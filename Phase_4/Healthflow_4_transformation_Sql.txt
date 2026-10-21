@@ -1,0 +1,2155 @@
+// Verify RAW tables
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SHOW TABLES IN SCHEMA HEALTHFLOW_DB.RAW;
+
+
+// Check the row counts
+SELECT 'PATIENTS' AS TABLE_NAME, COUNT(*) AS ROW_COUNT
+FROM RAW.PATIENTS
+
+UNION ALL
+
+SELECT 'PROVIDERS', COUNT(*)
+FROM RAW.PROVIDERS
+
+UNION ALL
+
+SELECT 'CLAIMS', COUNT(*)
+FROM RAW.CLAIMS
+
+UNION ALL
+
+SELECT 'DIAGNOSES_HISTORY', COUNT(*)
+FROM RAW.DIAGNOSES_HISTORY
+
+UNION ALL
+
+SELECT 'MEDICATIONS_REFERENCE', COUNT(*)
+FROM RAW.MEDICATIONS_REFERENCE
+
+UNION ALL
+
+SELECT 'FACILITY_MONTHLY_METRICS', COUNT(*)
+FROM RAW.FACILITY_MONTHLY_METRICS;
+
+
+// Create Streams
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+USE WAREHOUSE HF_TRANSFORM_WH;
+/*
+CREATE STREAM IF NOT EXISTS patients_stream
+ON TABLE RAW.PATIENTS;
+
+CREATE STREAM IF NOT EXISTS providers_stream
+ON TABLE RAW.PROVIDERS;
+
+CREATE STREAM IF NOT EXISTS claims_stream
+ON TABLE RAW.CLAIMS;
+
+CREATE STREAM IF NOT EXISTS diagnoses_stream
+
+CREATE STREAM IF NOT EXISTS medications_stream
+ON TABLE RAW.MEDICATIONS_REFERENCE;
+
+CREATE STREAM IF NOT EXISTS facility_metrics_stream
+ON TABLE RAW.FACILITY_MONTHLY_METRICS;
+*/
+// Verify Streams
+SHOW STREAMS IN SCHEMA HEALTHFLOW_DB.RAW;
+ON TABLE RAW.DIAGNOSES_HISTORY;
+
+//Check whether changes are available
+SELECT
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.CLAIMS_STREAM'
+    ) AS HAS_NEW_CHANGES;
+
+
+DESC TABLE HEALTHFLOW_DB.RAW.PATIENTS;
+
+// Create the table CURATED.PATIENTS
+/*
+CREATE TABLE IF NOT EXISTS CURATED.PATIENTS AS
+SELECT
+    TRY_TO_NUMBER(patient_id)::NUMBER(38,0)
+        AS patient_id,
+
+    NULLIF(TRIM(first_name), '')
+        AS first_name,
+
+    NULLIF(TRIM(last_name), '')
+        AS last_name,
+
+    TRY_TO_DATE(date_of_birth)
+        AS date_of_birth,
+
+    NULLIF(TRIM(gender), '')
+        AS gender,
+
+    NULLIF(TRIM(blood_group), '')
+        AS blood_group,
+
+    NULLIF(TRIM(phone), '')
+        AS phone,
+
+    NULLIF(LOWER(TRIM(email)), '')
+        AS email,
+
+    NULLIF(TRIM(address_city), '')
+        AS address_city,
+
+    NULLIF(TRIM(address_state), '')
+        AS address_state,
+
+    NULLIF(TRIM(country), '')
+        AS country,
+
+    NULLIF(TRIM(insurance_provider), '')
+        AS insurance_provider,
+
+    NULLIF(TRIM(insurance_plan_type), '')
+        AS insurance_plan_type,
+
+    TRY_TO_DATE(registration_date)
+        AS registration_date,
+
+    TRY_TO_BOOLEAN(is_active::VARCHAR)
+        AS is_active,
+
+    DATEDIFF(
+        YEAR,
+        TRY_TO_DATE(date_of_birth),
+        CURRENT_DATE()
+    )
+    - IFF(
+        DATEADD(
+            YEAR,
+            DATEDIFF(
+                YEAR,
+                TRY_TO_DATE(date_of_birth),
+                CURRENT_DATE()
+            ),
+            TRY_TO_DATE(date_of_birth)
+        ) > CURRENT_DATE(),
+        1,
+        0
+    ) AS patient_age
+
+FROM RAW.PATIENTS;
+*/
+
+// Validate the CURATED.PATIENTS table
+SELECT
+    COUNT(*) AS total_patients,
+    COUNT(DISTINCT patient_id) AS unique_patients,
+    COUNT_IF(patient_id IS NULL) AS null_patient_ids,
+    COUNT_IF(date_of_birth IS NULL) AS null_dob,
+    COUNT_IF(patient_age < 0) AS invalid_ages
+FROM CURATED.PATIENTS;
+
+
+// Preview the transformed records
+SELECT
+    patient_id,
+    first_name,
+    last_name,
+    date_of_birth,
+    patient_age,
+    insurance_provider,
+    is_active
+FROM CURATED.PATIENTS
+LIMIT 10;
+
+
+//Create the table CURATED.PROVIDERS
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA CURATED;
+USE WAREHOUSE HF_TRANSFORM_WH;
+/*
+CREATE TABLE IF NOT EXISTS CURATED.PROVIDERS AS
+SELECT
+    TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+        AS provider_id,
+
+    NULLIF(TRIM(provider_name), '')
+        AS provider_name,
+
+    NULLIF(TRIM(specialization), '')
+        AS specialization,
+
+    NULLIF(TRIM(qualification), '')
+        AS qualification,
+
+    NULLIF(TRIM(facility_name), '')
+        AS facility_name,
+
+    NULLIF(TRIM(facility_city), '')
+        AS facility_city,
+
+    NULLIF(TRIM(facility_state), '')
+        AS facility_state,
+
+    NULLIF(TRIM(facility_type), '')
+        AS facility_type,
+
+    TRY_TO_NUMBER(years_experience::VARCHAR)
+        AS years_experience,
+
+    TRY_TO_DECIMAL(
+        consultation_fee::VARCHAR, 12, 2
+    ) AS consultation_fee,
+
+    TRY_TO_BOOLEAN(is_active::VARCHAR)
+        AS is_active
+
+FROM RAW.PROVIDERS
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY provider_id
+    ORDER BY provider_id
+) = 1;
+*/
+
+// Validate the CURATED.PROVIDERS table
+/*
+SELECT
+    COUNT(*) AS total_providers,
+
+    COUNT(DISTINCT provider_id)
+        AS unique_providers,
+
+    COUNT_IF(provider_id IS NULL)
+        AS null_provider_ids,
+
+    COUNT_IF(years_experience < 0)
+        AS invalid_experience,
+
+    COUNT_IF(consultation_fee < 0)
+        AS invalid_fees
+
+FROM CURATED.PROVIDERS;
+
+// Create CURATED.CLAIMS table
+CREATE TABLE IF NOT EXISTS CURATED.CLAIMS AS
+SELECT
+    TRY_TO_NUMBER(claim_id::VARCHAR)::NUMBER(38,0)
+        AS claim_id,
+
+    TRY_TO_NUMBER(patient_id::VARCHAR)::NUMBER(38,0)
+        AS patient_id,
+
+    TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+        AS provider_id,
+
+    NULLIF(TRIM(diagnosis_code), '')
+        AS diagnosis_code,
+
+    NULLIF(TRIM(diagnosis_description), '')
+        AS diagnosis_description,
+
+    TRY_TO_DATE(claim_date, 'DD/MM/YYYY')
+        AS claim_date,
+
+    NULLIF(TRIM(service_type), '')
+        AS service_type,
+
+    TRY_TO_DECIMAL(billed_amount::VARCHAR, 12, 2)
+        AS billed_amount,
+
+    TRY_TO_DECIMAL(approved_amount::VARCHAR, 12, 2)
+        AS approved_amount,
+
+    TRY_TO_DECIMAL(patient_copay::VARCHAR, 12, 2)
+        AS patient_copay,
+
+    NULLIF(TRIM(claim_status), '')
+        AS claim_status,
+
+    TRY_TO_DATE(
+        NULLIF(TRIM(payment_date), ''),
+        'DD/MM/YYYY'
+    ) AS payment_date,
+
+    NULLIF(TRIM(denial_reason), '')
+        AS denial_reason,
+
+    DATEDIFF(
+        DAY,
+        TRY_TO_DATE(claim_date, 'DD/MM/YYYY'),
+        TRY_TO_DATE(
+            NULLIF(TRIM(payment_date), ''),
+            'DD/MM/YYYY'
+        )
+    ) AS claim_processing_days,
+
+    IFF(
+        TRY_TO_DECIMAL(billed_amount::VARCHAR, 12, 2) > 100000,
+        TRUE,
+        FALSE
+    ) AS is_high_value_claim
+
+FROM RAW.CLAIMS
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY claim_id
+    ORDER BY claim_id
+) = 1;
+*/
+
+// Validate CURATED.CLAIMS table
+SELECT
+    COUNT(*) AS total_claims,
+
+    COUNT(DISTINCT claim_id) AS unique_claims,
+
+    COUNT_IF(claim_id IS NULL) AS null_claim_ids,
+
+    COUNT_IF(claim_date IS NULL) AS null_claim_dates,
+
+    COUNT_IF(billed_amount < 0) AS negative_billed,
+
+    COUNT_IF(approved_amount < 0) AS negative_approved,
+
+    COUNT_IF(claim_processing_days < 0)
+        AS negative_processing_days,
+
+    COUNT_IF(is_high_value_claim = TRUE)
+        AS high_value_claims
+
+FROM CURATED.CLAIMS;
+
+//Create CURATED.DIAGNOSES_HISTORY table
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA CURATED;
+USE WAREHOUSE HF_TRANSFORM_WH;
+/*
+CREATE TABLE IF NOT EXISTS CURATED.DIAGNOSES_HISTORY AS
+SELECT
+    TRY_TO_NUMBER(record_id::VARCHAR)::NUMBER(38,0)
+        AS record_id,
+
+    TRY_TO_NUMBER(patient_id::VARCHAR)::NUMBER(38,0)
+        AS patient_id,
+
+    TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+        AS provider_id,
+
+    NULLIF(UPPER(TRIM(diagnosis_code)), '')
+        AS diagnosis_code,
+
+    NULLIF(TRIM(diagnosis_description), '')
+        AS diagnosis_description,
+
+    TRY_TO_DATE(
+        NULLIF(TRIM(diagnosis_date), ''),
+        'YYYY-MM-DD'
+    ) AS diagnosis_date,
+
+    NULLIF(TRIM(severity), '')
+        AS severity,
+
+    TRY_TO_BOOLEAN(is_chronic::VARCHAR)
+        AS is_chronic,
+
+    NULLIF(TRIM(treatment_plan), '')
+        AS treatment_plan,
+
+    TRY_TO_DATE(
+        NULLIF(TRIM(follow_up_date), ''),
+        'YYYY-MM-DD'
+    ) AS follow_up_date,
+
+    DATEDIFF(
+        DAY,
+        TRY_TO_DATE(diagnosis_date, 'YYYY-MM-DD'),
+        TRY_TO_DATE(follow_up_date, 'YYYY-MM-DD')
+    ) AS follow_up_days
+
+FROM RAW.DIAGNOSES_HISTORY
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY record_id
+    ORDER BY
+        diagnosis_date DESC NULLS LAST,
+        follow_up_date DESC NULLS LAST,
+        provider_id
+) = 1;
+
+*/
+
+// Validate CURATED.DIAGNOSES_HISTORY data
+SELECT
+    COUNT(*) AS total_diagnoses,
+
+    COUNT(DISTINCT record_id)
+        AS unique_diagnoses,
+
+    COUNT_IF(record_id IS NULL)
+        AS null_record_ids,
+
+    COUNT_IF(patient_id IS NULL)
+        AS null_patient_ids,
+
+    COUNT_IF(diagnosis_date IS NULL)
+        AS null_diagnosis_dates,
+
+    COUNT_IF(follow_up_days < 0)
+        AS invalid_follow_ups,
+
+    COUNT_IF(is_chronic = TRUE)
+        AS chronic_diagnoses
+
+FROM CURATED.DIAGNOSES_HISTORY;
+
+// Check patient referential integrity
+SELECT
+    COUNT(*) AS orphan_diagnoses
+FROM CURATED.DIAGNOSES_HISTORY d
+LEFT JOIN CURATED.PATIENTS p
+    ON d.patient_id = p.patient_id
+WHERE p.patient_id IS NULL;
+
+
+// Create CURATED.MEDICATIONS_REFERENCE table
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA CURATED;
+USE WAREHOUSE HF_TRANSFORM_WH;
+/*
+CREATE TABLE IF NOT EXISTS CURATED.MEDICATIONS_REFERENCE AS
+SELECT
+    TRY_TO_NUMBER(medication_id::VARCHAR)::NUMBER(38,0)
+        AS medication_id,
+
+    NULLIF(TRIM(medication_name), '')
+        AS medication_name,
+
+    NULLIF(TRIM(generic_name), '')
+        AS generic_name,
+
+    NULLIF(TRIM(category), '')
+        AS category,
+
+    NULLIF(TRIM(dosage_form), '')
+        AS dosage_form,
+
+    NULLIF(TRIM(manufacturer), '')
+        AS manufacturer,
+
+    TRY_TO_DECIMAL(unit_price::VARCHAR, 12, 2)
+        AS unit_price,
+
+    TRY_TO_BOOLEAN(requires_prescription::VARCHAR)
+        AS requires_prescription
+
+FROM RAW.MEDICATIONS_REFERENCE
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY medication_id
+    ORDER BY medication_id
+) = 1;
+*/
+// Validate the CURATED.MEDICATIONS_REFERENCE data
+
+SELECT
+    COUNT(*) AS total_medications,
+
+    COUNT(DISTINCT medication_id)
+        AS unique_medications,
+
+    COUNT_IF(medication_id IS NULL)
+        AS null_medication_ids,
+
+    COUNT_IF(medication_name IS NULL)
+        AS null_medication_names,
+
+    COUNT_IF(unit_price < 0)
+        AS negative_prices,
+
+    COUNT_IF(unit_price IS NULL)
+        AS null_prices,
+
+    COUNT_IF(requires_prescription IS NULL)
+        AS null_prescription_flags
+
+FROM CURATED.MEDICATIONS_REFERENCE;
+// Preview the cleaned medication data
+SELECT
+    medication_id,
+    medication_name,
+    generic_name,
+    category,
+    unit_price,
+    requires_prescription
+FROM CURATED.MEDICATIONS_REFERENCE
+LIMIT 10;
+
+
+// Verify RAW.FACILITY_MONTHLY_METRICS
+SELECT Count(*)
+FROM RAW.FACILITY_MONTHLY_METRICS
+LIMIT 5;
+
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE
+FROM HEALTHFLOW_DB.INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = 'RAW'
+  AND TABLE_NAME = 'FACILITY_MONTHLY_METRICS'
+ORDER BY ORDINAL_POSITION;
+
+// Create CURATED.FACILITY_MONTHLY_METRICS table
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA CURATED;
+USE WAREHOUSE HF_TRANSFORM_WH;
+/*
+CREATE TABLE IF NOT EXISTS
+CURATED.FACILITY_MONTHLY_METRICS AS
+
+SELECT
+    TRY_TO_NUMBER(metric_id::VARCHAR)::NUMBER(38,0)
+        AS metric_id,
+
+    NULLIF(TRIM(facility_name), '')
+        AS facility_name,
+
+    COALESCE(
+        TRY_TO_DATE(report_month, 'YYYY-MM-DD'),
+        TRY_TO_DATE(
+            TRIM(report_month) || '-01',
+            'YYYY-MM-DD'
+        )
+    ) AS report_month,
+
+    TRY_TO_NUMBER(total_patients_seen::VARCHAR)
+        AS total_patients_seen,
+
+    TRY_TO_NUMBER(total_claims_filed::VARCHAR)
+        AS total_claims_filed,
+
+    TRY_TO_DECIMAL(total_revenue::VARCHAR, 12, 2)
+        AS total_revenue,
+
+    TRY_TO_DECIMAL(avg_wait_time_minutes::VARCHAR, 10, 2)
+        AS avg_wait_time_minutes,
+
+    TRY_TO_DECIMAL(patient_satisfaction_score::VARCHAR, 5, 2)
+        AS patient_satisfaction_score,
+
+    TRY_TO_DECIMAL(bed_occupancy_rate::VARCHAR, 6, 2)
+        AS bed_occupancy_rate,
+
+    TRY_TO_NUMBER(staff_count::VARCHAR)
+        AS staff_count,
+
+    TRY_TO_NUMBER(emergency_visits::VARCHAR)
+        AS emergency_visits
+
+FROM RAW.FACILITY_MONTHLY_METRICS
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY metric_id
+    ORDER BY report_month DESC NULLS LAST
+) = 1;
+*/
+
+// Validate the CURATED.FACILITY_MONTHLY_METRICS table
+SELECT
+    COUNT(*) AS total_records,
+
+    COUNT(DISTINCT metric_id)
+        AS unique_metrics,
+
+    COUNT_IF(metric_id IS NULL)
+        AS null_metric_ids,
+
+    COUNT_IF(report_month IS NULL)
+        AS null_report_months,
+
+    COUNT_IF(total_revenue < 0)
+        AS negative_revenue,
+
+    COUNT_IF(avg_wait_time_minutes < 0)
+        AS invalid_wait_times,
+
+    COUNT_IF(patient_satisfaction_score < 0)
+        AS invalid_satisfaction,
+
+    COUNT_IF(bed_occupancy_rate < 0)
+        AS invalid_occupancy,
+
+    COUNT_IF(staff_count < 0)
+        AS invalid_staff_counts
+
+FROM CURATED.FACILITY_MONTHLY_METRICS;
+
+// Preview the cleaned records
+SELECT
+    facility_name,
+    report_month,
+    total_patients_seen,
+    total_claims_filed,
+    total_revenue,
+    avg_wait_time_minutes,
+    patient_satisfaction_score,
+    bed_occupancy_rate
+FROM CURATED.FACILITY_MONTHLY_METRICS
+LIMIT 10;
+
+// Check Stream status
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    'PATIENTS' AS TABLE_NAME,
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.PATIENTS_STREAM'
+    ) AS HAS_CHANGES
+
+UNION ALL
+
+SELECT 'PROVIDERS',
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.PROVIDERS_STREAM'
+    )
+
+UNION ALL
+
+SELECT 'CLAIMS',
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.CLAIMS_STREAM'
+    )
+
+UNION ALL
+
+SELECT 'DIAGNOSES_HISTORY',
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.DIAGNOSES_STREAM'
+    )
+
+UNION ALL
+
+SELECT 'MEDICATIONS_REFERENCE',
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.MEDICATIONS_STREAM'
+    )
+
+UNION ALL
+
+SELECT 'FACILITY_MONTHLY_METRICS',
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.FACILITY_METRICS_STREAM'
+    );
+
+//////////////////////////////////// Implement CDC for PATIENTS
+// Create a PATIENTS processing procedure
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE
+CURATED.PROCESS_PATIENTS()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.PATIENTS AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(patient_id)::NUMBER(38,0)
+                AS patient_id,
+            NULLIF(TRIM(first_name), '')
+                AS first_name,
+            NULLIF(TRIM(last_name), '')
+                AS last_name,
+            TRY_TO_DATE(date_of_birth)
+                AS date_of_birth,
+            NULLIF(TRIM(gender), '')
+                AS gender,
+            NULLIF(TRIM(blood_group), '')
+                AS blood_group,
+            NULLIF(TRIM(phone), '')
+                AS phone,
+            NULLIF(LOWER(TRIM(email)), '')
+                AS email,
+            NULLIF(TRIM(address_city), '')
+                AS address_city,
+            NULLIF(TRIM(address_state), '')
+                AS address_state,
+            NULLIF(TRIM(country), '')
+                AS country,
+            NULLIF(TRIM(insurance_provider), '')
+                AS insurance_provider,
+            NULLIF(TRIM(insurance_plan_type), '')
+                AS insurance_plan_type,
+            TRY_TO_DATE(registration_date)
+                AS registration_date,
+            TRY_TO_BOOLEAN(is_active::VARCHAR)
+                AS is_active,
+
+            DATEDIFF(
+                YEAR,
+                TRY_TO_DATE(date_of_birth),
+                CURRENT_DATE()
+            )
+            - IFF(
+                DATEADD(
+                    YEAR,
+                    DATEDIFF(
+                        YEAR,
+                        TRY_TO_DATE(date_of_birth),
+                        CURRENT_DATE()
+                    ),
+                    TRY_TO_DATE(date_of_birth)
+                ) > CURRENT_DATE(),
+                1, 0
+            ) AS patient_age
+
+        FROM RAW.PATIENTS_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY patient_id
+            ORDER BY METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.patient_id = src.patient_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.first_name = src.first_name,
+        tgt.last_name = src.last_name,
+        tgt.date_of_birth = src.date_of_birth,
+        tgt.gender = src.gender,
+        tgt.blood_group = src.blood_group,
+        tgt.phone = src.phone,
+        tgt.email = src.email,
+        tgt.address_city = src.address_city,
+        tgt.address_state = src.address_state,
+        tgt.country = src.country,
+        tgt.insurance_provider = src.insurance_provider,
+        tgt.insurance_plan_type = src.insurance_plan_type,
+        tgt.registration_date = src.registration_date,
+        tgt.is_active = src.is_active,
+        tgt.patient_age = src.patient_age
+
+    WHEN NOT MATCHED THEN INSERT (
+        patient_id, first_name, last_name,
+        date_of_birth, gender, blood_group,
+        phone, email, address_city,
+        address_state, country,
+        insurance_provider, insurance_plan_type,
+        registration_date, is_active, patient_age
+    )
+    VALUES (
+        src.patient_id, src.first_name, src.last_name,
+        src.date_of_birth, src.gender, src.blood_group,
+        src.phone, src.email, src.address_city,
+        src.address_state, src.country,
+        src.insurance_provider, src.insurance_plan_type,
+        src.registration_date, src.is_active,
+        src.patient_age
+    );
+
+    RETURN 'PATIENTS MERGE completed successfully';
+
+END;
+$$;
+
+// Verify the procedure was created
+SHOW PROCEDURES LIKE 'PROCESS_PATIENTS'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+// Test the CDC Pipeline (RAW → CURATED)
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    patient_id,
+    first_name,
+    last_name,
+    address_city
+FROM CURATED.PATIENTS
+WHERE patient_id = 1;
+
+// Update the RAW patient record (temporarily change the patient's city to CDC_TEST_CITY to test the pipeline)
+UPDATE RAW.PATIENTS
+SET address_city = 'CDC_TEST_CITY'
+WHERE TRY_TO_NUMBER(patient_id) = 1;
+
+// Verify that the Stream captured the change
+SELECT
+    patient_id,
+    address_city,
+    METADATA$ACTION AS ACTION,
+    METADATA$ISUPDATE AS IS_UPDATE
+FROM RAW.PATIENTS_STREAM
+WHERE TRY_TO_NUMBER(patient_id) = 1;
+
+//Execute the stored procedure
+CALL CURATED.PROCESS_PATIENTS();
+
+//Verify the CURATED table
+SELECT
+    patient_id,
+    first_name,
+    last_name,
+    address_city
+FROM CURATED.PATIENTS
+WHERE patient_id = 1;
+
+// Check the Stream status
+SELECT SYSTEM$STREAM_HAS_DATA(
+    'HEALTHFLOW_DB.RAW.PATIENTS_STREAM'
+) AS HAS_CHANGES;
+
+// Restore the Original Patient Data
+UPDATE RAW.PATIENTS
+SET address_city = 'Kolkata'
+WHERE TRY_TO_NUMBER(patient_id) = 1;
+
+//Run the CDC procedure again
+CALL CURATED.PROCESS_PATIENTS();
+
+// Verify both tables match
+SELECT
+    r.patient_id,
+    r.address_city AS raw_city,
+    c.address_city AS curated_city,
+
+    IFF(
+        r.address_city = c.address_city,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+
+FROM RAW.PATIENTS r
+JOIN CURATED.PATIENTS c
+    ON TRY_TO_NUMBER(r.patient_id) = c.patient_id
+
+WHERE TRY_TO_NUMBER(r.patient_id) = 1;
+
+// Verify Stream status
+SELECT
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.PATIENTS_STREAM'
+    ) AS HAS_CHANGES;
+
+    ///////  Implement MERGE for the remaining five tables PROVIDERS,CLAIMS,DIAGNOSES_HISTORY,MEDICATIONS_REFERENCE,FACILITY_MONTHLY_METRICS
+
+
+///////////////////////////////////////////////////////////////////// Implement CDC for PROVIDERS
+
+///////////////////// Create PROCESS_PROVIDERS procedure
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE  HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE CURATED.PROCESS_PROVIDERS()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.PROVIDERS AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+                AS provider_id,
+
+            NULLIF(TRIM(provider_name), '')
+                AS provider_name,
+
+            NULLIF(TRIM(specialization), '')
+                AS specialization,
+
+            NULLIF(TRIM(qualification), '')
+                AS qualification,
+
+            NULLIF(TRIM(facility_name), '')
+                AS facility_name,
+
+            NULLIF(TRIM(facility_city), '')
+                AS facility_city,
+
+            NULLIF(TRIM(facility_state), '')
+                AS facility_state,
+
+            NULLIF(TRIM(facility_type), '')
+                AS facility_type,
+
+            TRY_TO_NUMBER(years_experience::VARCHAR)
+                AS years_experience,
+
+            TRY_TO_DECIMAL(
+                consultation_fee::VARCHAR, 12, 2
+            ) AS consultation_fee,
+
+            TRY_TO_BOOLEAN(is_active::VARCHAR)
+                AS is_active
+
+        FROM RAW.PROVIDERS_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY provider_id
+            ORDER BY METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.provider_id = src.provider_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.provider_name = src.provider_name,
+        tgt.specialization = src.specialization,
+        tgt.qualification = src.qualification,
+        tgt.facility_name = src.facility_name,
+        tgt.facility_city = src.facility_city,
+        tgt.facility_state = src.facility_state,
+        tgt.facility_type = src.facility_type,
+        tgt.years_experience = src.years_experience,
+        tgt.consultation_fee = src.consultation_fee,
+        tgt.is_active = src.is_active
+
+    WHEN NOT MATCHED THEN INSERT (
+        provider_id,
+        provider_name,
+        specialization,
+        qualification,
+        facility_name,
+        facility_city,
+        facility_state,
+        facility_type,
+        years_experience,
+        consultation_fee,
+        is_active
+    )
+    VALUES (
+        src.provider_id,
+        src.provider_name,
+        src.specialization,
+        src.qualification,
+        src.facility_name,
+        src.facility_city,
+        src.facility_state,
+        src.facility_type,
+        src.years_experience,
+        src.consultation_fee,
+        src.is_active
+    );
+
+    RETURN 'PROVIDERS MERGE completed successfully';
+
+END;
+$$;
+
+// Verify procedure creation
+SHOW PROCEDURES LIKE 'PROCESS_PROVIDERS'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+// Verify the Stream
+SELECT
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.PROVIDERS_STREAM'
+    ) AS HAS_CHANGES;
+
+// Test the PROVIDERS CDC Pipeline
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    provider_id,
+    provider_name,
+    consultation_fee
+FROM CURATED.PROVIDERS
+ORDER BY provider_id
+LIMIT 5;
+
+// Update the RAW provider record for example (we set consultation_fee = '999.00')
+UPDATE RAW.PROVIDERS
+SET consultation_fee = '999.00'
+WHERE TRY_TO_NUMBER(provider_id) = 1;
+
+// Verify the Stream captured the change
+SELECT
+    provider_id,
+    consultation_fee,
+    METADATA$ACTION AS ACTION,
+    METADATA$ISUPDATE AS IS_UPDATE
+FROM RAW.PROVIDERS_STREAM
+WHERE TRY_TO_NUMBER(provider_id) = 1;
+
+// Execute the MERGE procedure
+CALL CURATED.PROCESS_PROVIDERS();
+
+// Verify the CURATED table
+SELECT
+    provider_id,
+    provider_name,
+    consultation_fee
+FROM CURATED.PROVIDERS
+WHERE provider_id = 1;
+
+// Restore the original consultation fee
+UPDATE RAW.PROVIDERS
+SET consultation_fee = '4400'
+WHERE TRY_TO_NUMBER(provider_id) = 1;
+
+CALL CURATED.PROCESS_PROVIDERS();
+
+// verify RAW and CURATED match
+SELECT
+    r.provider_id,
+    r.consultation_fee AS raw_fee,
+    c.consultation_fee AS curated_fee,
+    IFF(
+        TRY_TO_DECIMAL(r.consultation_fee, 12, 2)
+            = c.consultation_fee,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+FROM RAW.PROVIDERS r
+JOIN CURATED.PROVIDERS c
+    ON TRY_TO_NUMBER(r.provider_id) = c.provider_id
+WHERE TRY_TO_NUMBER(r.provider_id) = 1;
+
+///////////////////////////// Create PROCESS_CLAIMS Procedure
+
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE CURATED.PROCESS_CLAIMS()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.CLAIMS AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(claim_id::VARCHAR)::NUMBER(38,0)
+                AS claim_id,
+
+            TRY_TO_NUMBER(patient_id::VARCHAR)::NUMBER(38,0)
+                AS patient_id,
+
+            TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+                AS provider_id,
+
+            NULLIF(TRIM(diagnosis_code), '')
+                AS diagnosis_code,
+
+            NULLIF(TRIM(diagnosis_description), '')
+                AS diagnosis_description,
+
+            COALESCE(
+                TRY_TO_DATE(claim_date, 'YYYY-MM-DD'),
+                TRY_TO_DATE(claim_date, 'DD/MM/YYYY')
+            ) AS claim_date,
+
+            NULLIF(TRIM(service_type), '')
+                AS service_type,
+
+            TRY_TO_DECIMAL(billed_amount::VARCHAR, 12, 2)
+                AS billed_amount,
+
+            TRY_TO_DECIMAL(approved_amount::VARCHAR, 12, 2)
+                AS approved_amount,
+
+            TRY_TO_DECIMAL(patient_copay::VARCHAR, 12, 2)
+                AS patient_copay,
+
+            NULLIF(TRIM(claim_status), '')
+                AS claim_status,
+
+            COALESCE(
+                TRY_TO_DATE(NULLIF(TRIM(payment_date), ''), 'YYYY-MM-DD'),
+                TRY_TO_DATE(NULLIF(TRIM(payment_date), ''), 'DD/MM/YYYY')
+            ) AS payment_date,
+
+            NULLIF(TRIM(denial_reason), '')
+                AS denial_reason,
+
+            DATEDIFF(
+                DAY,
+                COALESCE(
+                    TRY_TO_DATE(claim_date, 'YYYY-MM-DD'),
+                    TRY_TO_DATE(claim_date, 'DD/MM/YYYY')
+                ),
+                COALESCE(
+                    TRY_TO_DATE(NULLIF(TRIM(payment_date), ''), 'YYYY-MM-DD'),
+                    TRY_TO_DATE(NULLIF(TRIM(payment_date), ''), 'DD/MM/YYYY')
+                )
+            ) AS claim_processing_days,
+
+            IFF(
+                TRY_TO_DECIMAL(
+                    billed_amount::VARCHAR, 12, 2
+                ) > 100000,
+                TRUE,
+                FALSE
+            ) AS is_high_value_claim
+
+        FROM RAW.CLAIMS_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY claim_id
+            ORDER BY METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.claim_id = src.claim_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.patient_id = src.patient_id,
+        tgt.provider_id = src.provider_id,
+        tgt.diagnosis_code = src.diagnosis_code,
+        tgt.diagnosis_description = src.diagnosis_description,
+        tgt.claim_date = src.claim_date,
+        tgt.service_type = src.service_type,
+        tgt.billed_amount = src.billed_amount,
+        tgt.approved_amount = src.approved_amount,
+        tgt.patient_copay = src.patient_copay,
+        tgt.claim_status = src.claim_status,
+        tgt.payment_date = src.payment_date,
+        tgt.denial_reason = src.denial_reason,
+        tgt.claim_processing_days = src.claim_processing_days,
+        tgt.is_high_value_claim = src.is_high_value_claim
+
+    WHEN NOT MATCHED THEN INSERT (
+        claim_id,
+        patient_id,
+        provider_id,
+        diagnosis_code,
+        diagnosis_description,
+        claim_date,
+        service_type,
+        billed_amount,
+        approved_amount,
+        patient_copay,
+        claim_status,
+        payment_date,
+        denial_reason,
+        claim_processing_days,
+        is_high_value_claim
+    )
+    VALUES (
+        src.claim_id,
+        src.patient_id,
+        src.provider_id,
+        src.diagnosis_code,
+        src.diagnosis_description,
+        src.claim_date,
+        src.service_type,
+        src.billed_amount,
+        src.approved_amount,
+        src.patient_copay,
+        src.claim_status,
+        src.payment_date,
+        src.denial_reason,
+        src.claim_processing_days,
+        src.is_high_value_claim
+    );
+
+    RETURN 'CLAIMS MERGE completed successfully';
+
+END;
+$$;
+
+
+// Verify procedure creation
+SHOW PROCEDURES LIKE 'PROCESS_CLAIMS'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+// Verify Stream status
+SELECT
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.CLAIMS_STREAM'
+    ) AS HAS_CHANGES;
+
+// Test the CLAIMS CDC Pipeline
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    claim_id,
+    billed_amount,
+    claim_status,
+    is_high_value_claim
+FROM CURATED.CLAIMS
+ORDER BY claim_id
+LIMIT 5;
+
+// Update the RAW claim (temporarily set the billed amount to 150000.00 to test both CDC and the high-value claim calculation)
+UPDATE RAW.CLAIMS
+SET billed_amount = '150000.00'
+WHERE TRY_TO_NUMBER(claim_id) = 1;
+
+// Verify the Stream captured the change
+SELECT
+    claim_id,
+    billed_amount,
+    METADATA$ACTION AS action,
+    METADATA$ISUPDATE AS is_update
+FROM RAW.CLAIMS_STREAM
+WHERE TRY_TO_NUMBER(claim_id) = 1;
+
+// Execute the MERGE procedure
+CALL CURATED.PROCESS_CLAIMS();
+
+// Validate the CURATED claim
+SELECT
+    claim_id,
+    billed_amount,
+    is_high_value_claim,
+    claim_processing_days
+FROM CURATED.CLAIMS
+WHERE claim_id = 1;
+
+// Restore the original claim amount
+UPDATE RAW.CLAIMS
+SET billed_amount = '4648'
+WHERE TRY_TO_NUMBER(claim_id) = 1;
+
+CALL CURATED.PROCESS_CLAIMS();
+
+// validate the restored data
+SELECT
+    r.claim_id,
+    r.billed_amount AS raw_amount,
+    c.billed_amount AS curated_amount,
+    c.is_high_value_claim,
+    IFF(
+        TRY_TO_DECIMAL(r.billed_amount, 12, 2)
+            = c.billed_amount,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+FROM RAW.CLAIMS r
+JOIN CURATED.CLAIMS c
+    ON TRY_TO_NUMBER(r.claim_id) = c.claim_id
+WHERE TRY_TO_NUMBER(r.claim_id) = 1;
+
+///////////////////////// Implement CDC for DIAGNOSES_HISTORY
+
+// Create PROCESS_DIAGNOSES_HISTORY procedure
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE
+CURATED.PROCESS_DIAGNOSES_HISTORY()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.DIAGNOSES_HISTORY AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(record_id::VARCHAR)::NUMBER(38,0)
+                AS record_id,
+
+            TRY_TO_NUMBER(patient_id::VARCHAR)::NUMBER(38,0)
+                AS patient_id,
+
+            TRY_TO_NUMBER(provider_id::VARCHAR)::NUMBER(38,0)
+                AS provider_id,
+
+            NULLIF(UPPER(TRIM(diagnosis_code)), '')
+                AS diagnosis_code,
+
+            NULLIF(TRIM(diagnosis_description), '')
+                AS diagnosis_description,
+
+            TRY_TO_DATE(
+                NULLIF(TRIM(diagnosis_date), ''),
+                'YYYY-MM-DD'
+            ) AS diagnosis_date,
+
+            NULLIF(TRIM(severity), '')
+                AS severity,
+
+            TRY_TO_BOOLEAN(is_chronic::VARCHAR)
+                AS is_chronic,
+
+            NULLIF(TRIM(treatment_plan), '')
+                AS treatment_plan,
+
+            COALESCE(
+                  TRY_TO_DATE(TRIM(follow_up_date), 'YYYY-MM-DD'),
+                  TRY_TO_DATE(TRIM(follow_up_date), 'DD/MM/YYYY')
+                   ) AS follow_up_date,
+
+           
+           DATEDIFF(
+                DAY,
+                COALESCE(
+                    TRY_TO_DATE(TRIM(diagnosis_date), 'YYYY-MM-DD'),
+                    TRY_TO_DATE(TRIM(diagnosis_date), 'DD/MM/YYYY')
+                ),
+                COALESCE(
+                    TRY_TO_DATE(TRIM(follow_up_date), 'YYYY-MM-DD'),
+                    TRY_TO_DATE(TRIM(follow_up_date), 'DD/MM/YYYY')
+                )
+            ) AS follow_up_days
+        FROM RAW.DIAGNOSES_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY record_id
+            ORDER BY
+                diagnosis_date DESC NULLS LAST,
+                follow_up_date DESC NULLS LAST,
+                METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.record_id = src.record_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.patient_id = src.patient_id,
+        tgt.provider_id = src.provider_id,
+        tgt.diagnosis_code = src.diagnosis_code,
+        tgt.diagnosis_description = src.diagnosis_description,
+        tgt.diagnosis_date = src.diagnosis_date,
+        tgt.severity = src.severity,
+        tgt.is_chronic = src.is_chronic,
+        tgt.treatment_plan = src.treatment_plan,
+        tgt.follow_up_date = src.follow_up_date,
+        tgt.follow_up_days = src.follow_up_days
+
+    WHEN NOT MATCHED THEN INSERT (
+        record_id,
+        patient_id,
+        provider_id,
+        diagnosis_code,
+        diagnosis_description,
+        diagnosis_date,
+        severity,
+        is_chronic,
+        treatment_plan,
+        follow_up_date,
+        follow_up_days
+    )
+    VALUES (
+        src.record_id,
+        src.patient_id,
+        src.provider_id,
+        src.diagnosis_code,
+        src.diagnosis_description,
+        src.diagnosis_date,
+        src.severity,
+        src.is_chronic,
+        src.treatment_plan,
+        src.follow_up_date,
+        src.follow_up_days
+    );
+
+    RETURN 'DIAGNOSES_HISTORY MERGE completed successfully';
+
+END;
+$$;
+
+// Verify the procedure
+SHOW PROCEDURES LIKE 'PROCESS_DIAGNOSES_HISTORY'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+//Check Stream status
+SELECT SYSTEM$STREAM_HAS_DATA(
+    'HEALTHFLOW_DB.RAW.DIAGNOSES_STREAM'
+) AS HAS_CHANGES;
+
+//Test DIAGNOSES_HISTORY CDC Pipeline
+SELECT
+    record_id,
+    diagnosis_date,
+    follow_up_date,
+    follow_up_days
+FROM CURATED.DIAGNOSES_HISTORY
+WHERE record_id = 1;
+
+// Update the RAW follow-up date(temporarily set the follow-up date to 30 days after the diagnosis date)
+UPDATE RAW.DIAGNOSES_HISTORY
+SET follow_up_date = TO_CHAR(
+    DATEADD(
+        DAY,
+        30,
+        TRY_TO_DATE(diagnosis_date, 'YYYY-MM-DD')
+    ),
+    'YYYY-MM-DD'
+)
+WHERE TRY_TO_NUMBER(record_id) = 1;
+
+// Verify the Stream captured the update
+SELECT
+    record_id,
+    follow_up_date,
+    METADATA$ACTION AS action,
+    METADATA$ISUPDATE AS is_update
+FROM RAW.DIAGNOSES_STREAM
+WHERE TRY_TO_NUMBER(record_id) = 1;
+
+// Execute the procedure
+CALL CURATED.PROCESS_DIAGNOSES_HISTORY();
+
+// Validate the CURATED record
+SELECT
+    record_id,
+    diagnosis_date,
+    follow_up_date,
+    follow_up_days,
+    IFF(follow_up_days = 30, 'PASS', 'FAIL')
+        AS validation_status
+FROM CURATED.DIAGNOSES_HISTORY
+WHERE record_id = 1;
+
+// Restore the original follow-up date
+UPDATE RAW.DIAGNOSES_HISTORY
+SET follow_up_date = '06/12/2024'
+WHERE TRY_TO_NUMBER(record_id) = 1;
+
+CALL CURATED.PROCESS_DIAGNOSES_HISTORY();
+
+// Validate
+SELECT
+    r.record_id,
+    r.follow_up_date AS raw_follow_up_date,
+    c.follow_up_date AS curated_follow_up_date,
+    c.follow_up_days,
+
+    IFF(
+        TRY_TO_DATE(
+            r.follow_up_date, 'DD/MM/YYYY'
+        ) = c.follow_up_date,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+
+FROM RAW.DIAGNOSES_HISTORY r
+
+JOIN CURATED.DIAGNOSES_HISTORY c
+    ON TRY_TO_NUMBER(r.record_id) = c.record_id
+
+WHERE TRY_TO_NUMBER(r.record_id) = 1;
+
+
+//////////////////////////////// Implement CDC for MEDICATIONS_REFERENCE
+
+// Create PROCESS_MEDICATIONS_REFERENCE
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE
+CURATED.PROCESS_MEDICATIONS_REFERENCE()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.MEDICATIONS_REFERENCE AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(medication_id::VARCHAR)::NUMBER(38,0)
+                AS medication_id,
+
+            NULLIF(TRIM(medication_name), '')
+                AS medication_name,
+
+            NULLIF(TRIM(generic_name), '')
+                AS generic_name,
+
+            NULLIF(TRIM(category), '')
+                AS category,
+
+            NULLIF(TRIM(dosage_form), '')
+                AS dosage_form,
+
+            NULLIF(TRIM(manufacturer), '')
+                AS manufacturer,
+
+            TRY_TO_DECIMAL(unit_price::VARCHAR, 12, 2)
+                AS unit_price,
+
+            TRY_TO_BOOLEAN(requires_prescription::VARCHAR)
+                AS requires_prescription
+
+        FROM RAW.MEDICATIONS_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY medication_id
+            ORDER BY METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.medication_id = src.medication_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.medication_name = src.medication_name,
+        tgt.generic_name = src.generic_name,
+        tgt.category = src.category,
+        tgt.dosage_form = src.dosage_form,
+        tgt.manufacturer = src.manufacturer,
+        tgt.unit_price = src.unit_price,
+        tgt.requires_prescription = src.requires_prescription
+
+    WHEN NOT MATCHED THEN INSERT (
+        medication_id,
+        medication_name,
+        generic_name,
+        category,
+        dosage_form,
+        manufacturer,
+        unit_price,
+        requires_prescription
+    )
+    VALUES (
+        src.medication_id,
+        src.medication_name,
+        src.generic_name,
+        src.category,
+        src.dosage_form,
+        src.manufacturer,
+        src.unit_price,
+        src.requires_prescription
+    );
+
+    RETURN 'MEDICATIONS_REFERENCE MERGE completed successfully';
+
+END;
+$$;
+
+// Verify procedure creation
+SHOW PROCEDURES LIKE 'PROCESS_MEDICATIONS_REFERENCE'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+// Check Stream status
+SELECT SYSTEM$STREAM_HAS_DATA(
+    'HEALTHFLOW_DB.RAW.MEDICATIONS_STREAM'
+) AS HAS_CHANGES;
+
+
+// Update the RAW medication price(Temporarily change the price to 999.99)
+UPDATE RAW.MEDICATIONS_REFERENCE
+SET unit_price = '999.99'
+WHERE TRY_TO_NUMBER(medication_id) = 1;
+
+// Verify the Stream captured the change
+SELECT
+    medication_id,
+    unit_price,
+    METADATA$ACTION AS action,
+    METADATA$ISUPDATE AS is_update
+FROM RAW.MEDICATIONS_STREAM
+WHERE TRY_TO_NUMBER(medication_id) = 1;
+
+//Execute the stored procedure
+CALL CURATED.PROCESS_MEDICATIONS_REFERENCE();
+
+// Validate the CURATED medication
+SELECT
+    medication_id,
+    medication_name,
+    unit_price,
+    IFF(unit_price = 999.99, 'PASS', 'FAIL')
+        AS validation_status
+FROM CURATED.MEDICATIONS_REFERENCE
+WHERE medication_id = 1;
+
+
+// Restore the original medication price
+UPDATE RAW.MEDICATIONS_REFERENCE
+SET unit_price = '45'
+WHERE TRY_TO_NUMBER(medication_id) = 1;
+
+CALL CURATED.PROCESS_MEDICATIONS_REFERENCE();
+
+// Final validation
+SELECT
+    r.medication_id,
+    r.unit_price AS raw_price,
+    c.unit_price AS curated_price,
+
+    IFF(
+        TRY_TO_DECIMAL(r.unit_price, 12, 2)
+            IS NOT DISTINCT FROM c.unit_price,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+
+FROM RAW.MEDICATIONS_REFERENCE r
+
+JOIN CURATED.MEDICATIONS_REFERENCE c
+    ON TRY_TO_NUMBER(r.medication_id) = c.medication_id
+
+WHERE TRY_TO_NUMBER(r.medication_id) = 1;
+
+//////////////////////////////// Implement CDC for FACILITY_MONTHLY_METRICS
+
+//Create the stored procedure
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE PROCEDURE
+CURATED.PROCESS_FACILITY_MONTHLY_METRICS()
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+
+    MERGE INTO CURATED.FACILITY_MONTHLY_METRICS AS tgt
+
+    USING (
+        SELECT
+            TRY_TO_NUMBER(metric_id::VARCHAR)::NUMBER(38,0)
+                AS metric_id,
+
+            NULLIF(TRIM(facility_name), '')
+                AS facility_name,
+
+            COALESCE(
+                TRY_TO_DATE(report_month, 'YYYY-MM-DD'),
+                TRY_TO_DATE(
+                    TRIM(report_month) || '-01',
+                    'YYYY-MM-DD'
+                )
+            ) AS report_month,
+
+            TRY_TO_NUMBER(total_patients_seen::VARCHAR)
+                AS total_patients_seen,
+
+            TRY_TO_NUMBER(total_claims_filed::VARCHAR)
+                AS total_claims_filed,
+
+            TRY_TO_DECIMAL(total_revenue::VARCHAR, 12, 2)
+                AS total_revenue,
+
+            TRY_TO_DECIMAL(avg_wait_time_minutes::VARCHAR, 10, 2)
+                AS avg_wait_time_minutes,
+
+            TRY_TO_DECIMAL(patient_satisfaction_score::VARCHAR, 5, 2)
+                AS patient_satisfaction_score,
+
+            TRY_TO_DECIMAL(bed_occupancy_rate::VARCHAR, 6, 2)
+                AS bed_occupancy_rate,
+
+            TRY_TO_NUMBER(staff_count::VARCHAR)
+                AS staff_count,
+
+            TRY_TO_NUMBER(emergency_visits::VARCHAR)
+                AS emergency_visits
+
+        FROM RAW.FACILITY_METRICS_STREAM
+
+        WHERE METADATA$ACTION = 'INSERT'
+
+        QUALIFY ROW_NUMBER() OVER (
+            PARTITION BY metric_id
+            ORDER BY report_month DESC NULLS LAST,
+                     METADATA$ROW_ID
+        ) = 1
+
+    ) AS src
+
+    ON tgt.metric_id = src.metric_id
+
+    WHEN MATCHED THEN UPDATE SET
+        tgt.facility_name = src.facility_name,
+        tgt.report_month = src.report_month,
+        tgt.total_patients_seen = src.total_patients_seen,
+        tgt.total_claims_filed = src.total_claims_filed,
+        tgt.total_revenue = src.total_revenue,
+        tgt.avg_wait_time_minutes = src.avg_wait_time_minutes,
+        tgt.patient_satisfaction_score = src.patient_satisfaction_score,
+        tgt.bed_occupancy_rate = src.bed_occupancy_rate,
+        tgt.staff_count = src.staff_count,
+        tgt.emergency_visits = src.emergency_visits
+
+    WHEN NOT MATCHED THEN INSERT (
+        metric_id,
+        facility_name,
+        report_month,
+        total_patients_seen,
+        total_claims_filed,
+        total_revenue,
+        avg_wait_time_minutes,
+        patient_satisfaction_score,
+        bed_occupancy_rate,
+        staff_count,
+        emergency_visits
+    )
+    VALUES (
+        src.metric_id,
+        src.facility_name,
+        src.report_month,
+        src.total_patients_seen,
+        src.total_claims_filed,
+        src.total_revenue,
+        src.avg_wait_time_minutes,
+        src.patient_satisfaction_score,
+        src.bed_occupancy_rate,
+        src.staff_count,
+        src.emergency_visits
+    );
+
+    RETURN 'FACILITY_MONTHLY_METRICS MERGE completed successfully';
+
+END;
+$$;
+
+// Verify procedure creation
+SHOW PROCEDURES LIKE 'PROCESS_FACILITY_MONTHLY_METRICS'
+IN SCHEMA HEALTHFLOW_DB.CURATED;
+
+// Check Stream status
+SELECT
+    SYSTEM$STREAM_HAS_DATA(
+        'HEALTHFLOW_DB.RAW.FACILITY_METRICS_STREAM'
+    ) AS HAS_CHANGES;
+
+
+// Test FACILITY_MONTHLY_METRICS CDC Pipeline
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    metric_id,
+    facility_name,
+    report_month,
+    total_revenue
+FROM CURATED.FACILITY_MONTHLY_METRICS
+ORDER BY metric_id
+LIMIT 5;
+
+// Update the RAW revenue (Temporarily change the revenue to 999999.99.)
+UPDATE RAW.FACILITY_MONTHLY_METRICS
+SET total_revenue = '999999.99'
+WHERE TRY_TO_NUMBER(metric_id) = 1;
+
+//Verify the Stream captured the change
+SELECT
+    metric_id,
+    total_revenue,
+    METADATA$ACTION AS action,
+    METADATA$ISUPDATE AS is_update
+FROM RAW.FACILITY_METRICS_STREAM
+WHERE TRY_TO_NUMBER(metric_id) = 1;
+
+// Execute the stored procedure
+CALL CURATED.PROCESS_FACILITY_MONTHLY_METRICS();
+
+// Validate the CURATED revenue
+SELECT
+    metric_id,
+    facility_name,
+    total_revenue,
+    IFF(
+        total_revenue = 999999.99,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+FROM CURATED.FACILITY_MONTHLY_METRICS
+WHERE metric_id = 1;
+
+// Restore the original revenue
+UPDATE RAW.FACILITY_MONTHLY_METRICS
+SET total_revenue = '20980563'
+WHERE TRY_TO_NUMBER(metric_id) = 1;
+
+CALL CURATED.PROCESS_FACILITY_MONTHLY_METRICS();
+
+// Final validation
+SELECT
+    r.metric_id,
+    r.total_revenue AS raw_revenue,
+    c.total_revenue AS curated_revenue,
+
+    IFF(
+        TRY_TO_DECIMAL(r.total_revenue::VARCHAR, 12, 2)
+            IS NOT DISTINCT FROM c.total_revenue,
+        'PASS',
+        'FAIL'
+    ) AS validation_status
+
+FROM RAW.FACILITY_MONTHLY_METRICS r
+JOIN CURATED.FACILITY_MONTHLY_METRICS c
+    ON TRY_TO_NUMBER(r.metric_id) = c.metric_id
+WHERE TRY_TO_NUMBER(r.metric_id) = 1;
+
+// Relationship between CLAIMS and DIAGNOSES_HISTORY
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    COUNT(*) AS total_claims,
+
+    COUNT_IF(diagnosis_matches = 0)
+        AS claims_without_diagnosis,
+
+    COUNT_IF(diagnosis_matches = 1)
+        AS claims_with_one_diagnosis,
+
+    COUNT_IF(diagnosis_matches > 1)
+        AS claims_with_multiple_diagnoses
+
+FROM (
+    SELECT
+        c.claim_id,
+        COUNT(d.record_id) AS diagnosis_matches
+
+    FROM CURATED.CLAIMS c
+
+    LEFT JOIN CURATED.DIAGNOSES_HISTORY d
+        ON c.patient_id = d.patient_id
+        AND c.diagnosis_code = d.diagnosis_code
+
+    GROUP BY c.claim_id
+);
+
+// Create CURATED.CLAIM_LINE_ITEM
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+CREATE OR REPLACE TABLE CURATED.CLAIM_LINE_ITEM AS
+
+SELECT
+    c.claim_id,
+    c.patient_id,
+    c.provider_id,
+
+    c.diagnosis_code,
+    c.diagnosis_description,
+
+    c.claim_date,
+    c.service_type,
+
+    c.billed_amount,
+    c.approved_amount,
+    c.patient_copay,
+    c.claim_status,
+    c.payment_date,
+    c.denial_reason,
+
+    c.claim_processing_days,
+    c.is_high_value_claim,
+
+    d.record_id AS diagnosis_record_id,
+    d.diagnosis_date,
+    d.severity,
+    d.is_chronic,
+    d.treatment_plan,
+    d.follow_up_date,
+    d.follow_up_days
+
+FROM CURATED.CLAIMS c
+
+LEFT JOIN CURATED.DIAGNOSES_HISTORY d
+    ON c.patient_id = d.patient_id
+    AND c.diagnosis_code = d.diagnosis_code
+    AND d.diagnosis_date <= c.claim_date
+
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY c.claim_id
+    ORDER BY
+        d.diagnosis_date DESC NULLS LAST,
+        d.record_id DESC NULLS LAST
+) = 1;
+
+// Validate the new table
+SELECT
+    COUNT(*) AS total_claim_line_items,
+
+    COUNT(DISTINCT claim_id) AS unique_claims,
+
+    COUNT_IF(diagnosis_record_id IS NOT NULL)
+        AS matched_diagnoses,
+
+    COUNT_IF(diagnosis_record_id IS NULL)
+        AS unmatched_diagnoses,
+
+    COUNT_IF(
+        diagnosis_date > claim_date
+    ) AS invalid_diagnosis_dates
+
+FROM CURATED.CLAIM_LINE_ITEM;
+
+// Validate financial totals
+SELECT
+    'CURATED.CLAIMS' AS source_table,
+    COUNT(*) AS total_records,
+    SUM(billed_amount) AS total_billed,
+    SUM(approved_amount) AS total_approved
+FROM CURATED.CLAIMS
+
+UNION ALL
+
+SELECT
+    'CURATED.CLAIM_LINE_ITEM',
+    COUNT(*),
+    SUM(billed_amount),
+    SUM(approved_amount)
+FROM CURATED.CLAIM_LINE_ITEM;
+
+// Validate all CURATED table counts
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT 'PATIENTS' AS TABLE_NAME, COUNT(*) AS ROW_COUNT
+FROM CURATED.PATIENTS
+
+UNION ALL
+SELECT 'PROVIDERS', COUNT(*)
+FROM CURATED.PROVIDERS
+
+UNION ALL
+SELECT 'CLAIMS', COUNT(*)
+FROM CURATED.CLAIMS
+
+UNION ALL
+SELECT 'DIAGNOSES_HISTORY', COUNT(*)
+FROM CURATED.DIAGNOSES_HISTORY
+
+UNION ALL
+SELECT 'MEDICATIONS_REFERENCE', COUNT(*)
+FROM CURATED.MEDICATIONS_REFERENCE
+
+UNION ALL
+SELECT 'FACILITY_MONTHLY_METRICS', COUNT(*)
+FROM CURATED.FACILITY_MONTHLY_METRICS
+
+UNION ALL
+SELECT 'CLAIM_LINE_ITEM', COUNT(*)
+FROM CURATED.CLAIM_LINE_ITEM
+
+ORDER BY TABLE_NAME;
+
+// Validate primary keys and duplicates
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    'PATIENTS' AS TABLE_NAME,
+    COUNT(*) AS TOTAL_ROWS,
+    COUNT(DISTINCT PATIENT_ID) AS UNIQUE_IDS,
+    COUNT_IF(PATIENT_ID IS NULL) AS NULL_IDS
+FROM CURATED.PATIENTS
+
+UNION ALL
+
+SELECT
+    'PROVIDERS',
+    COUNT(*),
+    COUNT(DISTINCT PROVIDER_ID),
+    COUNT_IF(PROVIDER_ID IS NULL)
+FROM CURATED.PROVIDERS
+
+UNION ALL
+
+SELECT
+    'CLAIMS',
+    COUNT(*),
+    COUNT(DISTINCT CLAIM_ID),
+    COUNT_IF(CLAIM_ID IS NULL)
+FROM CURATED.CLAIMS
+
+UNION ALL
+
+SELECT
+    'DIAGNOSES_HISTORY',
+    COUNT(*),
+    COUNT(DISTINCT RECORD_ID),
+    COUNT_IF(RECORD_ID IS NULL)
+FROM CURATED.DIAGNOSES_HISTORY
+
+UNION ALL
+
+SELECT
+    'MEDICATIONS_REFERENCE',
+    COUNT(*),
+    COUNT(DISTINCT MEDICATION_ID),
+    COUNT_IF(MEDICATION_ID IS NULL)
+FROM CURATED.MEDICATIONS_REFERENCE
+
+UNION ALL
+
+SELECT
+    'FACILITY_MONTHLY_METRICS',
+    COUNT(*),
+    COUNT(DISTINCT METRIC_ID),
+    COUNT_IF(METRIC_ID IS NULL)
+FROM CURATED.FACILITY_MONTHLY_METRICS
+
+UNION ALL
+
+SELECT
+    'CLAIM_LINE_ITEM',
+    COUNT(*),
+    COUNT(DISTINCT CLAIM_ID),
+    COUNT_IF(CLAIM_ID IS NULL)
+FROM CURATED.CLAIM_LINE_ITEM;
+
+
+// Referential Integrity Validation check
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    'CLAIMS → PATIENTS' AS RELATIONSHIP,
+    COUNT(*) AS INVALID_REFERENCES
+FROM CURATED.CLAIMS c
+LEFT JOIN CURATED.PATIENTS p
+    ON c.patient_id = p.patient_id
+WHERE p.patient_id IS NULL
+
+UNION ALL
+
+SELECT
+    'CLAIMS → PROVIDERS',
+    COUNT(*)
+FROM CURATED.CLAIMS c
+LEFT JOIN CURATED.PROVIDERS p
+    ON c.provider_id = p.provider_id
+WHERE p.provider_id IS NULL
+
+UNION ALL
+
+SELECT
+    'DIAGNOSES → PATIENTS',
+    COUNT(*)
+FROM CURATED.DIAGNOSES_HISTORY d
+LEFT JOIN CURATED.PATIENTS p
+    ON d.patient_id = p.patient_id
+WHERE p.patient_id IS NULL
+
+UNION ALL
+
+SELECT
+    'DIAGNOSES → PROVIDERS',
+    COUNT(*)
+FROM CURATED.DIAGNOSES_HISTORY d
+LEFT JOIN CURATED.PROVIDERS p
+    ON d.provider_id = p.provider_id
+WHERE p.provider_id IS NULL
+
+UNION ALL
+
+SELECT
+    'CLAIM_LINE_ITEM → CLAIMS',
+    COUNT(*)
+FROM CURATED.CLAIM_LINE_ITEM l
+LEFT JOIN CURATED.CLAIMS c
+    ON l.claim_id = c.claim_id
+WHERE c.claim_id IS NULL;
+
+// Date and Business Rule Validation
+USE DATABASE HEALTHFLOW_DB;
+USE WAREHOUSE HF_TRANSFORM_WH;
+
+SELECT
+    COUNT(*) AS total_diagnoses,
+
+    COUNT_IF(diagnosis_date IS NULL)
+        AS null_diagnosis_dates,
+
+    COUNT_IF(follow_up_date IS NULL)
+        AS null_follow_up_dates,
+
+    COUNT_IF(follow_up_days < 0)
+        AS negative_follow_up_days,
+
+    COUNT_IF(
+        follow_up_days IS DISTINCT FROM
+        DATEDIFF(
+            DAY,
+            diagnosis_date,
+            follow_up_date
+        )
+    ) AS incorrect_follow_up_days
+
+FROM CURATED.DIAGNOSES_HISTORY;
+
+// Validate insurance claim business rules
+SELECT
+    COUNT(*) AS total_claims,
+
+    COUNT_IF(claim_date IS NULL)
+        AS null_claim_dates,
+
+    COUNT_IF(billed_amount < 0)
+        AS negative_billed_amounts,
+
+    COUNT_IF(approved_amount < 0)
+        AS negative_approved_amounts,
+
+    COUNT_IF(patient_copay < 0)
+        AS negative_copays,
+
+    COUNT_IF(approved_amount > billed_amount)
+        AS approved_exceeds_billed,
+
+    COUNT_IF(claim_processing_days < 0)
+        AS negative_processing_days,
+
+    COUNT_IF(
+        is_high_value_claim IS DISTINCT FROM
+        (billed_amount > 100000)
+    ) AS incorrect_high_value_flags
+
+FROM CURATED.CLAIMS;
+
+// Validate facility performance metrics
+SELECT
+    COUNT(*) AS total_records,
+
+    COUNT_IF(total_revenue < 0)
+        AS negative_revenue,
+
+    COUNT_IF(total_patients_seen < 0)
+        AS negative_patient_counts,
+
+    COUNT_IF(total_claims_filed < 0)
+        AS negative_claim_counts,
+
+    COUNT_IF(avg_wait_time_minutes < 0)
+        AS negative_wait_times,
+
+    COUNT_IF(staff_count < 0)
+        AS negative_staff_counts,
+
+    COUNT_IF(emergency_visits < 0)
+        AS negative_emergency_visits,
+
+    COUNT_IF(
+        bed_occupancy_rate < 0
+        OR bed_occupancy_rate > 100
+    ) AS invalid_occupancy_rates
+
+FROM CURATED.FACILITY_MONTHLY_METRICS;
+
+
+
+

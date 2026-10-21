@@ -1,0 +1,462 @@
+
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+USE WAREHOUSE HF_INGEST_WH;
+/*
+CREATE OR REPLACE FILE FORMAT STD_CSV
+    TYPE = 'CSV'
+    FIELD_DELIMITER = ','
+    SKIP_HEADER = 1
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+    NULL_IF = ('NULL', 'null', '')
+    EMPTY_FIELD_AS_NULL = TRUE
+    TRIM_SPACE = TRUE
+    ERROR_ON_COLUMN_COUNT_MISMATCH = TRUE
+    COMPRESSION = AUTO;
+*/
+
+//Verify the file format
+SHOW FILE FORMATS LIKE 'STD_CSV'
+IN SCHEMA HEALTHFLOW_DB.RAW;
+
+//Integrate with AWS S3 Bucket
+USE ROLE ACCOUNTADMIN;
+
+/*
+CREATE OR REPLACE STORAGE INTEGRATION HEALTHFLOW_S3_INT
+    TYPE = EXTERNAL_STAGE
+    STORAGE_PROVIDER = 'S3'
+    ENABLED = TRUE
+    STORAGE_ALLOWED_LOCATIONS = (
+      ' '
+    )
+    STORAGE_AWS_ROLE_ARN =
+      ' ;
+
+*/
+
+//Retrieve Snowflake integration details
+DESC INTEGRATION HEALTHFLOW_S3_INT;
+
+
+//Verify the integration
+SHOW INTEGRATIONS LIKE 'HEALTHFLOW_S3_INT';
+
+// Create the external stage
+USE ROLE ACCOUNTADMIN;
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+USE WAREHOUSE HF_INGEST_WH;
+
+CREATE OR REPLACE STAGE HEALTHFLOW_S3_STAGE
+    URL = ''
+    STORAGE_INTEGRATION = HEALTHFLOW_S3_INT
+    FILE_FORMAT = STD_CSV;
+
+    // Verify the S3 connection
+LIST @HEALTHFLOW_S3_STAGE;
+
+// Create the four RAW tables
+USE DATABASE HEALTHFLOW_DB;
+/*
+CREATE SCHEMA IF NOT EXISTS RAW;
+USE SCHEMA RAW;
+
+CREATE TABLE IF NOT EXISTS PATIENTS (
+    patient_id          VARCHAR,
+    first_name          VARCHAR,
+    last_name           VARCHAR,
+    date_of_birth       VARCHAR,
+    gender              VARCHAR,
+    blood_group         VARCHAR,
+    phone               VARCHAR,
+    email               VARCHAR,
+    address_city        VARCHAR,
+    address_state       VARCHAR,
+    country             VARCHAR,
+    insurance_provider  VARCHAR,
+    insurance_plan_type VARCHAR,
+    registration_date   VARCHAR,
+    is_active           VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS PROVIDERS (
+    provider_id      VARCHAR,
+    provider_name    VARCHAR,
+    specialization   VARCHAR,
+    qualification    VARCHAR,
+    facility_name    VARCHAR,
+    facility_city    VARCHAR,
+    facility_state   VARCHAR,
+    facility_type    VARCHAR,
+    years_experience VARCHAR,
+    consultation_fee VARCHAR,
+    is_active        VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS CLAIMS (
+    claim_id              VARCHAR,
+    patient_id            VARCHAR,
+    provider_id           VARCHAR,
+    diagnosis_code        VARCHAR,
+    diagnosis_description VARCHAR,
+    claim_date            VARCHAR,
+    service_type          VARCHAR,
+    billed_amount         VARCHAR,
+    approved_amount       VARCHAR,
+    patient_copay         VARCHAR,
+    claim_status          VARCHAR,
+    payment_date          VARCHAR,
+    denial_reason         VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS DIAGNOSES_HISTORY (
+    record_id             VARCHAR,
+    patient_id            VARCHAR,
+    provider_id           VARCHAR,
+    diagnosis_code        VARCHAR,
+    diagnosis_description VARCHAR,
+    diagnosis_date        VARCHAR,
+    severity              VARCHAR,
+    is_chronic            VARCHAR,
+    treatment_plan        VARCHAR,
+    follow_up_date        VARCHAR
+);
+*/
+// Verify the tables
+SELECT
+    table_name,
+    ordinal_position,
+    column_name,
+    data_type
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_schema = 'RAW'
+  AND table_name IN (
+      'PATIENTS', 'PROVIDERS', 'CLAIMS', 'DIAGNOSES_HISTORY'
+  )
+ORDER BY table_name, ordinal_position;
+
+// 
+USE SCHEMA RAW;
+
+
+/*
+CREATE FILE FORMAT IF NOT EXISTS RAW.HEALTHFLOW_CSV_FORMAT
+    TYPE = CSV
+    FIELD_DELIMITER = ','
+    SKIP_HEADER = 1
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+    EMPTY_FIELD_AS_NULL = TRUE
+    NULL_IF = ('')
+    ESCAPE_UNENCLOSED_FIELD = NONE
+    ERROR_ON_COLUMN_COUNT_MISMATCH = TRUE;
+*/
+// Copy data into TABLES
+/*
+COPY INTO RAW.PATIENTS
+FROM @RAW.HEALTHFLOW_S3_STAGE
+FILES = ('patients.csv')
+FILE_FORMAT = (FORMAT_NAME = 'RAW.HEALTHFLOW_CSV_FORMAT')
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO RAW.PROVIDERS
+FROM @RAW.HEALTHFLOW_S3_STAGE
+FILES = ('providers.csv')
+FILE_FORMAT = (FORMAT_NAME = 'RAW.HEALTHFLOW_CSV_FORMAT')
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO RAW.CLAIMS
+FROM @RAW.HEALTHFLOW_S3_STAGE
+FILES = ('claims.csv')
+FILE_FORMAT = (FORMAT_NAME = 'RAW.HEALTHFLOW_CSV_FORMAT')
+ON_ERROR = 'ABORT_STATEMENT';
+
+
+COPY INTO RAW.DIAGNOSES_HISTORY
+FROM @RAW.HEALTHFLOW_S3_STAGE
+FILES = ('diagnoses_history.csv')
+FILE_FORMAT = (FORMAT_NAME = 'RAW.HEALTHFLOW_CSV_FORMAT')
+ON_ERROR = 'ABORT_STATEMENT';
+
+
+SELECT 'PATIENTS' AS table_name, COUNT(*) AS loaded_rows,
+       20000 AS expected_rows
+FROM RAW.PATIENTS
+UNION ALL
+SELECT 'PROVIDERS', COUNT(*), 500 FROM RAW.PROVIDERS
+UNION ALL
+SELECT 'CLAIMS', COUNT(*), 50000 FROM RAW.CLAIMS
+UNION ALL
+SELECT 'DIAGNOSES_HISTORY', COUNT(*), 30000
+FROM RAW.DIAGNOSES_HISTORY;
+*/
+
+// Check missing and duplicate IDs
+
+WITH ids AS (
+    SELECT 'PATIENTS' AS table_name,
+           NULLIF(TRIM(patient_id), '') AS id
+    FROM RAW.PATIENTS
+
+    UNION ALL
+    SELECT 'PROVIDERS', NULLIF(TRIM(provider_id), '')
+    FROM RAW.PROVIDERS
+
+    UNION ALL
+    SELECT 'CLAIMS', NULLIF(TRIM(claim_id), '')
+    FROM RAW.CLAIMS
+
+    UNION ALL
+    SELECT 'DIAGNOSES_HISTORY', NULLIF(TRIM(record_id), '')
+    FROM RAW.DIAGNOSES_HISTORY
+)
+SELECT
+    table_name,
+    COUNT(*) AS total_rows,
+    COUNT(*) - COUNT(id) AS missing_ids,
+    COUNT(id) - COUNT(DISTINCT id) AS duplicate_extra_rows
+FROM ids
+GROUP BY table_name
+ORDER BY table_name;
+
+// Check Date conversions
+
+WITH date_checks AS (
+    SELECT 'PATIENTS.date_of_birth' AS field,
+           date_of_birth AS date_value, 'YYYY-MM-DD' AS date_format
+    FROM RAW.PATIENTS
+    UNION ALL
+    SELECT 'PATIENTS.registration_date', registration_date, 'YYYY-MM-DD'
+    FROM RAW.PATIENTS
+    UNION ALL
+    SELECT 'CLAIMS.claim_date', claim_date, 'DD/MM/YYYY'
+    FROM RAW.CLAIMS
+    UNION ALL
+    SELECT 'CLAIMS.payment_date', payment_date, 'DD/MM/YYYY'
+    FROM RAW.CLAIMS
+    UNION ALL
+    SELECT 'DIAGNOSES_HISTORY.diagnosis_date', diagnosis_date, 'YYYY-MM-DD'
+    FROM RAW.DIAGNOSES_HISTORY
+    UNION ALL
+    SELECT 'DIAGNOSES_HISTORY.follow_up_date', follow_up_date, 'YYYY-MM-DD'
+    FROM RAW.DIAGNOSES_HISTORY
+)
+SELECT
+    field,
+    COUNT(*) AS invalid_dates
+FROM date_checks
+WHERE NULLIF(TRIM(date_value), '') IS NOT NULL
+  AND TRY_TO_DATE(TRIM(date_value), date_format) IS NULL
+GROUP BY field;
+
+
+//Check whether every claim and diagnosis references an existing patient and provider
+
+SELECT 'CLAIMS → PATIENTS' AS relationship,
+       COUNT(*) AS unmatched_rows
+FROM RAW.CLAIMS c
+WHERE NOT EXISTS (
+    SELECT 1 FROM RAW.PATIENTS p
+    WHERE TRIM(p.patient_id) = TRIM(c.patient_id)
+)
+
+UNION ALL
+
+SELECT 'CLAIMS → PROVIDERS', COUNT(*)
+FROM RAW.CLAIMS c
+WHERE NOT EXISTS (
+    SELECT 1 FROM RAW.PROVIDERS p
+    WHERE TRIM(p.provider_id) = TRIM(c.provider_id)
+)
+
+UNION ALL
+
+SELECT 'DIAGNOSES → PATIENTS', COUNT(*)
+FROM RAW.DIAGNOSES_HISTORY d
+WHERE NOT EXISTS (
+    SELECT 1 FROM RAW.PATIENTS p
+    WHERE TRIM(p.patient_id) = TRIM(d.patient_id)
+)
+
+UNION ALL
+
+SELECT 'DIAGNOSES → PROVIDERS', COUNT(*)
+FROM RAW.DIAGNOSES_HISTORY d
+WHERE NOT EXISTS (
+    SELECT 1 FROM RAW.PROVIDERS p
+    WHERE TRIM(p.provider_id) = TRIM(d.provider_id)
+);
+
+// Check numeric and boolean fields
+
+WITH checks AS (
+    SELECT 'PROVIDERS.years_experience' AS field,
+           years_experience AS value, 'INTEGER' AS expected_type
+    FROM RAW.PROVIDERS
+    UNION ALL
+    SELECT 'PROVIDERS.consultation_fee', consultation_fee, 'AMOUNT'
+    FROM RAW.PROVIDERS
+    UNION ALL
+    SELECT 'CLAIMS.billed_amount', billed_amount, 'AMOUNT'
+    FROM RAW.CLAIMS
+    UNION ALL
+    SELECT 'CLAIMS.approved_amount', approved_amount, 'AMOUNT'
+    FROM RAW.CLAIMS
+    UNION ALL
+    SELECT 'CLAIMS.patient_copay', patient_copay, 'AMOUNT'
+    FROM RAW.CLAIMS
+    UNION ALL
+    SELECT 'PATIENTS.is_active', is_active, 'BOOLEAN'
+    FROM RAW.PATIENTS
+    UNION ALL
+    SELECT 'PROVIDERS.is_active', is_active, 'BOOLEAN'
+    FROM RAW.PROVIDERS
+    UNION ALL
+    SELECT 'DIAGNOSES_HISTORY.is_chronic', is_chronic, 'BOOLEAN'
+    FROM RAW.DIAGNOSES_HISTORY
+)
+SELECT field, COUNT(*) AS invalid_or_missing_rows
+FROM checks
+WHERE NULLIF(TRIM(value), '') IS NULL
+   OR (
+       expected_type = 'INTEGER'
+       AND (
+           NOT REGEXP_LIKE(TRIM(value), '^[0-9]+$')
+           OR TRY_TO_NUMBER(TRIM(value)) IS NULL
+       )
+   )
+   OR (
+       expected_type = 'AMOUNT'
+       AND TRY_TO_DECIMAL(TRIM(value), 18, 2) IS NULL
+   )
+   OR (
+       expected_type = 'BOOLEAN'
+       AND LOWER(TRIM(value)) NOT IN ('true', 'false')
+   )
+GROUP BY field;
+
+
+// Create the Cleaned layer
+
+/*
+CREATE SCHEMA IF NOT EXISTS CLEAN;
+
+CREATE VIEW CLEAN.PATIENTS AS
+SELECT
+    TRIM(patient_id) AS patient_id,
+    TRIM(first_name) AS first_name,
+    TRIM(last_name) AS last_name,
+    TO_DATE(TRIM(date_of_birth), 'YYYY-MM-DD') AS date_of_birth,
+    TRIM(gender) AS gender,
+    TRIM(blood_group) AS blood_group,
+    TRIM(phone) AS phone,
+    TRIM(email) AS email,
+    TRIM(address_city) AS address_city,
+    TRIM(address_state) AS address_state,
+    TRIM(country) AS country,
+    TRIM(insurance_provider) AS insurance_provider,
+    TRIM(insurance_plan_type) AS insurance_plan_type,
+    TO_DATE(TRIM(registration_date), 'YYYY-MM-DD') AS registration_date,
+    TO_BOOLEAN(TRIM(is_active)) AS is_active
+FROM RAW.PATIENTS;
+
+
+
+CREATE VIEW CLEAN.PROVIDERS AS
+SELECT
+    TRIM(provider_id) AS provider_id,
+    TRIM(provider_name) AS provider_name,
+    TRIM(specialization) AS specialization,
+    TRIM(qualification) AS qualification,
+    TRIM(facility_name) AS facility_name,
+    TRIM(facility_city) AS facility_city,
+    TRIM(facility_state) AS facility_state,
+    TRIM(facility_type) AS facility_type,
+    TO_NUMBER(TRIM(years_experience), 38, 0) AS years_experience,
+    TO_DECIMAL(TRIM(consultation_fee), 18, 2) AS consultation_fee,
+    TO_BOOLEAN(TRIM(is_active)) AS is_active
+FROM RAW.PROVIDERS;
+
+
+CREATE VIEW CLEAN.CLAIMS AS
+SELECT
+    TRIM(claim_id) AS claim_id,
+    TRIM(patient_id) AS patient_id,
+    TRIM(provider_id) AS provider_id,
+    TRIM(diagnosis_code) AS diagnosis_code,
+    TRIM(diagnosis_description) AS diagnosis_description,
+    TO_DATE(TRIM(claim_date), 'DD/MM/YYYY') AS claim_date,
+    TRIM(service_type) AS service_type,
+    TO_DECIMAL(TRIM(billed_amount), 18, 2) AS billed_amount,
+    TO_DECIMAL(TRIM(approved_amount), 18, 2) AS approved_amount,
+    TO_DECIMAL(TRIM(patient_copay), 18, 2) AS patient_copay,
+    TRIM(claim_status) AS claim_status,
+    TO_DATE(
+        NULLIF(TRIM(payment_date), ''),
+        'DD/MM/YYYY'
+    ) AS payment_date,
+    NULLIF(TRIM(denial_reason), '') AS denial_reason
+FROM RAW.CLAIMS;
+
+
+
+CREATE VIEW CLEAN.DIAGNOSES_HISTORY AS
+SELECT
+    TRIM(record_id) AS record_id,
+    TRIM(patient_id) AS patient_id,
+    TRIM(provider_id) AS provider_id,
+    TRIM(diagnosis_code) AS diagnosis_code,
+    TRIM(diagnosis_description) AS diagnosis_description,
+    TO_DATE(TRIM(diagnosis_date), 'YYYY-MM-DD') AS diagnosis_date,
+    TRIM(severity) AS severity,
+    TO_BOOLEAN(TRIM(is_chronic)) AS is_chronic,
+    TRIM(treatment_plan) AS treatment_plan,
+    TO_DATE(
+        NULLIF(TRIM(follow_up_date), ''),
+        'YYYY-MM-DD'
+    ) AS follow_up_date
+FROM RAW.DIAGNOSES_HISTORY;
+
+*/
+
+SELECT
+    COUNT(*) AS total_patients,
+    MIN(date_of_birth) AS earliest_birth_date,
+    MAX(date_of_birth) AS latest_birth_date,
+    COUNT_IF(is_active) AS active_patients
+FROM CLEAN.PATIENTS;
+
+
+SELECT
+    COUNT(*) AS total_providers,
+    MIN(years_experience) AS min_years_experience,
+    MAX(years_experience) AS max_years_experience,
+    MIN(consultation_fee) AS min_consultation_fee,
+    MAX(consultation_fee) AS max_consultation_fee,
+    COUNT_IF(is_active) AS active_providers
+FROM CLEAN.PROVIDERS;
+
+
+SELECT
+    COUNT(*) AS total_claims,
+    MIN(claim_date) AS earliest_claim_date,
+    MAX(claim_date) AS latest_claim_date,
+    SUM(billed_amount) AS total_billed_amount,
+    SUM(approved_amount) AS total_approved_amount,
+    SUM(patient_copay) AS total_patient_copay,
+    COUNT_IF(payment_date IS NULL) AS missing_payment_dates,
+    COUNT_IF(denial_reason IS NULL) AS missing_denial_reasons
+FROM CLEAN.CLAIMS;
+
+
+SELECT
+    COUNT(*) AS total_diagnoses,
+    MIN(diagnosis_date) AS earliest_diagnosis_date,
+    MAX(diagnosis_date) AS latest_diagnosis_date,
+    COUNT_IF(is_chronic) AS chronic_diagnoses,
+    COUNT_IF(follow_up_date < diagnosis_date)
+        AS follow_ups_before_diagnosis
+FROM CLEAN.DIAGNOSES_HISTORY;
+
+
+SHOW TABLES IN SCHEMA RAW;

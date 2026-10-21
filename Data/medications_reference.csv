@@ -1,0 +1,201 @@
+medication_id,medication_name,generic_name,category,dosage_form,manufacturer,unit_price,requires_prescription
+1,Amlodipine,Amlodipine Besylate,Antihypertensive,Tablet,Cipla,45,TRUE
+2,Telmisartan,Telmisartan,Antihypertensive,Tablet,Micro Labs,65,TRUE
+3,Losartan,Losartan Potassium,Antihypertensive,Tablet,Torrent,55,TRUE
+4,Atenolol,Atenolol,Antihypertensive,Tablet,Sun Pharma,30,TRUE
+5,Ramipril,Ramipril,Antihypertensive,Capsule,Lupin,48,TRUE
+6,Metoprolol,Metoprolol Succinate,Antihypertensive,Tablet,AstraZeneca,72,TRUE
+7,Enalapril,Enalapril Maleate,Antihypertensive,Tablet,Dr Reddys,38,TRUE
+8,Nifedipine,Nifedipine,Antihypertensive,Tablet,Bayer,52,TRUE
+9,Metformin,Metformin HCl,Antidiabetic,Tablet,USV,25,TRUE
+10,Glimepiride,Glimepiride,Antidiabetic,Tablet,Sanofi,60,TRUE
+11,Sitagliptin,Sitagliptin Phosphate,Antidiabetic,Tablet,MSD,185,TRUE
+12,Insulin Glargine,Insulin Glargine,Antidiabetic,Injection,Sanofi,1200,TRUE
+13,Empagliflozin,Empagliflozin,Antidiabetic,Tablet,Boehringer,210,TRUE
+14,Vildagliptin,Vildagliptin,Antidiabetic,Tablet,Novartis,165,TRUE
+15,Pioglitazone,Pioglitazone,Antidiabetic,Tablet,Takeda,78,TRUE
+16,Gliclazide,Gliclazide,Antidiabetic,Tablet,Serdia,55,TRUE
+17,Amoxicillin,Amoxicillin,Antibiotic,Capsule,GSK,35,TRUE
+18,Azithromycin,Azithromycin,Antibiotic,Tablet,Pfizer,85,TRUE
+19,Ciprofloxacin,Ciprofloxacin,Antibiotic,Tablet,Bayer,42,TRUE
+20,Ceftriaxone,Ceftriaxone,Antibiotic,Injection,Aurobindo,180,TRUE
+21,Doxycycline,Doxycycline,Antibiotic,Capsule,Sun Pharma,38,TRUE
+22,Levofloxacin,Levofloxacin,Antibiotic,Tablet,Glenmark,95,TRUE
+23,Metronidazole,Metronidazole,Antibiotic,Tablet,Abbott,22,TRUE
+24,Cefixime,Cefixime,Antibiotic,Tablet,Mankind,68,TRUE
+25,Clindamycin,Clindamycin,Antibiotic,Capsule,Pfizer,110,TRUE
+26,Paracetamol,Acetaminophen,Analgesic,Tablet,GSK,12,FALSE
+27,Ibuprofen,Ibuprofen,Analgesic,Tablet,Cipla,15,FALSE
+28,Diclofenac,Diclofenac Sodium,Analgesic,Tablet,Novartis,18,TRUE
+29,Tramadol,Tramadol HCl,Analgesic,Tablet,Intas,65,TRUE
+30,Aceclofenac,Aceclofenac,Analgesic,Tablet,IPCA,32,TRUE
+31,Naproxen,Naproxen,Analgesic,Tablet,Roche,28,TRUE
+32,Aspirin,Acetylsalicylic Acid,Analgesic,Tablet,Bayer,10,FALSE
+33,Sertraline,Sertraline HCl,Antidepressant,Tablet,Pfizer,95,TRUE
+34,Escitalopram,Escitalopram Oxalate,Antidepressant,Tablet,Lundbeck,120,TRUE
+35,Fluoxetine,Fluoxetine HCl,Antidepressant,Capsule,Eli Lilly,85,TRUE
+36,Venlafaxine,Venlafaxine,Antidepressant,Capsule,Wyeth,140,TRUE
+37,Amitriptyline,Amitriptyline,Antidepressant,Tablet,Sun Pharma,28,TRUE
+38,Duloxetine,Duloxetine,Antidepressant,Capsule,Eli Lilly,155,TRUE
+39,Mirtazapine,Mirtazapine,Antidepressant,Tablet,Organon,105,TRUE
+40,Atorvastatin,Atorvastatin,Statin,Tablet,Pfizer,55,TRUE
+41,Rosuvastatin,Rosuvastatin,Statin,Tablet,AstraZeneca,78,TRUE
+42,Simvastatin,Simvastatin,Statin,Tablet,Merck,45,TRUE
+43,Pravastatin,Pravastatin,Statin,Tablet,BMS,62,TRUE
+44,Salbutamol,Salbutamol,Bronchodilator,Inhaler,Cipla,130,TRUE
+45,Budesonide,Budesonide,Bronchodilator,Inhaler,AstraZeneca,320,TRUE
+46,Montelukast,Montelukast,Bronchodilator,Tablet,Merck,85,TRUE
+47,Ipratropium,Ipratropium Bromide,Bronchodilator,Inhaler,Boehringer,210,TRUE
+48,Formoterol,Formoterol,Bronchodilator,Inhaler,Novartis,280,TRUE
+49,Warfarin,Warfarin Sodium,Anticoagulant,Tablet,BMS,22,TRUE
+50,Rivaroxaban,Rivaroxaban,Anticoagulant,Tablet,Bayer,180,TRUE
+51,Apixaban,Apixaban,Anticoagulant,Tablet,Pfizer,195,TRUE
+52,Enoxaparin,Enoxaparin Sodium,Anticoagulant,Injection,Sanofi,450,TRUE
+53,Clopidogrel,Clopidogrel,Anticoagulant,Tablet,Sanofi,48,TRUE
+54,Pantoprazole,Pantoprazole,Antacid,Tablet,Sun Pharma,38,TRUE
+55,Omeprazole,Omeprazole,Antacid,Capsule,AstraZeneca,32,TRUE
+56,Ranitidine,Ranitidine,Antacid,Tablet,GSK,18,FALSE
+57,Esomeprazole,Esomeprazole,Antacid,Tablet,AstraZeneca,55,TRUE
+58,Rabeprazole,Rabeprazole,Antacid,Tablet,Eisai,42,TRUE
+59,Sucralfate,Sucralfate,Antacid,Tablet,Sanofi,35,TRUE
+60,Vitamin D3,Cholecalciferol,Vitamin,Tablet,Abbott,25,FALSE
+61,Vitamin B12,Methylcobalamin,Vitamin,Tablet,Mankind,30,FALSE
+62,Vitamin C,Ascorbic Acid,Vitamin,Tablet,Liminal,15,FALSE
+63,Iron + Folic Acid,Ferrous Fumarate,Vitamin,Tablet,Alkem,22,FALSE
+64,Calcium + D3,Calcium Carbonate,Vitamin,Tablet,USV,35,FALSE
+65,Multivitamin,Multivitamin Complex,Vitamin,Tablet,Pfizer,45,FALSE
+66,Omega-3,Fish Oil,Vitamin,Capsule,HealthKart,120,FALSE
+67,Zinc,Zinc Gluconate,Vitamin,Tablet,Himalaya,18,FALSE
+68,Biotin,Biotin,Vitamin,Tablet,HealthVit,85,FALSE
+69,Metformin 100mg,Metformin HCl,Antidiabetic,Tablet,USV,38,TRUE
+70,Rabeprazole 100mg,Rabeprazole,Antacid,Tablet,Eisai,59,TRUE
+71,Losartan 50mg,Losartan Potassium,Antihypertensive,Tablet,Torrent,40,TRUE
+72,Pioglitazone 50mg,Pioglitazone,Antidiabetic,Tablet,Takeda,108,TRUE
+73,Montelukast 20mg,Montelukast,Bronchodilator,Tablet,Merck,77,TRUE
+74,Duloxetine 5mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,268,TRUE
+75,Amlodipine 250mg,Amlodipine Besylate,Antihypertensive,Tablet,Cipla,70,TRUE
+76,Levofloxacin 5mg,Levofloxacin,Antibiotic,Tablet,Glenmark,77,TRUE
+77,Warfarin 10mg,Warfarin Sodium,Anticoagulant,Tablet,BMS,16,TRUE
+78,Clindamycin 100mg,Clindamycin,Antibiotic,Capsule,Pfizer,121,TRUE
+79,Metronidazole 5mg,Metronidazole,Antibiotic,Tablet,Abbott,38,TRUE
+80,Ipratropium 40mg,Ipratropium Bromide,Bronchodilator,Inhaler,Boehringer,283,TRUE
+81,Vitamin D3 20mg,Cholecalciferol,Vitamin,Tablet,Abbott,17,FALSE
+82,Ciprofloxacin 10mg,Ciprofloxacin,Antibiotic,Tablet,Bayer,59,TRUE
+83,Montelukast 100mg,Montelukast,Bronchodilator,Tablet,Merck,56,TRUE
+84,Pioglitazone 5mg,Pioglitazone,Antidiabetic,Tablet,Takeda,154,TRUE
+85,Omeprazole 500mg,Omeprazole,Antacid,Capsule,AstraZeneca,58,TRUE
+86,Clindamycin 5mg,Clindamycin,Antibiotic,Capsule,Pfizer,135,TRUE
+87,Pantoprazole 10mg,Pantoprazole,Antacid,Tablet,Sun Pharma,31,TRUE
+88,Metronidazole 500mg,Metronidazole,Antibiotic,Tablet,Abbott,33,TRUE
+89,Budesonide 100mg,Budesonide,Bronchodilator,Inhaler,AstraZeneca,464,TRUE
+90,Sitagliptin 500mg,Sitagliptin Phosphate,Antidiabetic,Tablet,MSD,153,TRUE
+91,Vitamin D3 500mg,Cholecalciferol,Vitamin,Tablet,Abbott,38,FALSE
+92,Pantoprazole 50mg,Pantoprazole,Antacid,Tablet,Sun Pharma,34,TRUE
+93,Losartan 10mg,Losartan Potassium,Antihypertensive,Tablet,Torrent,63,TRUE
+94,Ramipril 500mg,Ramipril,Antihypertensive,Capsule,Lupin,90,TRUE
+95,Amitriptyline 10mg,Amitriptyline,Antidepressant,Tablet,Sun Pharma,25,TRUE
+96,Aspirin 20mg,Acetylsalicylic Acid,Analgesic,Tablet,Bayer,18,FALSE
+97,Simvastatin 40mg,Simvastatin,Statin,Tablet,Merck,36,TRUE
+98,Metformin 500mg,Metformin HCl,Antidiabetic,Tablet,USV,41,TRUE
+99,Fluoxetine 5mg,Fluoxetine HCl,Antidepressant,Capsule,Eli Lilly,139,TRUE
+100,Diclofenac 20mg,Diclofenac Sodium,Analgesic,Tablet,Novartis,19,TRUE
+101,Metformin 40mg,Metformin HCl,Antidiabetic,Tablet,USV,18,TRUE
+102,Atenolol 100mg,Atenolol,Antihypertensive,Tablet,Sun Pharma,24,TRUE
+103,Sitagliptin 20mg,Sitagliptin Phosphate,Antidiabetic,Tablet,MSD,265,TRUE
+104,Clindamycin 20mg,Clindamycin,Antibiotic,Capsule,Pfizer,157,TRUE
+105,Aceclofenac 5mg,Aceclofenac,Analgesic,Tablet,IPCA,62,TRUE
+106,Ranitidine 50mg,Ranitidine,Antacid,Tablet,GSK,27,FALSE
+107,Nifedipine 5mg,Nifedipine,Antihypertensive,Tablet,Bayer,87,TRUE
+108,Levofloxacin 100mg,Levofloxacin,Antibiotic,Tablet,Glenmark,96,TRUE
+109,Sitagliptin 40mg,Sitagliptin Phosphate,Antidiabetic,Tablet,MSD,111,TRUE
+110,Ipratropium 5mg,Ipratropium Bromide,Bronchodilator,Inhaler,Boehringer,411,TRUE
+111,Warfarin 250mg,Warfarin Sodium,Anticoagulant,Tablet,BMS,28,TRUE
+112,Enalapril 5mg,Enalapril Maleate,Antihypertensive,Tablet,Dr Reddys,67,TRUE
+113,Sertraline 500mg,Sertraline HCl,Antidepressant,Tablet,Pfizer,77,TRUE
+114,Fluoxetine 50mg,Fluoxetine HCl,Antidepressant,Capsule,Eli Lilly,122,TRUE
+115,Aspirin 50mg,Acetylsalicylic Acid,Analgesic,Tablet,Bayer,7,FALSE
+116,Cefixime 5mg,Cefixime,Antibiotic,Tablet,Mankind,63,TRUE
+117,Gliclazide 100mg,Gliclazide,Antidiabetic,Tablet,Serdia,39,TRUE
+118,Aspirin 100mg,Acetylsalicylic Acid,Analgesic,Tablet,Bayer,19,FALSE
+119,Fluoxetine 250mg,Fluoxetine HCl,Antidepressant,Capsule,Eli Lilly,66,TRUE
+120,Naproxen 250mg,Naproxen,Analgesic,Tablet,Roche,27,TRUE
+121,Ranitidine 20mg,Ranitidine,Antacid,Tablet,GSK,35,FALSE
+122,Montelukast 5mg,Montelukast,Bronchodilator,Tablet,Merck,98,TRUE
+123,Pravastatin 10mg,Pravastatin,Statin,Tablet,BMS,75,TRUE
+124,Escitalopram 40mg,Escitalopram Oxalate,Antidepressant,Tablet,Lundbeck,92,TRUE
+125,Pioglitazone 100mg,Pioglitazone,Antidiabetic,Tablet,Takeda,83,TRUE
+126,Duloxetine 500mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,220,TRUE
+127,Amlodipine 100mg,Amlodipine Besylate,Antihypertensive,Tablet,Cipla,71,TRUE
+128,Atenolol 500mg,Atenolol,Antihypertensive,Tablet,Sun Pharma,20,TRUE
+129,Azithromycin 40mg,Azithromycin,Antibiotic,Tablet,Pfizer,76,TRUE
+130,Gliclazide 40mg,Gliclazide,Antidiabetic,Tablet,Serdia,95,TRUE
+131,Empagliflozin 100mg,Empagliflozin,Antidiabetic,Tablet,Boehringer,154,TRUE
+132,Diclofenac 10mg,Diclofenac Sodium,Analgesic,Tablet,Novartis,21,TRUE
+133,Aceclofenac 50mg,Aceclofenac,Analgesic,Tablet,IPCA,49,TRUE
+134,Simvastatin 100mg,Simvastatin,Statin,Tablet,Merck,30,TRUE
+135,Ipratropium 10mg,Ipratropium Bromide,Bronchodilator,Inhaler,Boehringer,361,TRUE
+136,Enalapril 500mg,Enalapril Maleate,Antihypertensive,Tablet,Dr Reddys,32,TRUE
+137,Fluoxetine 40mg,Fluoxetine HCl,Antidepressant,Capsule,Eli Lilly,67,TRUE
+138,Insulin Glargine 5mg,Insulin Glargine,Antidiabetic,Injection,Sanofi,1497,TRUE
+139,Ranitidine 100mg,Ranitidine,Antacid,Tablet,GSK,21,FALSE
+140,Atenolol 50mg,Atenolol,Antihypertensive,Tablet,Sun Pharma,58,TRUE
+141,Aspirin 40mg,Acetylsalicylic Acid,Analgesic,Tablet,Bayer,8,FALSE
+142,Paracetamol 50mg,Acetaminophen,Analgesic,Tablet,GSK,9,FALSE
+143,Amlodipine 20mg,Amlodipine Besylate,Antihypertensive,Tablet,Cipla,43,TRUE
+144,Apixaban 40mg,Apixaban,Anticoagulant,Tablet,Pfizer,194,TRUE
+145,Budesonide 40mg,Budesonide,Bronchodilator,Inhaler,AstraZeneca,261,TRUE
+146,Ciprofloxacin 500mg,Ciprofloxacin,Antibiotic,Tablet,Bayer,82,TRUE
+147,Duloxetine 50mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,255,TRUE
+148,Duloxetine 40mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,202,TRUE
+149,Omeprazole 250mg,Omeprazole,Antacid,Capsule,AstraZeneca,21,TRUE
+150,Sertraline 100mg,Sertraline HCl,Antidepressant,Tablet,Pfizer,170,TRUE
+151,Ramipril 100mg,Ramipril,Antihypertensive,Capsule,Lupin,74,TRUE
+152,Gliclazide 20mg,Gliclazide,Antidiabetic,Tablet,Serdia,42,TRUE
+153,Esomeprazole 500mg,Esomeprazole,Antacid,Tablet,AstraZeneca,77,TRUE
+154,Losartan 100mg,Losartan Potassium,Antihypertensive,Tablet,Torrent,65,TRUE
+155,Duloxetine 10mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,295,TRUE
+156,Vildagliptin 10mg,Vildagliptin,Antidiabetic,Tablet,Novartis,154,TRUE
+157,Paracetamol 250mg,Acetaminophen,Analgesic,Tablet,GSK,18,FALSE
+158,Ceftriaxone 40mg,Ceftriaxone,Antibiotic,Injection,Aurobindo,187,TRUE
+159,Warfarin 100mg,Warfarin Sodium,Anticoagulant,Tablet,BMS,13,TRUE
+160,Atorvastatin 100mg,Atorvastatin,Statin,Tablet,Pfizer,38,TRUE
+161,Vildagliptin 5mg,Vildagliptin,Antidiabetic,Tablet,Novartis,129,TRUE
+162,Metronidazole 100mg,Metronidazole,Antibiotic,Tablet,Abbott,40,TRUE
+163,Pantoprazole 5mg,Pantoprazole,Antacid,Tablet,Sun Pharma,55,TRUE
+164,Enoxaparin 50mg,Enoxaparin Sodium,Anticoagulant,Injection,Sanofi,690,TRUE
+165,Venlafaxine 5mg,Venlafaxine,Antidepressant,Capsule,Wyeth,266,TRUE
+166,Enalapril 250mg,Enalapril Maleate,Antihypertensive,Tablet,Dr Reddys,36,TRUE
+167,Esomeprazole 100mg,Esomeprazole,Antacid,Tablet,AstraZeneca,90,TRUE
+168,Glimepiride 5mg,Glimepiride,Antidiabetic,Tablet,Sanofi,59,TRUE
+169,Sertraline 40mg,Sertraline HCl,Antidepressant,Tablet,Pfizer,90,TRUE
+170,Sucralfate 50mg,Sucralfate,Antacid,Tablet,Sanofi,25,TRUE
+171,Diclofenac 5mg,Diclofenac Sodium,Analgesic,Tablet,Novartis,11,TRUE
+172,Levofloxacin 250mg,Levofloxacin,Antibiotic,Tablet,Glenmark,141,TRUE
+173,Amoxicillin 250mg,Amoxicillin,Antibiotic,Capsule,GSK,57,TRUE
+174,Venlafaxine 20mg,Venlafaxine,Antidepressant,Capsule,Wyeth,193,TRUE
+175,Nifedipine 100mg,Nifedipine,Antihypertensive,Tablet,Bayer,99,TRUE
+176,Budesonide 250mg,Budesonide,Bronchodilator,Inhaler,AstraZeneca,436,TRUE
+177,Duloxetine 250mg,Duloxetine,Antidepressant,Capsule,Eli Lilly,186,TRUE
+178,Losartan 5mg,Losartan Potassium,Antihypertensive,Tablet,Torrent,61,TRUE
+179,Vitamin D3 50mg,Cholecalciferol,Vitamin,Tablet,Abbott,46,FALSE
+180,Vildagliptin 500mg,Vildagliptin,Antidiabetic,Tablet,Novartis,253,TRUE
+181,Metronidazole 20mg,Metronidazole,Antibiotic,Tablet,Abbott,43,TRUE
+182,Formoterol 250mg,Formoterol,Bronchodilator,Inhaler,Novartis,530,TRUE
+183,Gliclazide 250mg,Gliclazide,Antidiabetic,Tablet,Serdia,108,TRUE
+184,Enoxaparin 250mg,Enoxaparin Sodium,Anticoagulant,Injection,Sanofi,825,TRUE
+185,Telmisartan 250mg,Telmisartan,Antihypertensive,Tablet,Micro Labs,106,TRUE
+186,Levofloxacin 20mg,Levofloxacin,Antibiotic,Tablet,Glenmark,163,TRUE
+187,Ranitidine 500mg,Ranitidine,Antacid,Tablet,GSK,17,FALSE
+188,Apixaban 100mg,Apixaban,Anticoagulant,Tablet,Pfizer,221,TRUE
+189,Losartan 40mg,Losartan Potassium,Antihypertensive,Tablet,Torrent,50,TRUE
+190,Clopidogrel 40mg,Clopidogrel,Anticoagulant,Tablet,Sanofi,52,TRUE
+191,Clopidogrel 500mg,Clopidogrel,Anticoagulant,Tablet,Sanofi,43,TRUE
+192,Pravastatin 500mg,Pravastatin,Statin,Tablet,BMS,71,TRUE
+193,Azithromycin 100mg,Azithromycin,Antibiotic,Tablet,Pfizer,166,TRUE
+194,Azithromycin 10mg,Azithromycin,Antibiotic,Tablet,Pfizer,127,TRUE
+195,Paracetamol 10mg,Acetaminophen,Analgesic,Tablet,GSK,22,FALSE
+196,Mirtazapine 20mg,Mirtazapine,Antidepressant,Tablet,Organon,113,TRUE
+197,Apixaban 10mg,Apixaban,Anticoagulant,Tablet,Pfizer,236,TRUE
+198,Clindamycin 500mg,Clindamycin,Antibiotic,Capsule,Pfizer,105,TRUE
+199,Amlodipine 500mg,Amlodipine Besylate,Antihypertensive,Tablet,Cipla,49,TRUE
+200,Ramipril 10mg,Ramipril,Antihypertensive,Capsule,Lupin,70,TRUE

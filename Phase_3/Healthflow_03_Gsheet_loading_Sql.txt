@@ -1,0 +1,97 @@
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+USE WAREHOUSE HF_INGEST_WH;
+
+-- Medication reference data
+/*
+CREATE TABLE IF NOT EXISTS MEDICATIONS_REFERENCE (
+    medication_id NUMBER(38,0),
+    medication_name VARCHAR(255),
+    generic_name VARCHAR(255),
+    category VARCHAR(100),
+    dosage_form VARCHAR(100),
+    manufacturer VARCHAR(255),
+    unit_price NUMBER(12,2),
+    requires_prescription BOOLEAN
+);
+
+-- Facility monthly performance data
+CREATE TABLE IF NOT EXISTS FACILITY_MONTHLY_METRICS (
+    metric_id NUMBER(38,0),
+    facility_name VARCHAR(255),
+    report_month VARCHAR(7),
+    total_patients_seen NUMBER(38,0),
+    total_claims_filed NUMBER(38,0),
+    total_revenue NUMBER(18,2),
+    avg_wait_time_minutes FLOAT,
+    patient_satisfaction_score FLOAT,
+    bed_occupancy_rate FLOAT,
+    staff_count NUMBER(38,0),
+    emergency_visits NUMBER(38,0)
+);
+
+*/
+
+// Verify table creation
+SHOW TABLES IN SCHEMA HEALTHFLOW_DB.RAW;
+
+DESC TABLE HEALTHFLOW_DB.RAW.MEDICATIONS_REFERENCE;
+
+DESC TABLE HEALTHFLOW_DB.RAW.FACILITY_MONTHLY_METRICS;
+
+
+//Snowflake Connection Details
+SELECT
+    CURRENT_ORGANIZATION_NAME() AS ORGANIZATION,
+    CURRENT_ACCOUNT_NAME() AS ACCOUNT_NAME,
+    CURRENT_USER() AS USERNAME,
+    CURRENT_ROLE() AS ROLE_NAME,
+    CURRENT_WAREHOUSE() AS WAREHOUSE_NAME,
+    CURRENT_DATABASE() AS DATABASE_NAME,
+    CURRENT_SCHEMA() AS SCHEMA_NAME;
+
+
+ // Make a connection using the above Snowflake connection details in Python & then proceed with the steps below
+
+// Verify tables
+USE DATABASE HEALTHFLOW_DB;
+USE SCHEMA RAW;
+
+SELECT
+    'MEDICATIONS_REFERENCE' AS TABLE_NAME,
+    COUNT(*) AS TOTAL_ROWS
+FROM MEDICATIONS_REFERENCE
+
+UNION ALL
+
+SELECT
+    'FACILITY_MONTHLY_METRICS',
+    COUNT(*)
+FROM FACILITY_MONTHLY_METRICS;
+
+// Check duplicate IDs
+SELECT
+    medication_id,
+    COUNT(*) AS duplicate_count
+FROM RAW.MEDICATIONS_REFERENCE
+GROUP BY medication_id
+HAVING COUNT(*) > 1;
+
+SELECT
+    metric_id,
+    COUNT(*) AS duplicate_count
+FROM RAW.FACILITY_MONTHLY_METRICS
+GROUP BY metric_id
+HAVING COUNT(*) > 1;
+
+// Verify NULL values
+SELECT
+    COUNT_IF(medication_id IS NULL) AS NULL_IDS,
+    COUNT_IF(medication_name IS NULL) AS NULL_NAMES
+FROM RAW.MEDICATIONS_REFERENCE;
+
+SELECT
+    COUNT_IF(metric_id IS NULL) AS NULL_IDS,
+    COUNT_IF(facility_name IS NULL) AS NULL_FACILITIES,
+    COUNT_IF(report_month IS NULL) AS NULL_MONTHS
+FROM RAW.FACILITY_MONTHLY_METRICS;
