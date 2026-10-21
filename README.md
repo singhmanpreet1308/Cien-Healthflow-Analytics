@@ -1,5 +1,7 @@
 # Cien-Healthflow-Analytics
 
+<<<<<<< HEAD
+
 An end-to-end healthcare intelligence platform designed to unify fragmented patient, insurance claims, and operational data into a secure, reliable, and intelligent data ecosystem. The platform streamlines data processing, ensures data quality and governance, automates workflows, and transforms complex healthcare information into actionable insights. It also aims to integrate an AI-powered medical knowledge assistant to deliver context-aware, evidence-grounded responses, supporting smarter decision-making, operational efficiency, and improved healthcare outcomes.
 
 ![1791585784551](image/README/1791585784551.png)
@@ -186,6 +188,7 @@ Key activities:
 - Performed data quality checks and record-count validation.
 
 **Outcome:** Established a structured CURATED layer with cleaned, deduplicated, and standardised healthcare datasets, ready for automated processing and downstream analytics.
+
 
 ### Phase 05 — Task Scheduling & Automation
 
