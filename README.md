@@ -116,12 +116,12 @@ HEALTHFLOW_DB
 
 ### Virtual Warehouse Configuration
 
-| Warehouse    | Size   | Auto-Suspend | Purpose                 |
-| ------------ | ------ | ------------ | ----------------------- |
-| INGEST_WH    | SMALL  | 60 sec       | Source data ingestion   |
-| TRANSFORM_WH | MEDIUM | 120 sec      | Data transformations    |
-| ANALYTICS_WH | MEDIUM | 300 sec      | Analytics and reporting |
-| DEV_WH       | XSMALL | 60 sec       | Development and testing |
+| Warehouse       | Size   | Auto-Suspend | Purpose                 |
+| --------------- | ------ | ------------ | ----------------------- |
+| HF_INGEST_WH    | SMALL  | 60 sec       | Source data ingestion   |
+| HF_TRANSFORM_WH | MEDIUM | 120 sec      | Data transformations    |
+| HF_ANALYTICS_WH | MEDIUM | 300 sec      | Analytics and reporting |
+| HF_DEV_WH       | XSMALL | 60 sec       | Development and testing |
 
 ## 6. Implementation Progress
 
