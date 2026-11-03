@@ -197,3 +197,25 @@ Key activities:
 - Validated the automation pipeline by testing new data inserts and updates.
 
 **Outcome:** Established an automated, dependency-driven ELT pipeline that incrementally synchronises RAW and CURATED datasets, reducing manual processing and supporting continuous data updates.
+
+### Phase 06 — Analytics Layer (CURATED → ANALYTICS)
+
+**Objective:** Build analytics-ready datasets using Snowflake Dynamic Tables, Materialized Views, CTEs, and Window Functions.
+
+**Key Activities:**
+
+- Created Dynamic Tables for claims, provider performance, and facility-level analytics.
+- Integrated CURATED datasets to analyse claims, patients, providers, and diagnoses.
+- Calculated key metrics including claim approval rates, average billed amounts, and processing times.
+- Applied Window Functions and CTEs for revenue trends, running totals, and diagnosis rankings.
+- Created a Materialized View for daily claims summaries to support efficient reporting.
+
+**Key Findings & Analytical Capabilities:**
+
+- **Claims Analysis:** Enables identification of high-cost claims, approval patterns, and processing trends.
+- **Provider Performance:** Supports comparison of providers based on claim volume, approval rates, and billed amounts.
+- **Facility Performance:** Enables monitoring of patient satisfaction, waiting times, and revenue trends.
+- **Revenue Insights:** Supports month-over-month revenue analysis and identification of top-performing regions.
+- **Diagnosis Trends:** Identifies the most frequent diagnoses across patient populations and regions.
+
+**Outcome:** Established an analytics-ready Gold layer with reusable healthcare metrics and optimised datasets for business intelligence and decision-making.
