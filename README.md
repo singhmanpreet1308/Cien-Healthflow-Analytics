@@ -224,7 +224,6 @@ Key activities:
 
 ![1794009548267](image/README/1794009548267.png)
 
-
 ### Phase 07 — Data Security & Governance
 
 **Objective:** Implement secure, role-based data access and protect sensitive healthcare information using Snowflake's security and governance features.
@@ -246,3 +245,91 @@ Key activities:
 - **Data Governance:** Classification tags support identification and management of sensitive healthcare data.
 
 **Outcome:** Established a governed Snowflake environment with controlled data access, sensitive information protection, and region-based security enforcement.
+
+
+### Phase 08 — Time Travel, Cloning & Data Recovery
+
+**Objective:** Implement data recovery and safe development practices using Snowflake Time Travel, Zero-Copy Cloning, and UNDROP.
+
+**Key Activities:**
+
+- Configured a 30-day Time Travel retention period for CURATED claims and patients tables.
+- Tested historical data recovery by simulating accidental record deletion and restoring data using `AT (OFFSET)`.
+- Created a Zero-Copy Clone of `HEALTHFLOW_DB` for isolated development and testing.
+- Validated cloned database structures without modifying the original environment.
+- Demonstrated table recovery using Snowflake's `UNDROP` functionality.
+- Cleaned up temporary cloned objects after testing.
+
+**Key Findings:**
+
+- **Data Recovery:** Time Travel enables access to historical data and recovery from accidental modifications within the retention window.
+- **Safe Development:** Zero-Copy Cloning provides isolated environments without initially duplicating underlying data storage.
+- **Disaster Recovery:** UNDROP helps restore accidentally dropped database objects within the applicable retention period.
+- **Data Integrity:** Recovery and cloning capabilities support safer testing while protecting production data.
+
+**Outcome:** Established data recovery and isolated testing capabilities, improving the reliability, resilience, and operational safety of the healthcare data platform.
+
+
+### Phase 09 — Cost Management & Monitoring
+
+**Objective:** Monitor Snowflake resource consumption, control warehouse costs, and optimise query performance.
+
+**Key Activities:**
+
+- Configured a Resource Monitor (`healthflow_budget`) with a 500-credit quota.
+- Set usage alerts at 50% and 75%, with suspension at 100%.
+- Assigned resource monitoring to `TRANSFORM_WH` and `ANALYTICS_WH`.
+- Applied cost allocation tags (`data-engineering`, `analytics`, `development`) to warehouses.
+- Analysed warehouse credit consumption using Snowflake `ACCOUNT_USAGE` views.
+- Identified high-cost queries and potential optimisation opportunities.
+
+**Key Findings:**
+
+- **Cost Visibility:** Warehouse-level credit tracking enables monitoring of compute expenditure.
+- **Budget Control:** Resource monitors provide alerts and suspension controls to reduce unexpected costs.
+- **Cost Attribution:** Tags help organise warehouse spending by workload or business function.
+- **Query Optimisation:** Query history and usage metrics help identify expensive queries and inefficient resource utilisation.
+
+**Outcome:** Established cost monitoring, budget controls, and usage analysis capabilities to support efficient Snowflake resource management.
+
+
+### Phase 10 — Healthcare Analytics Queries & Validation
+
+**Objective:** Validate the analytics layer through business-focused SQL queries and generate actionable healthcare insights.
+
+**Key Activities & Findings:**
+
+1. **Claims Analysis:** Analysed total claims, approval rates, billed amounts, and approved amounts across insurance providers and service types.
+2. **Chronic Disease Analysis:** Identified the five most common chronic diagnoses and compared their average claim costs.
+3. **Provider Performance:** Ranked healthcare providers by claim volume, approval amounts, and average processing time.
+4. **Facility Benchmarking:** Compared patient satisfaction scores and waiting times to identify underperforming facilities.
+5. **Revenue Trends:** Analysed monthly revenue, month-over-month growth, and regional revenue contributions.
+6. **AI-Powered Insights:** Explored Snowflake Cortex AI capabilities for sentiment analysis and patient-friendly diagnosis summaries.
+
+**Analytics Validation Screenshots**
+
+*Insert screenshots of the five required business queries below.*
+
+**Query 1 — Claims Analysis**
+
+![1794078166354](image/README/1794078166354.png)
+
+**Query 2 — Chronic Disease Analysis**
+
+![1794078183679](image/README/1794078183679.png)
+
+![1794078207139](image/README/1794078207139.png)
+
+**Query 3 — Provider Performance**
+
+![1794078228381](image/README/1794078228381.png)
+
+**Query 4 — Facility Benchmarking**
+
+![1794078243404](image/README/1794078243404.png)
+
+**Query 5 — Revenue Trends**
+
+![1794078257768](image/README/1794078257768.png)
+
+**Outcome:** Validated the healthcare analytics layer through business-focused queries, supporting claims monitoring, provider evaluation, facility benchmarking, and revenue analysis.
