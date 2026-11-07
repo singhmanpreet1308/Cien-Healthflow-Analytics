@@ -219,3 +219,30 @@ Key activities:
 - **Diagnosis Trends:** Identifies the most frequent diagnoses across patient populations and regions.
 
 **Outcome:** Established an analytics-ready Gold layer with reusable healthcare metrics and optimised datasets for business intelligence and decision-making.
+
+### Healthcare Analytics Dashboard
+
+![1794009548267](image/README/1794009548267.png)
+
+
+### Phase 07 — Data Security & Governance
+
+**Objective:** Implement secure, role-based data access and protect sensitive healthcare information using Snowflake's security and governance features.
+
+**Key Activities:**
+
+- Implemented Role-Based Access Control (RBAC) for Analyst, Engineer, and Admin roles.
+- Configured role hierarchy and access permissions based on responsibilities.
+- Created Dynamic Data Masking policies to protect sensitive patient information, including email and phone numbers.
+- Applied Row Access Policies to restrict claims data visibility based on assigned regions.
+- Implemented data classification tags to categorise sensitive healthcare information.
+- Validated security policies by testing data visibility across different roles.
+
+**Key Findings:**
+
+- **Role-Based Security:** Users access data according to their assigned roles and permissions.
+- **Sensitive Data Protection:** Masking policies restrict exposure of patient contact information to unauthorised roles.
+- **Regional Data Isolation:** Row Access Policies limit claims visibility to authorised regions.
+- **Data Governance:** Classification tags support identification and management of sensitive healthcare data.
+
+**Outcome:** Established a governed Snowflake environment with controlled data access, sensitive information protection, and region-based security enforcement.
