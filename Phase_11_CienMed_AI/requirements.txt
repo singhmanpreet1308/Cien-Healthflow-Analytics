@@ -8,6 +8,7 @@ plotly==7.1.0
 # Data & warehouse
 duckdb==2.0.0
 pandas==2.3.3
+tabulate==0.9.0          # needed by DataFrame.to_markdown() in reports
 numpy==2.5.3
 
 # ML (pin scikit-learn + joblib so saved models in artifacts/ load correctly)
