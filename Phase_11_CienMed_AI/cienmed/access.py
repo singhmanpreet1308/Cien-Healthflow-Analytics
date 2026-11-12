@@ -15,6 +15,8 @@ import re
 
 import requests
 
+from cienmed import config  # noqa: F401  (loads .env so the settings below are visible)
+
 API = "https://api.github.com"
 LABEL_REQUEST, LABEL_APPROVED, LABEL_REJECTED = "access-request", "approved", "rejected"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")

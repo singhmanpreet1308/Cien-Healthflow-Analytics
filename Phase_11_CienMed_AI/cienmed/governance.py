@@ -5,7 +5,7 @@ import hashlib
 import json
 import os
 import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 import bcrypt
 import pandas as pd
@@ -62,13 +62,30 @@ def users_status() -> str:
     return ""
 
 
+def is_expired(user: dict) -> bool:
+    """Trial accounts carry `expires: YYYY-MM-DD` (last valid day). No field = never expires."""
+    exp = user.get("expires")
+    if not exp:
+        return False
+    try:
+        return date.fromisoformat(str(exp)) < date.today()
+    except ValueError:
+        return True          # unreadable date: fail closed
+
+
+def user_daily_limit(username: str) -> int | None:
+    """Per-account daily paid-call limit (`daily_limit` in users.yaml), or None for the global default."""
+    limit = load_users().get((username or "").strip().lower(), {}).get("daily_limit")
+    return int(limit) if limit is not None else None
+
+
 def authenticate(username: str, password: str) -> dict | None:
-    """Return {'username', 'name', 'role'} on success, else None."""
+    """Return {'username', 'name', 'role'} on success, else None (also None for expired accounts)."""
     user = load_users().get(username.strip().lower())
     if not user:
         bcrypt.checkpw(b"x", bcrypt.hashpw(b"y", bcrypt.gensalt()))  # constant-ish time on unknown user
         return None
-    if bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
+    if bcrypt.checkpw(password.encode(), user["password_hash"].encode()) and not is_expired(user):
         return {"username": username.strip().lower(), "name": user["name"], "role": user["role"]}
     return None
 

@@ -47,6 +47,13 @@ def usage_today(username: str | None = None) -> int:
     return day.get(username or current_user(), 0)
 
 
+def user_limit(username: str | None = None) -> int:
+    """Daily paid-call limit for this user: their own `daily_limit` (trial accounts) or the global default."""
+    from cienmed import governance
+    own = governance.user_daily_limit(username or current_user())
+    return own if own is not None else config.USER_DAILY_LIMIT
+
+
 def total_today() -> int:
     return _load().get(date.today().isoformat(), {}).get("_total", 0)
 
@@ -64,10 +71,11 @@ def check_and_spend() -> None:
     day = data.setdefault(today, {})
     if day.get("_total", 0) >= config.GLOBAL_DAILY_LIMIT:
         raise BudgetExceeded("CienMed AI has reached today's overall AI usage limit. Please try again tomorrow.")
-    if user != "_system" and day.get(user, 0) >= config.USER_DAILY_LIMIT:
+    limit = user_limit(user)
+    if user != "_system" and day.get(user, 0) >= limit:
         raise BudgetExceeded(
-            f"You have reached your daily limit of {config.USER_DAILY_LIMIT} AI calls (about "
-            f"{config.USER_DAILY_LIMIT // 2} new questions). "
+            f"You have reached your daily limit of {limit} AI calls (about "
+            f"{limit // 2} new questions). "
             "Previously asked questions still work. Please try again tomorrow."
         )
     day["_total"] = day.get("_total", 0) + 1

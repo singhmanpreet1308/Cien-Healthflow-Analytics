@@ -330,3 +330,108 @@ Key activities:
 ![1794078257768](image/README/1794078257768.png)
 
 **Outcome:** Validated the healthcare analytics layer through business-focused queries, supporting claims monitoring, provider evaluation, facility benchmarking, and revenue analysis.
+
+
+# Phase 11 — CienMed AI 🩺
+
+**A role-aware AI assistant for the Cien HealthFlow Analytics Platform.**
+Clinicians ask about patients; admins and business analysts ask about claims, facilities and revenue — in plain English, with every answer grounded in the platform's data.
+
+🔗 **Live app:** [cienmedapp.streamlit.app](https://cienmedapp.streamlit.app/) — choose an assistant → **Explore as guest**
+🔗 **Opens from:** the *CienMed AI* tab of the Power BI dashboard
+
+![1794499559336](image/README/1794499559336.png)
+
+![1794499289901](image/README/1794499289901.png)
+
+<!-- Landing page: Clinician Assistant / Admin Report Agent cards -->
+
+---
+
+## Features
+
+| 🩺 Clinician Assistant                           | 📊 Admin / BA Report Agent               |
+| ------------------------------------------------ | ---------------------------------------- |
+| Patient history summaries                        | Natural-language analytics (Text-to-SQL) |
+| Medications & allergies from PDF medical reports | KPI reports with charts + AI commentary  |
+| Cardiac history, readmission risk                | Claim-denial risk work queue             |
+| Clinical note search (RAG)                       | Audit log                                |
+
+<!-- Power BI home page with the CienMed AI button -->
+
+---
+
+
+## Architecture
+
+```
+Power BI ──► Streamlit (login · roles · guest mode)
+                 │
+                 ▼
+     Orchestrator: route → run tool → mask PHI → ground answer → audit
+                 │
+  ┌─────────┬────┴─────┬──────────┬──────────┬────────────┐
+ Text-to-SQL  Patient   PDF reports   RAG     ML models   Report Agent
+                 │
+       DuckDB warehouse  ·  Euri LLM (cache + token budget)
+```
+
+**Stack:** Python · DuckDB · Euri API (gpt-4.1-mini) · scikit-learn · pdfplumber · Streamlit · Plotly · Power BI
+
+---
+
+## In action
+
+| Clinician                                         | Admin                                            |
+| ------------------------------------------------- | ------------------------------------------------ |
+| ![1794499677909](image/README/1794499677909.png)  | ![1794499808482](image/README/1794499808482.png) |
+| ![1794500031807](image/README/1794500031807.png)  | ![1794499925207](image/README/1794499925207.png) |
+
+---
+
+## Key design decisions
+
+| Decision                                                         | Why (found in testing)                                                          |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Scope rules in code, not prompts**                       | The LLM answered "wait time" with claim-to-payment days instead of refusing     |
+| **Diagnosis codes + one-row-per-episode rule**             | "CKD **and** pneumonia" returned 0; correct answer is **49**        |
+| **Fixed SQL for facts and reports; LLM only writes prose** | Same question → same numbers, every time                                       |
+| **Pre-formatted money + full tables for commentary**       | The model read ₹22.13 Cr as **₹221 Cr** and made false "highest" claims |
+| **Unknown ≠ none for allergies**                          | No report → "UNKNOWN, check before prescribing"                                |
+| **Model card on every prediction**                         | Both models score AUC ≈ 0.5 on synthetic data, shown honestly                  |
+
+---
+
+## Governance & cost control
+
+- **Role-based access**: separate tools, tables and search results per role
+- **PHI masking**: salted pseudonyms for admins; contact details hidden from all
+- **Audit log**: every question, tool, SQL and row count
+- **Token budget**: response cache, per-user and global daily caps, cache-only guest mode
+
+<!-- Admin audit log tab, or a readmission answer showing the model card warning -->
+
+---
+
+## Run locally
+
+```bash
+cd Phase_11_CienMed_AI
+pip install -r requirements.txt
+copy .env.example .env              # add your EURI_API_KEY
+python manage_users.py demo         # demo logins
+python manage_users.py guest        # guest accounts
+streamlit run app/streamlit_app.py
+```
+
+No API key? `set CIENMED_LLM=mock` runs everything offline.
+**Tests:** `pytest -q` → 27 offline tests (zero tokens).
+
+---
+
+## Limitations
+
+- Synthetic data: some clinical combinations are unrealistic; ML has no real signal
+- No prescription table: medications only for patients with a PDF report
+- Readmission is a proxy (new diagnosis within 30 days)
+- TF-IDF search matches words, not meaning
