@@ -10,7 +10,8 @@ load_dotenv(PHASE_ROOT / ".env")
 
 # Use the shared /Data folder if the CSVs are there, else this phase's data/raw
 _shared = REPO_ROOT / "Data"
-DATA_RAW = _shared if (_shared / "claims.csv").exists() else PHASE_ROOT / "data" / "raw"
+_own = PHASE_ROOT / "data" / "raw"
+DATA_RAW = _own if (_own / "claims.csv").exists() else REPO_ROOT / "Data"
 
 DOCS_DIR = PHASE_ROOT / "data" / "docs"
 ARTIFACTS = PHASE_ROOT / "artifacts"

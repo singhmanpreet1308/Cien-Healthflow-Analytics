@@ -44,7 +44,10 @@ def _clean_frames() -> dict[str, pd.DataFrame]:
     claims["claim_date"] = pd.to_datetime(claims["claim_date"], format="%d/%m/%Y")
     claims["payment_date"] = pd.to_datetime(claims["payment_date"], format="%d/%m/%Y", errors="coerce")
 
-    dx = pd.read_csv(raw / "diagnoses_history.csv", parse_dates=["diagnosis_date", "follow_up_date"])
+    dx = pd.read_csv(raw / "diagnoses_history.csv")
+    # Dates are dd/mm/yyyy; parse explicitly so they never fall back to strings
+    for col in ("diagnosis_date", "follow_up_date"):
+        dx[col] = pd.to_datetime(dx[col], format="%d/%m/%Y", errors="coerce")
     providers = pd.read_csv(raw / "providers.csv")
     meds = pd.read_csv(raw / "medications_reference.csv")
 
