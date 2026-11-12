@@ -15,7 +15,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from cienmed import budget, config, governance, orchestrator, reports, theme
+from cienmed import access, budget, config, governance, orchestrator, reports, theme
 from cienmed.examples import EXAMPLES
 from cienmed.tools import ml_tool
 
@@ -52,6 +52,8 @@ def auto_chart(df: pd.DataFrame):
 
 def render_response(r: orchestrator.Response, key: str) -> None:
     st.markdown(r.answer)
+    if r.tool == "budget" and access.form_url():
+        st.markdown(f"👉 [**🔑 Request full access**]({access.form_url()}) to ask your own questions.")
     if r.needs_choice is not None:
         st.dataframe(r.needs_choice, hide_index=True, width="stretch")
     if r.model_card:
@@ -123,6 +125,7 @@ def login_page() -> None:
                 st.session_state.user = guest
                 st.session_state.history = []
                 st.rerun()
+        request_access_form(wanted)
         if st.button("← Choose a different assistant", width="stretch"):
             del st.query_params["role"]
             st.rerun()
@@ -140,6 +143,45 @@ def guest_account(role: str) -> dict | None:
     return None
 
 
+def request_access_form(role: str, in_sidebar: bool = False) -> None:
+    """Guests ask for a full trial account; the owner approves or rejects it.
+    Uses a Google Form link if CIENMED_ACCESS_FORM_URL is set, otherwise the in-app GitHub form."""
+    form_url = access.form_url()
+    if form_url:
+        st.link_button("🔑 Request full access", form_url, width="stretch",
+                       help="Recruiter or reviewer? Ask for a trial account to ask your own questions.")
+        return
+    if not access.configured():
+        return
+    if st.session_state.get("access_requested"):
+        st.success(f"Request #{st.session_state.access_requested} sent — you'll hear back by email.", icon="📨")
+        return
+    with st.expander("🔑 Request full access", expanded=False):
+        st.caption("Recruiter or reviewer? Ask for a trial account to ask your own questions. "
+                   "Your details are kept private and used only to reply.")
+        with st.form(f"access_{'side' if in_sidebar else 'main'}", clear_on_submit=False):
+            name = st.text_input("Name")
+            email = st.text_input("Work email")
+            org = st.text_input("Company / organisation")
+            chosen = st.selectbox("Assistant", list(access.ROLES), index=list(access.ROLES).index(role),
+                                  format_func=access.ROLES.get)
+            reason = st.text_area("What would you like to explore? (optional)", max_chars=500)
+            sent = st.form_submit_button("Send request", width="stretch")
+        if sent:
+            if st.session_state.get("access_attempts", 0) >= 3:
+                st.error("Too many attempts in this session.")
+                return
+            st.session_state.access_attempts = st.session_state.get("access_attempts", 0) + 1
+            try:
+                number = access.submit_request(name, email, org, chosen, reason)
+            except access.AccessError as e:
+                st.error(str(e))
+            else:
+                st.session_state.access_requested = number
+                governance.audit({"username": "_visitor", "role": chosen}, f"<access request #{number}>", "access")
+                st.rerun()
+
+
 # ------------------------------------------------------------------ sidebar
 def sidebar(user: dict) -> None:
     with st.sidebar:
@@ -151,9 +193,10 @@ def sidebar(user: dict) -> None:
         st.caption(f"LLM: {'Euri · ' + config.LLM_MODEL if config.LLM_BACKEND == 'euri' else 'offline mock'}")
         if budget.is_cache_only(user["username"]):
             st.info("Demo account: example questions only (pre-answered).", icon="🔒")
+            request_access_form(user["role"], in_sidebar=True)
         else:
-            used = budget.usage_today(user["username"])
-            st.caption(f"AI calls today: {used} / {config.USER_DAILY_LIMIT} (≈2 per new question; repeats are free)")
+            used, limit = budget.usage_today(user["username"]), budget.user_limit(user["username"])
+            st.caption(f"AI calls today: {used} / {limit} (≈2 per new question; repeats are free)")
         if st.button("Clear conversation", width="stretch"):
             st.session_state.history = []
             st.rerun()
@@ -167,8 +210,20 @@ def sidebar(user: dict) -> None:
 
 
 # ------------------------------------------------------------------ chat
+def guest_banner(role: str) -> None:
+    """Shown to demo/guest accounts: what they can do, and how to get full access."""
+    url = access.form_url()
+    left, right = st.columns([3, 1], vertical_alignment="center")
+    left.info("**You're exploring the demo.** Click any example question below — answers are pre-generated. "
+              "Want to ask your own questions? Request a free trial account.", icon="👀")
+    if url:
+        right.link_button("🔑 Request full access", url, width="stretch", type="primary")
+
+
 def chat(user: dict, patient_id: int | None = None) -> None:
     role = user["role"]
+    if budget.is_cache_only(user["username"]):
+        guest_banner(role)
     cols = st.columns(3)
     for i, ex in enumerate(EXAMPLES[role]):
         if cols[i % 3].button(ex, key=f"ex{i}", width="stretch"):
