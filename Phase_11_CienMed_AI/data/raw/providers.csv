@@ -1,0 +1,501 @@
+provider_id,provider_name,specialization,qualification,facility_name,facility_city,facility_state,facility_type,years_experience,consultation_fee,is_active
+1,Dr. Yashvi Kata,Psychiatry,MCh,KIMS Hospital,Delhi,Delhi,Clinic,13,4400,TRUE
+2,Dr. Zayan Cunningham,Cardiology,MCh,Sakra World Hospital,Bangalore,Karnataka,Clinic,34,4200,TRUE
+3,Dr. Eiravati Dhar,Gynecology,MS,Max Super Speciality,Kolkata,West Bengal,Clinic,30,2000,TRUE
+4,Dr. Yashvi Gibson,Orthopedics,MS,KIMS Hospital,Chennai,Tamil Nadu,Clinic,17,4100,TRUE
+5,Dr. Carol Bala,Ophthalmology,MBBS,Artemis Hospital,Mumbai,Maharashtra,Clinic,5,4450,TRUE
+6,Dr. Jennifer Warren,General Medicine,DM,BLK Super Speciality,Coimbatore,Tamil Nadu,Clinic,7,5000,TRUE
+7,Dr. Ashley Kamdar,General Medicine,DM,AIIMS,Guwahati,Assam,Clinic,25,1400,TRUE
+8,Dr. Nicholas Gonzalez,Neurology,MBBS,Fortis Healthcare,Mumbai,Maharashtra,Hospital,28,2050,TRUE
+9,Dr. Gaurangi Sidhu,Ophthalmology,MD,Wockhardt Hospital,Guwahati,Assam,Clinic,16,3550,TRUE
+10,Dr. Roger Ray,ENT,MCh,Sterling Hospital,Coimbatore,Tamil Nadu,Hospital,24,950,TRUE
+11,Dr. Elizabeth Bahl,ENT,DM,Sagar Hospital,Hyderabad,Telangana,Diagnostic Center,7,2500,TRUE
+12,Dr. Melissa Venkatesh,Oncology,DM,Apollo Hospital,Pune,Maharashtra,Hospital,30,2500,TRUE
+13,Dr. Jonathan Williams,Ophthalmology,MBBS,Medanta,Guwahati,Assam,Hospital,16,3550,TRUE
+14,Dr. Yashasvi Subramaniam,Pulmonology,DM,Wockhardt Hospital,Jaipur,Rajasthan,Hospital,31,3350,TRUE
+15,Dr. Gabriel Carter,Dermatology,DM,Tata Memorial,Patna,Bihar,Clinic,24,2950,TRUE
+16,Dr. Karan Robertson,Psychiatry,MCh,Vikram Hospital,Visakhapatnam,Andhra Pradesh,Hospital,5,1600,FALSE
+17,Dr. Brent Mcclain,Oncology,MCh,Hinduja Hospital,Coimbatore,Tamil Nadu,Clinic,22,2300,TRUE
+18,Dr. Pratyush Adams,Pediatrics,MBBS,Yashoda Hospital,Hyderabad,Telangana,Hospital,21,2400,TRUE
+19,Dr. Edward Merchant,General Medicine,MD,Medanta,Kochi,Kerala,Clinic,8,4700,TRUE
+20,Dr. Kashish Herrera,Gynecology,MS,Yashoda Hospital,Kochi,Kerala,Hospital,1,1800,TRUE
+21,Dr. Gina Vasa,Cardiology,MD,Yashoda Hospital,Jaipur,Rajasthan,Hospital,35,850,TRUE
+22,Dr. Christopher Shaw,Oncology,MCh,Vikram Hospital,Bangalore,Karnataka,Diagnostic Center,1,600,TRUE
+23,Dr. Eesha Konda,Cardiology,MS,Rainbow Children Hospital,Chandigarh,Chandigarh,Clinic,29,3800,TRUE
+24,Dr. Victoria Bains,Cardiology,MBBS,Hinduja Hospital,Bangalore,Karnataka,Diagnostic Center,29,2250,TRUE
+25,Dr. Patricia Sekhon,Dermatology,MS,Aster CMI,Kochi,Kerala,Hospital,25,4350,TRUE
+26,Dr. Chatresh Gopal,Gynecology,MD,Hinduja Hospital,Visakhapatnam,Andhra Pradesh,Hospital,17,3700,TRUE
+27,Dr. Sergio Zuniga,Orthopedics,MD,Care Hospital,Delhi,Delhi,Clinic,11,3400,FALSE
+28,Dr. Danielle Sankar,Psychiatry,MCh,Cloudnine Hospital,Chennai,Tamil Nadu,Diagnostic Center,34,650,TRUE
+29,Dr. Adya Newton,Ophthalmology,MS,Narayana Health,Pune,Maharashtra,Clinic,35,4050,TRUE
+30,Dr. Nicholas Mannan,Oncology,DM,Narayana Health,Bangalore,Karnataka,Hospital,5,4100,TRUE
+31,Dr. Vrinda Gole,Gynecology,MD,Hinduja Hospital,Bhopal,Madhya Pradesh,Hospital,5,4800,TRUE
+32,Dr. Sarah Brandt,General Medicine,MBBS,Zydus Hospital,Chennai,Tamil Nadu,Clinic,26,1050,TRUE
+33,Dr. Pushti Chokshi,Pulmonology,MD,Wockhardt Hospital,Coimbatore,Tamil Nadu,Clinic,26,450,TRUE
+34,Dr. Wahab Mannan,General Medicine,MCh,Tata Memorial,Coimbatore,Tamil Nadu,Diagnostic Center,19,850,TRUE
+35,Dr. Christine Smith,Orthopedics,MD,KIMS Hospital,Mumbai,Maharashtra,Clinic,17,800,TRUE
+36,Dr. Brinda Minhas,Ophthalmology,MBBS,Vikram Hospital,Pune,Maharashtra,Clinic,35,2000,TRUE
+37,Dr. Justin Dalal,Ophthalmology,DM,Sagar Hospital,Jaipur,Rajasthan,Hospital,11,750,FALSE
+38,Dr. Karen Cunningham,Pediatrics,DM,BLK Super Speciality,Ahmedabad,Gujarat,Hospital,27,1700,FALSE
+39,Dr. John Valdez,Ophthalmology,MD,Manipal Hospital,Guwahati,Assam,Hospital,1,750,TRUE
+40,Dr. Stephanie Saha,Dermatology,MBBS,HCG Oncology,Guwahati,Assam,Hospital,28,550,TRUE
+41,Dr. Barbara Green,Cardiology,MD,Breach Candy Hospital,Kolkata,West Bengal,Diagnostic Center,2,2600,FALSE
+42,Dr. Christopher Toor,Oncology,DM,Continental Hospital,Bangalore,Karnataka,Hospital,30,600,TRUE
+43,Dr. Vrinda Pillai,Orthopedics,DM,Max Super Speciality,Kolkata,West Bengal,Clinic,12,3650,TRUE
+44,Dr. George Rios,Gynecology,MS,Cloudnine Hospital,Guwahati,Assam,Clinic,20,3550,FALSE
+45,Dr. Aradhana Taylor,Gynecology,MCh,Care Hospital,Nagpur,Maharashtra,Hospital,13,750,TRUE
+46,Dr. Dalaja Fox,Neurology,MCh,Yashoda Hospital,Delhi,Delhi,Clinic,11,4500,TRUE
+47,Dr. Aarush Shere,Psychiatry,MD,Zydus Hospital,Guwahati,Assam,Clinic,18,900,TRUE
+48,Dr. Shravya Date,Pediatrics,DM,Artemis Hospital,Bhopal,Madhya Pradesh,Hospital,16,1250,TRUE
+49,Dr. Peter Contractor,General Medicine,MCh,Columbia Asia,Pune,Maharashtra,Clinic,23,2350,TRUE
+50,Dr. Yagnesh Sood,ENT,MS,Sakra World Hospital,Nagpur,Maharashtra,Hospital,10,750,TRUE
+51,Dr. Ishwar Chopra,Neurology,MD,Sakra World Hospital,Jaipur,Rajasthan,Clinic,33,4600,TRUE
+52,Dr. William Sheth,General Medicine,MS,Rainbow Children Hospital,Jaipur,Rajasthan,Clinic,6,1150,TRUE
+53,Dr. Mary Palla,Dermatology,MS,Kokilaben Dhirubhai Ambani,Chandigarh,Chandigarh,Clinic,25,3600,TRUE
+54,Dr. Ruth Jones,Dermatology,MCh,Hinduja Hospital,Pune,Maharashtra,Clinic,26,1650,TRUE
+55,Dr. Cassidy Donovan,Oncology,MS,Columbia Asia,Mumbai,Maharashtra,Clinic,28,4400,TRUE
+56,Dr. Andrea Acharya,Psychiatry,MCh,Hinduja Hospital,Hyderabad,Telangana,Hospital,25,2500,TRUE
+57,Dr. Chelsea Blackwell,Oncology,DM,Artemis Hospital,Patna,Bihar,Hospital,32,200,FALSE
+58,Dr. Rushil Mayo,General Medicine,DM,Rainbow Children Hospital,Thiruvananthapuram,Kerala,Hospital,3,4800,TRUE
+59,Dr. Janani Bennett,Dermatology,MD,Continental Hospital,Kolkata,West Bengal,Hospital,20,2300,TRUE
+60,Dr. Diya Hughes,Pediatrics,MCh,Care Hospital,Kochi,Kerala,Hospital,35,1350,TRUE
+61,Dr. Leah Sastry,Pulmonology,MCh,Aster CMI,Bhopal,Madhya Pradesh,Hospital,19,200,TRUE
+62,Dr. Brittney Wells,Pulmonology,DM,Kokilaben Dhirubhai Ambani,Ahmedabad,Gujarat,Diagnostic Center,3,2350,TRUE
+63,Dr. Falak Aguilar,Psychiatry,MCh,Continental Hospital,Visakhapatnam,Andhra Pradesh,Hospital,35,3950,FALSE
+64,Dr. Paul Divan,General Medicine,MS,Columbia Asia,Mumbai,Maharashtra,Clinic,15,4350,TRUE
+65,Dr. Michael Vaidya,Dermatology,MCh,KIMS Hospital,Nagpur,Maharashtra,Hospital,12,4100,TRUE
+66,Dr. Banjeet Kumer,Ophthalmology,MD,Sterling Hospital,Kochi,Kerala,Diagnostic Center,18,3200,TRUE
+67,Dr. Calvin Dhingra,Pulmonology,MD,Artemis Hospital,Guwahati,Assam,Hospital,33,4600,TRUE
+68,Dr. Harinakshi Kumar,Cardiology,MS,Sagar Hospital,Mumbai,Maharashtra,Clinic,16,3600,TRUE
+69,Dr. Mary Rodgers,ENT,MD,Breach Candy Hospital,Kolkata,West Bengal,Hospital,10,4900,TRUE
+70,Dr. Aarush Diaz,General Medicine,MBBS,Rainbow Children Hospital,Chennai,Tamil Nadu,Hospital,34,700,TRUE
+71,Dr. Lindsay Venkataraman,ENT,MCh,Zydus Hospital,Kochi,Kerala,Diagnostic Center,8,1050,TRUE
+72,Dr. Amanda Wagle,Gynecology,DM,Wockhardt Hospital,Kolkata,West Bengal,Diagnostic Center,35,2950,TRUE
+73,Dr. Paul Cummings,Cardiology,MBBS,Sagar Hospital,Nagpur,Maharashtra,Hospital,10,2450,TRUE
+74,Dr. Hredhaan Jackson,Cardiology,MBBS,AIIMS,Thiruvananthapuram,Kerala,Hospital,17,3100,TRUE
+75,Dr. Osha Newman,Dermatology,MBBS,Tata Memorial,Chennai,Tamil Nadu,Hospital,14,2450,TRUE
+76,Dr. Kimberly Moyer,Ophthalmology,MCh,KIMS Hospital,Chennai,Tamil Nadu,Clinic,31,4000,TRUE
+77,Dr. Jonathan Trivedi,Psychiatry,DM,Manipal Hospital,Nagpur,Maharashtra,Clinic,29,1300,TRUE
+78,Dr. Riya Mckenzie,General Medicine,MBBS,Care Hospital,Jaipur,Rajasthan,Hospital,34,4350,TRUE
+79,Dr. Henry Harper,Gynecology,MS,Medanta,Nagpur,Maharashtra,Diagnostic Center,32,4950,TRUE
+80,Dr. Damyanti Jacobs,Psychiatry,MBBS,Fortis Healthcare,Lucknow,Uttar Pradesh,Clinic,14,3700,TRUE
+81,Dr. Elizabeth Campbell,Psychiatry,DM,Sakra World Hospital,Chennai,Tamil Nadu,Hospital,35,1250,TRUE
+82,Dr. Hemani Sundaram,Pulmonology,MD,Narayana Health,Indore,Madhya Pradesh,Hospital,26,250,TRUE
+83,Dr. Sarah Gonzalez,Gynecology,DM,Care Hospital,Indore,Madhya Pradesh,Hospital,11,200,TRUE
+84,Dr. Tammy Holder,Ophthalmology,MBBS,Manipal Hospital,Visakhapatnam,Andhra Pradesh,Diagnostic Center,30,2050,TRUE
+85,Dr. Kimberly Love,ENT,MD,Zydus Hospital,Chandigarh,Chandigarh,Hospital,1,1600,TRUE
+86,Dr. Carrie Green,Pulmonology,MCh,Cloudnine Hospital,Delhi,Delhi,Diagnostic Center,10,3600,TRUE
+87,Dr. Gabriel George,General Medicine,DM,Yashoda Hospital,Patna,Bihar,Clinic,35,3650,TRUE
+88,Dr. Audrey Cowan,ENT,MD,Tata Memorial,Bangalore,Karnataka,Clinic,21,500,TRUE
+89,Dr. Todd Reyes,Dermatology,DM,Tata Memorial,Kochi,Kerala,Hospital,18,1100,TRUE
+90,Dr. Rushil Edwards,Neurology,MCh,Rainbow Children Hospital,Mumbai,Maharashtra,Hospital,22,3150,TRUE
+91,Dr. Ranbir Deol,Pediatrics,DM,Cloudnine Hospital,Chennai,Tamil Nadu,Diagnostic Center,19,550,FALSE
+92,Dr. Wahab Jayaraman,General Medicine,MS,AIIMS,Jaipur,Rajasthan,Diagnostic Center,2,2650,TRUE
+93,Dr. Dennis Perry,Ophthalmology,MBBS,Yashoda Hospital,Kolkata,West Bengal,Hospital,16,2550,TRUE
+94,Dr. Idika Panchal,Gynecology,MCh,AIIMS,Bangalore,Karnataka,Clinic,20,3800,TRUE
+95,Dr. Sarah Contractor,ENT,MS,Sagar Hospital,Kolkata,West Bengal,Diagnostic Center,26,1050,TRUE
+96,Dr. Ashley Guerra,ENT,MS,HCG Oncology,Patna,Bihar,Clinic,21,3250,TRUE
+97,Dr. Champak Bates,Pulmonology,MS,Apollo Hospital,Chandigarh,Chandigarh,Clinic,24,1150,TRUE
+98,Dr. Joshua Patterson,Oncology,MCh,KIMS Hospital,Bhopal,Madhya Pradesh,Diagnostic Center,24,1200,TRUE
+99,Dr. Marie Sidhu,Orthopedics,MS,Continental Hospital,Indore,Madhya Pradesh,Clinic,9,2750,FALSE
+100,Dr. Kayla Sant,Ophthalmology,MCh,Lilavati Hospital,Indore,Madhya Pradesh,Clinic,16,950,TRUE
+101,Dr. Dennis Doshi,Ophthalmology,DM,Lilavati Hospital,Hyderabad,Telangana,Clinic,2,650,TRUE
+102,Dr. Hemani Brandt,Ophthalmology,DM,Rainbow Children Hospital,Kochi,Kerala,Clinic,11,3300,TRUE
+103,Dr. Anvi Puri,Pediatrics,DM,HCG Oncology,Pune,Maharashtra,Hospital,25,2450,TRUE
+104,Dr. Anna Johnston,Oncology,MS,Aster CMI,Ahmedabad,Gujarat,Clinic,26,2150,TRUE
+105,Dr. Timothy Johnson,Psychiatry,MBBS,Lilavati Hospital,Lucknow,Uttar Pradesh,Clinic,13,4700,TRUE
+106,Dr. Veda Meyer,ENT,MS,Artemis Hospital,Bhopal,Madhya Pradesh,Clinic,32,4000,TRUE
+107,Dr. Veer Biswas,General Medicine,MCh,Medanta,Delhi,Delhi,Hospital,7,1750,TRUE
+108,Dr. Vivaan Price,Gynecology,MD,Apollo Hospital,Kolkata,West Bengal,Hospital,13,400,TRUE
+109,Dr. Adya Daniel,Cardiology,MCh,Wockhardt Hospital,Nagpur,Maharashtra,Hospital,7,3950,TRUE
+110,Dr. Ranveer Wilson,Orthopedics,MD,Manipal Hospital,Chandigarh,Chandigarh,Hospital,25,850,TRUE
+111,Dr. Steve West,Gynecology,DM,Cloudnine Hospital,Indore,Madhya Pradesh,Clinic,34,2050,TRUE
+112,Dr. Jason Kala,Pediatrics,MCh,Columbia Asia,Mumbai,Maharashtra,Hospital,19,300,TRUE
+113,Dr. Jennifer Chauhan,Cardiology,MS,Sagar Hospital,Chandigarh,Chandigarh,Hospital,8,200,TRUE
+114,Dr. Laura Dhingra,Psychiatry,MCh,Fortis Healthcare,Pune,Maharashtra,Diagnostic Center,7,4400,TRUE
+115,Dr. Dennis Natarajan,Dermatology,MCh,Fortis Healthcare,Coimbatore,Tamil Nadu,Clinic,6,3800,FALSE
+116,Dr. Ashley Dubey,Orthopedics,MD,Zydus Hospital,Chandigarh,Chandigarh,Hospital,24,3350,TRUE
+117,Dr. Ana Brown,Ophthalmology,MCh,Yashoda Hospital,Ahmedabad,Gujarat,Hospital,24,2750,FALSE
+118,Dr. Lawrence Gour,ENT,MBBS,HCG Oncology,Pune,Maharashtra,Hospital,1,1400,TRUE
+119,Dr. William Dhaliwal,Gynecology,MD,Rainbow Children Hospital,Patna,Bihar,Hospital,24,4450,TRUE
+120,Dr. Mugdha Nazareth,Cardiology,MD,Vikram Hospital,Coimbatore,Tamil Nadu,Clinic,15,2250,TRUE
+121,Dr. Rita Vohra,Cardiology,MCh,Fortis Healthcare,Guwahati,Assam,Hospital,21,750,TRUE
+122,Dr. Sudiksha Valencia,General Medicine,MD,Continental Hospital,Mumbai,Maharashtra,Hospital,12,1200,TRUE
+123,Dr. Mason Pall,General Medicine,MCh,Wockhardt Hospital,Bhopal,Madhya Pradesh,Hospital,28,4150,TRUE
+124,Dr. Michael Miller,Neurology,MD,Care Hospital,Nagpur,Maharashtra,Clinic,35,4050,TRUE
+125,Dr. Sarah Dhar,Ophthalmology,MCh,Global Hospital,Kochi,Kerala,Hospital,32,4800,TRUE
+126,Dr. Dawn Davis,Gynecology,MCh,Rainbow Children Hospital,Bhopal,Madhya Pradesh,Clinic,2,3300,TRUE
+127,Dr. Oviya Kelly,Gynecology,MBBS,Aster CMI,Chandigarh,Chandigarh,Hospital,2,3900,TRUE
+128,Dr. April Maharaj,Oncology,MD,Continental Hospital,Lucknow,Uttar Pradesh,Clinic,2,3450,TRUE
+129,Dr. Eddie Steele,Pulmonology,MS,Care Hospital,Lucknow,Uttar Pradesh,Clinic,31,3500,TRUE
+130,Dr. Brinda Bora,Ophthalmology,MS,HCG Oncology,Mumbai,Maharashtra,Hospital,33,3650,TRUE
+131,Dr. Isaac Gordon,Neurology,DM,Kokilaben Dhirubhai Ambani,Delhi,Delhi,Clinic,24,2300,TRUE
+132,Dr. Qabil Goda,Orthopedics,MBBS,HCG Oncology,Pune,Maharashtra,Hospital,19,200,TRUE
+133,Dr. Brenda Jackson,Psychiatry,DM,Tata Memorial,Kolkata,West Bengal,Clinic,34,3750,TRUE
+134,Dr. Anita Mital,Ophthalmology,MBBS,Cloudnine Hospital,Bhopal,Madhya Pradesh,Hospital,15,450,TRUE
+135,Dr. Dennis Bajaj,Cardiology,MCh,Artemis Hospital,Guwahati,Assam,Clinic,16,1400,TRUE
+136,Dr. Troy Garrison,Psychiatry,MS,KIMS Hospital,Lucknow,Uttar Pradesh,Diagnostic Center,24,2850,TRUE
+137,Dr. Yashoda Kunda,Ophthalmology,MCh,Sakra World Hospital,Patna,Bihar,Clinic,14,2700,TRUE
+138,Dr. Julie Harris,Gynecology,DM,Vikram Hospital,Guwahati,Assam,Clinic,7,4700,TRUE
+139,Dr. Warjas Puri,Oncology,MS,Apollo Hospital,Ahmedabad,Gujarat,Hospital,35,3850,TRUE
+140,Dr. Roberto Malhotra,Pediatrics,MS,Columbia Asia,Bangalore,Karnataka,Clinic,3,3050,FALSE
+141,Dr. Kimberly Kashyap,Orthopedics,DM,KIMS Hospital,Indore,Madhya Pradesh,Clinic,10,4400,FALSE
+142,Dr. Jennifer Kamdar,ENT,DM,Fortis Healthcare,Bhopal,Madhya Pradesh,Clinic,22,400,TRUE
+143,Dr. Nitesh Prabhu,ENT,MBBS,Tata Memorial,Coimbatore,Tamil Nadu,Diagnostic Center,2,1350,TRUE
+144,Dr. Qadim Bridges,ENT,MD,BLK Super Speciality,Ahmedabad,Gujarat,Hospital,3,3950,TRUE
+145,Dr. Matthew Patterson,Pulmonology,DM,Tata Memorial,Delhi,Delhi,Clinic,33,4350,TRUE
+146,Dr. Azaan Hall,Cardiology,MCh,KIMS Hospital,Indore,Madhya Pradesh,Diagnostic Center,28,4800,TRUE
+147,Dr. Mary Henderson,Orthopedics,DM,Cloudnine Hospital,Nagpur,Maharashtra,Hospital,24,800,TRUE
+148,Dr. Lipika Steele,Dermatology,MD,Rainbow Children Hospital,Chennai,Tamil Nadu,Hospital,29,1750,TRUE
+149,Dr. Kimberly Hamilton,ENT,MCh,Wockhardt Hospital,Coimbatore,Tamil Nadu,Clinic,35,2050,FALSE
+150,Dr. Januja Kothari,Gynecology,DM,Sagar Hospital,Visakhapatnam,Andhra Pradesh,Clinic,23,4900,TRUE
+151,Dr. Timothy Gaba,Ophthalmology,MCh,Yashoda Hospital,Patna,Bihar,Clinic,14,1650,TRUE
+152,Dr. Nachiket Sundaram,ENT,MBBS,AIIMS,Chandigarh,Chandigarh,Clinic,26,3950,TRUE
+153,Dr. Jacob Devi,Dermatology,DM,Narayana Health,Kochi,Kerala,Clinic,5,3150,TRUE
+154,Dr. Harinakshi Young,Neurology,MCh,Breach Candy Hospital,Guwahati,Assam,Diagnostic Center,6,3000,TRUE
+155,Dr. Vincent Prabhakar,Gynecology,DM,BLK Super Speciality,Thiruvananthapuram,Kerala,Hospital,15,1800,TRUE
+156,Dr. Ethan Dugar,Cardiology,MBBS,Rainbow Children Hospital,Nagpur,Maharashtra,Hospital,9,2850,FALSE
+157,Dr. Donna Sanghvi,Gynecology,DM,Manipal Hospital,Nagpur,Maharashtra,Hospital,23,2150,TRUE
+158,Dr. Mary Kar,Gynecology,MBBS,Medanta,Jaipur,Rajasthan,Clinic,35,1000,TRUE
+159,Dr. Advik Cobb,Dermatology,DM,Max Super Speciality,Lucknow,Uttar Pradesh,Hospital,32,1500,TRUE
+160,Dr. David Wadhwa,ENT,DM,Zydus Hospital,Chennai,Tamil Nadu,Hospital,21,4700,TRUE
+161,Dr. Ansh Dougherty,General Medicine,MS,Cloudnine Hospital,Hyderabad,Telangana,Hospital,31,2150,TRUE
+162,Dr. Rishi Beasley,General Medicine,MCh,Zydus Hospital,Patna,Bihar,Hospital,16,4200,TRUE
+163,Dr. Matthew Dugal,Ophthalmology,MS,Zydus Hospital,Bangalore,Karnataka,Clinic,33,1850,TRUE
+164,Dr. Mariah Sanchez,Pediatrics,MCh,Cloudnine Hospital,Lucknow,Uttar Pradesh,Diagnostic Center,7,2400,TRUE
+165,Dr. Janya Buch,Psychiatry,DM,Zydus Hospital,Mumbai,Maharashtra,Clinic,19,1100,FALSE
+166,Dr. Ryan Oconnor,Pediatrics,MD,Manipal Hospital,Patna,Bihar,Clinic,10,2900,TRUE
+167,Dr. Jill Nunez,Psychiatry,MBBS,Fortis Healthcare,Indore,Madhya Pradesh,Clinic,18,2800,TRUE
+168,Dr. Faqid Black,Pediatrics,MS,Apollo Hospital,Kochi,Kerala,Clinic,1,1100,TRUE
+169,Dr. Ayaan Padmanabhan,Cardiology,MBBS,Sakra World Hospital,Jaipur,Rajasthan,Clinic,30,3600,TRUE
+170,Dr. Michael Crawford,Gynecology,MD,Max Super Speciality,Lucknow,Uttar Pradesh,Clinic,8,3050,FALSE
+171,Dr. Lajita Jacobs,Oncology,MBBS,Tata Memorial,Delhi,Delhi,Hospital,7,2450,FALSE
+172,Dr. Mekhala Mcdowell,Pulmonology,MD,Lilavati Hospital,Mumbai,Maharashtra,Hospital,34,4950,TRUE
+173,Dr. Abhiram Pena,Pediatrics,MS,Manipal Hospital,Nagpur,Maharashtra,Hospital,18,2600,FALSE
+174,Dr. Anay Brock,ENT,MS,Sterling Hospital,Jaipur,Rajasthan,Clinic,22,4600,TRUE
+175,Dr. Gunbir Rana,Gynecology,MBBS,Aster CMI,Mumbai,Maharashtra,Diagnostic Center,33,1100,TRUE
+176,Dr. John Castaneda,Gynecology,MD,Rainbow Children Hospital,Ahmedabad,Gujarat,Clinic,29,2550,TRUE
+177,Dr. Neel Varughese,Psychiatry,MS,Vikram Hospital,Lucknow,Uttar Pradesh,Clinic,31,3600,TRUE
+178,Dr. Ayaan Blake,Gynecology,MCh,Sakra World Hospital,Bhopal,Madhya Pradesh,Hospital,33,2050,TRUE
+179,Dr. Tina Wade,Pulmonology,MS,Manipal Hospital,Jaipur,Rajasthan,Diagnostic Center,10,2500,FALSE
+180,Dr. Owen Lalla,Oncology,MS,Breach Candy Hospital,Guwahati,Assam,Diagnostic Center,28,500,TRUE
+181,Dr. Kelly Narang,Orthopedics,MBBS,Aster CMI,Visakhapatnam,Andhra Pradesh,Hospital,9,900,TRUE
+182,Dr. Ashley Agrawal,Dermatology,MS,Breach Candy Hospital,Delhi,Delhi,Diagnostic Center,19,550,TRUE
+183,Dr. Julia Blair,ENT,MS,Kokilaben Dhirubhai Ambani,Guwahati,Assam,Hospital,24,2500,TRUE
+184,Dr. Elizabeth Rios,Psychiatry,MCh,Manipal Hospital,Ahmedabad,Gujarat,Clinic,19,4600,TRUE
+185,Dr. Ashley Sekhon,Oncology,DM,KIMS Hospital,Chandigarh,Chandigarh,Clinic,3,1600,TRUE
+186,Dr. Samarth Adams,Ophthalmology,MS,HCG Oncology,Indore,Madhya Pradesh,Hospital,1,3450,TRUE
+187,Dr. Sneha Woodard,Pulmonology,DM,Hinduja Hospital,Bangalore,Karnataka,Clinic,35,1900,TRUE
+188,Dr. Fiyaz Morse,Neurology,DM,Aster CMI,Lucknow,Uttar Pradesh,Hospital,12,3650,TRUE
+189,Dr. Barry Huber,Pediatrics,MS,Cloudnine Hospital,Chandigarh,Chandigarh,Clinic,34,3450,TRUE
+190,Dr. Bakhshi Jordan,General Medicine,MD,Lilavati Hospital,Bhopal,Madhya Pradesh,Hospital,26,2400,TRUE
+191,Dr. Daniel Bansal,Pulmonology,MS,Apollo Hospital,Guwahati,Assam,Clinic,33,1150,TRUE
+192,Dr. Isaac Wyatt,Orthopedics,DM,Hinduja Hospital,Chennai,Tamil Nadu,Hospital,27,1550,FALSE
+193,Dr. Forum Gonzalez,Oncology,MBBS,Hinduja Hospital,Ahmedabad,Gujarat,Hospital,22,2350,TRUE
+194,Dr. Sherry Balasubramanian,ENT,MBBS,Max Super Speciality,Jaipur,Rajasthan,Clinic,10,3650,TRUE
+195,Dr. Catherine Raju,Pulmonology,MCh,Care Hospital,Mumbai,Maharashtra,Hospital,15,2350,TRUE
+196,Dr. Janani Pathak,Pulmonology,DM,Aster CMI,Patna,Bihar,Diagnostic Center,10,4350,TRUE
+197,Dr. Yatin Davis,Neurology,MCh,Medanta,Pune,Maharashtra,Clinic,11,650,TRUE
+198,Dr. Yashvi Williams,Orthopedics,MCh,Fortis Healthcare,Indore,Madhya Pradesh,Clinic,33,2850,TRUE
+199,Dr. Anirudh Deshpande,General Medicine,MBBS,Columbia Asia,Hyderabad,Telangana,Clinic,19,300,TRUE
+200,Dr. Lucky Dhillon,ENT,DM,Care Hospital,Kochi,Kerala,Hospital,32,1400,TRUE
+201,Dr. Advay Edwards,Pulmonology,MD,Sagar Hospital,Thiruvananthapuram,Kerala,Hospital,17,2300,TRUE
+202,Dr. Kevin Flores,Neurology,MS,Care Hospital,Hyderabad,Telangana,Hospital,7,900,TRUE
+203,Dr. Sneha Keer,Cardiology,MBBS,Zydus Hospital,Delhi,Delhi,Hospital,31,1050,TRUE
+204,Dr. Curtis Mannan,Pulmonology,MD,Vikram Hospital,Bangalore,Karnataka,Clinic,35,1450,TRUE
+205,Dr. Kabir Sarkar,Pediatrics,DM,Artemis Hospital,Coimbatore,Tamil Nadu,Hospital,26,1550,TRUE
+206,Dr. Mugdha Young,ENT,MBBS,Max Super Speciality,Kochi,Kerala,Clinic,32,2350,TRUE
+207,Dr. Katie Pillai,Gynecology,MS,Cloudnine Hospital,Chandigarh,Chandigarh,Clinic,20,4800,TRUE
+208,Dr. Avni Stewart,ENT,MD,Fortis Healthcare,Mumbai,Maharashtra,Hospital,2,2800,TRUE
+209,Dr. Christina Naidu,Pediatrics,MD,Kokilaben Dhirubhai Ambani,Hyderabad,Telangana,Clinic,12,1350,TRUE
+210,Dr. Jennifer Kanda,Pulmonology,MBBS,Columbia Asia,Visakhapatnam,Andhra Pradesh,Diagnostic Center,35,4750,TRUE
+211,Dr. Samar Davis,Pulmonology,MD,Kokilaben Dhirubhai Ambani,Patna,Bihar,Hospital,18,3450,TRUE
+212,Dr. Jhalak Larson,Psychiatry,MCh,Artemis Hospital,Pune,Maharashtra,Hospital,7,2100,TRUE
+213,Dr. Chanchal Delgado,Cardiology,MBBS,Hinduja Hospital,Thiruvananthapuram,Kerala,Hospital,3,4650,TRUE
+214,Dr. Cassandra Chopra,Pediatrics,MD,Continental Hospital,Chennai,Tamil Nadu,Hospital,2,4300,TRUE
+215,Dr. Heather Nagar,Pediatrics,MD,Apollo Hospital,Lucknow,Uttar Pradesh,Hospital,33,3600,TRUE
+216,Dr. Thomas Raj,Orthopedics,MD,Continental Hospital,Nagpur,Maharashtra,Hospital,23,1200,TRUE
+217,Dr. James Hayre,ENT,DM,Breach Candy Hospital,Nagpur,Maharashtra,Hospital,13,1850,TRUE
+218,Dr. Nicholas Agarwal,Pediatrics,MD,Yashoda Hospital,Patna,Bihar,Clinic,26,4150,TRUE
+219,Dr. Eiravati Sullivan,Gynecology,DM,Care Hospital,Coimbatore,Tamil Nadu,Clinic,30,3050,TRUE
+220,Dr. Yutika Parmer,Neurology,MCh,Max Super Speciality,Pune,Maharashtra,Diagnostic Center,25,4900,TRUE
+221,Dr. Mary Jha,Gynecology,MBBS,Tata Memorial,Delhi,Delhi,Diagnostic Center,11,500,TRUE
+222,Dr. Naksh Fuller,Oncology,MS,HCG Oncology,Pune,Maharashtra,Hospital,33,350,TRUE
+223,Dr. Kathleen Bawa,Dermatology,DM,Continental Hospital,Patna,Bihar,Hospital,13,4250,TRUE
+224,Dr. Daniel Master,Psychiatry,MCh,Columbia Asia,Indore,Madhya Pradesh,Hospital,9,2850,TRUE
+225,Dr. Kirk Sangha,Pediatrics,MD,BLK Super Speciality,Bhopal,Madhya Pradesh,Clinic,14,2000,TRUE
+226,Dr. Michelle Green,ENT,MCh,HCG Oncology,Indore,Madhya Pradesh,Diagnostic Center,18,4200,TRUE
+227,Dr. Neha Kalita,Ophthalmology,MS,KIMS Hospital,Indore,Madhya Pradesh,Clinic,15,3300,TRUE
+228,Dr. Nimrat Thakur,Pediatrics,DM,Cloudnine Hospital,Jaipur,Rajasthan,Hospital,14,4350,TRUE
+229,Dr. Yamini Gonzalez,Psychiatry,MD,Lilavati Hospital,Patna,Bihar,Clinic,4,250,TRUE
+230,Dr. Lucky Gonzales,Pulmonology,MBBS,AIIMS,Kolkata,West Bengal,Hospital,29,4100,TRUE
+231,Dr. Jessica Dhillon,Pediatrics,MS,Global Hospital,Patna,Bihar,Hospital,5,950,FALSE
+232,Dr. Linda De,Psychiatry,MS,Zydus Hospital,Lucknow,Uttar Pradesh,Hospital,17,850,FALSE
+233,Dr. Bhavika Chatterjee,Pediatrics,MS,Lilavati Hospital,Ahmedabad,Gujarat,Hospital,16,2300,TRUE
+234,Dr. Laura Chanda,Cardiology,DM,Sterling Hospital,Chennai,Tamil Nadu,Diagnostic Center,20,4200,TRUE
+235,Dr. Christopher Garcia,Ophthalmology,MD,Aster CMI,Chennai,Tamil Nadu,Clinic,1,4850,TRUE
+236,Dr. Gavin Mitchell,General Medicine,DM,Hinduja Hospital,Ahmedabad,Gujarat,Diagnostic Center,2,4000,TRUE
+237,Dr. Michael Mccormick,Psychiatry,MBBS,Manipal Hospital,Thiruvananthapuram,Kerala,Hospital,14,4750,TRUE
+238,Dr. Oeshi Thompson,Oncology,MD,Manipal Hospital,Kochi,Kerala,Diagnostic Center,2,2150,TRUE
+239,Dr. Melissa Lee,Gynecology,MD,Breach Candy Hospital,Mumbai,Maharashtra,Hospital,3,1350,TRUE
+240,Dr. Anmol Grover,Psychiatry,MS,Artemis Hospital,Pune,Maharashtra,Clinic,11,1900,TRUE
+241,Dr. William Salas,Gynecology,MD,Artemis Hospital,Delhi,Delhi,Diagnostic Center,19,3450,TRUE
+242,Dr. Triveni Luthra,Orthopedics,MCh,Artemis Hospital,Ahmedabad,Gujarat,Clinic,10,2900,TRUE
+243,Dr. James Andra,Pulmonology,DM,Kokilaben Dhirubhai Ambani,Jaipur,Rajasthan,Hospital,28,4100,FALSE
+244,Dr. Yagnesh Miller,Oncology,MS,Sterling Hospital,Bangalore,Karnataka,Clinic,32,2600,TRUE
+245,Dr. Indali Rau,Pediatrics,MCh,Cloudnine Hospital,Chandigarh,Chandigarh,Hospital,8,5000,TRUE
+246,Dr. Sean James,General Medicine,MS,Lilavati Hospital,Indore,Madhya Pradesh,Hospital,2,3100,TRUE
+247,Dr. Clinton Jones,Neurology,MCh,Continental Hospital,Lucknow,Uttar Pradesh,Hospital,21,4700,TRUE
+248,Dr. Varsha Farmer,Cardiology,MBBS,Vikram Hospital,Pune,Maharashtra,Diagnostic Center,9,2100,TRUE
+249,Dr. Shawn Johnson,General Medicine,MS,Medanta,Jaipur,Rajasthan,Hospital,12,4200,TRUE
+250,Dr. Pushti Vohra,Psychiatry,MD,BLK Super Speciality,Visakhapatnam,Andhra Pradesh,Clinic,29,2650,TRUE
+251,Dr. Austin Majumdar,General Medicine,DM,Zydus Hospital,Jaipur,Rajasthan,Diagnostic Center,28,4150,TRUE
+252,Dr. Stephanie Hamilton,Orthopedics,MD,Artemis Hospital,Guwahati,Assam,Diagnostic Center,3,4650,TRUE
+253,Dr. Chandresh Biswas,Psychiatry,MS,Rainbow Children Hospital,Lucknow,Uttar Pradesh,Clinic,17,2200,TRUE
+254,Dr. Richard Smith,General Medicine,MD,Apollo Hospital,Indore,Madhya Pradesh,Clinic,29,1200,TRUE
+255,Dr. Arjun Freeman,Dermatology,MD,Sakra World Hospital,Patna,Bihar,Hospital,30,4550,TRUE
+256,Dr. Nidra Narasimhan,Ophthalmology,MCh,Sagar Hospital,Ahmedabad,Gujarat,Clinic,17,3150,TRUE
+257,Dr. Mary Austin,Oncology,MS,Cloudnine Hospital,Visakhapatnam,Andhra Pradesh,Diagnostic Center,32,3150,FALSE
+258,Dr. Indrajit Sloan,Ophthalmology,DM,Wockhardt Hospital,Jaipur,Rajasthan,Hospital,33,3550,FALSE
+259,Dr. Alexandria Juarez,ENT,MD,Apollo Hospital,Coimbatore,Tamil Nadu,Clinic,7,750,TRUE
+260,Dr. Victor Payne,Pulmonology,MD,Global Hospital,Lucknow,Uttar Pradesh,Clinic,16,4100,TRUE
+261,Dr. Diana Bala,Orthopedics,MCh,Sakra World Hospital,Patna,Bihar,Diagnostic Center,5,2000,TRUE
+262,Dr. Chaman Cook,Ophthalmology,MD,Sakra World Hospital,Chennai,Tamil Nadu,Hospital,18,3450,TRUE
+263,Dr. Neel Tyler,Pediatrics,MD,Breach Candy Hospital,Jaipur,Rajasthan,Hospital,27,3050,TRUE
+264,Dr. Jeffrey Prabhu,Oncology,DM,Tata Memorial,Visakhapatnam,Andhra Pradesh,Clinic,1,3350,TRUE
+265,Dr. Jerry Barad,Dermatology,MBBS,Care Hospital,Jaipur,Rajasthan,Clinic,19,950,TRUE
+266,Dr. Kashvi Mukhopadhyay,Gynecology,MBBS,Sagar Hospital,Thiruvananthapuram,Kerala,Clinic,13,1050,TRUE
+267,Dr. George Bahl,Psychiatry,MCh,Hinduja Hospital,Kochi,Kerala,Hospital,6,1500,TRUE
+268,Dr. Keya Lopez,Dermatology,MBBS,Kokilaben Dhirubhai Ambani,Ahmedabad,Gujarat,Clinic,22,1450,TRUE
+269,Dr. Ekta Mani,Pediatrics,DM,Sakra World Hospital,Nagpur,Maharashtra,Diagnostic Center,21,2400,TRUE
+270,Dr. Ian Khatri,Gynecology,MBBS,Columbia Asia,Chennai,Tamil Nadu,Hospital,15,1450,TRUE
+271,Dr. Gabriel Grover,Cardiology,DM,Cloudnine Hospital,Delhi,Delhi,Hospital,32,300,TRUE
+272,Dr. Paula Malhotra,Dermatology,DM,Apollo Hospital,Bhopal,Madhya Pradesh,Hospital,11,1700,TRUE
+273,Dr. Jai Hamilton,Pulmonology,MD,Breach Candy Hospital,Kochi,Kerala,Clinic,6,1500,TRUE
+274,Dr. Mikayla Williams,ENT,DM,Artemis Hospital,Chandigarh,Chandigarh,Hospital,27,4250,TRUE
+275,Dr. Michael Balan,Gynecology,MCh,Medanta,Guwahati,Assam,Diagnostic Center,21,3800,TRUE
+276,Dr. Ashley Tate,Pulmonology,MCh,BLK Super Speciality,Patna,Bihar,Hospital,21,2000,TRUE
+277,Dr. Elizabeth Edwards,Gynecology,MBBS,Vikram Hospital,Guwahati,Assam,Diagnostic Center,19,4350,TRUE
+278,Dr. Vamakshi Aggarwal,Dermatology,MCh,Vikram Hospital,Hyderabad,Telangana,Clinic,6,3800,TRUE
+279,Dr. Zachary Stafford,Dermatology,MCh,Cloudnine Hospital,Chandigarh,Chandigarh,Hospital,7,2450,TRUE
+280,Dr. Yashawini Verma,Pediatrics,DM,Sagar Hospital,Patna,Bihar,Hospital,33,2600,TRUE
+281,Dr. Pranav Parekh,Psychiatry,MS,Apollo Hospital,Nagpur,Maharashtra,Diagnostic Center,7,4200,TRUE
+282,Dr. Stephen Griffin,ENT,DM,Rainbow Children Hospital,Indore,Madhya Pradesh,Clinic,29,4900,TRUE
+283,Dr. Elizabeth Strickland,Orthopedics,DM,Apollo Hospital,Coimbatore,Tamil Nadu,Hospital,2,3650,TRUE
+284,Dr. Richard Om,Psychiatry,DM,KIMS Hospital,Pune,Maharashtra,Hospital,31,250,TRUE
+285,Dr. Krishna Knight,Orthopedics,MS,Care Hospital,Kolkata,West Bengal,Hospital,25,2700,TRUE
+286,Dr. Michelle Kulkarni,Pulmonology,MBBS,Medanta,Coimbatore,Tamil Nadu,Hospital,25,1350,TRUE
+287,Dr. James Park,Cardiology,MS,Tata Memorial,Indore,Madhya Pradesh,Diagnostic Center,3,600,FALSE
+288,Dr. Maanav Bhargava,Gynecology,MCh,Artemis Hospital,Thiruvananthapuram,Kerala,Clinic,11,4550,TRUE
+289,Dr. Stephanie Morris,Ophthalmology,DM,Aster CMI,Patna,Bihar,Clinic,10,3550,TRUE
+290,Dr. Paul D’Alia,General Medicine,MCh,Max Super Speciality,Chennai,Tamil Nadu,Clinic,31,200,TRUE
+291,Dr. Amanda Sami,Ophthalmology,DM,Columbia Asia,Bhopal,Madhya Pradesh,Diagnostic Center,28,2100,TRUE
+292,Dr. Christopher Welch,Pulmonology,MBBS,Lilavati Hospital,Patna,Bihar,Clinic,2,3650,TRUE
+293,Dr. Martin Bates,Psychiatry,MCh,Wockhardt Hospital,Ahmedabad,Gujarat,Diagnostic Center,20,1350,TRUE
+294,Dr. Nimrat Sibal,Cardiology,DM,Vikram Hospital,Hyderabad,Telangana,Clinic,13,4950,TRUE
+295,Dr. Robert Krishna,General Medicine,MBBS,Zydus Hospital,Indore,Madhya Pradesh,Clinic,34,4550,TRUE
+296,Dr. Alka Narayanan,Psychiatry,DM,Breach Candy Hospital,Thiruvananthapuram,Kerala,Diagnostic Center,12,2050,TRUE
+297,Dr. Inaya Andrade,Pediatrics,MS,Manipal Hospital,Mumbai,Maharashtra,Hospital,21,2850,TRUE
+298,Dr. Raghav Williams,Psychiatry,MD,Sterling Hospital,Bangalore,Karnataka,Hospital,31,1150,TRUE
+299,Dr. Regina Bhalla,General Medicine,MD,Care Hospital,Jaipur,Rajasthan,Hospital,15,2850,TRUE
+300,Dr. Harinakshi Bedi,Dermatology,MS,Manipal Hospital,Indore,Madhya Pradesh,Clinic,18,2150,TRUE
+301,Dr. Hemani Carter,Psychiatry,MS,Columbia Asia,Guwahati,Assam,Hospital,32,2050,TRUE
+302,Dr. Rachel Mangal,Psychiatry,DM,Artemis Hospital,Jaipur,Rajasthan,Clinic,25,2850,TRUE
+303,Dr. Nancy Frazier,Neurology,DM,Continental Hospital,Thiruvananthapuram,Kerala,Hospital,12,1150,FALSE
+304,Dr. Vamakshi Mital,ENT,MBBS,Continental Hospital,Bangalore,Karnataka,Diagnostic Center,8,5000,TRUE
+305,Dr. Kashvi Kumer,Gynecology,MBBS,Sagar Hospital,Kolkata,West Bengal,Diagnostic Center,8,2550,TRUE
+306,Dr. Michael Brahmbhatt,Pediatrics,MS,Cloudnine Hospital,Bangalore,Karnataka,Clinic,7,550,TRUE
+307,Dr. Sanya Thakur,General Medicine,DM,KIMS Hospital,Ahmedabad,Gujarat,Hospital,18,2750,FALSE
+308,Dr. Jamie Dean,Pediatrics,MBBS,Sakra World Hospital,Kochi,Kerala,Clinic,11,4650,TRUE
+309,Dr. Rishi Reyes,Neurology,MD,Narayana Health,Coimbatore,Tamil Nadu,Clinic,2,3400,TRUE
+310,Dr. Ekaraj Charles,Pediatrics,MCh,Sagar Hospital,Jaipur,Rajasthan,Clinic,23,2600,TRUE
+311,Dr. Adam Brewer,Neurology,MD,Hinduja Hospital,Nagpur,Maharashtra,Diagnostic Center,23,4500,TRUE
+312,Dr. Karen Karan,Ophthalmology,MS,Narayana Health,Guwahati,Assam,Hospital,6,900,TRUE
+313,Dr. Azaan Klein,Ophthalmology,MBBS,Sakra World Hospital,Chennai,Tamil Nadu,Hospital,19,1250,FALSE
+314,Dr. Paula Gokhale,ENT,MS,Fortis Healthcare,Nagpur,Maharashtra,Clinic,16,1250,TRUE
+315,Dr. Holly Boyd,Dermatology,DM,Kokilaben Dhirubhai Ambani,Hyderabad,Telangana,Clinic,20,3800,TRUE
+316,Dr. Elizabeth Roman,Pulmonology,MBBS,Fortis Healthcare,Delhi,Delhi,Diagnostic Center,12,250,TRUE
+317,Dr. Raagini Hughes,Oncology,MCh,AIIMS,Delhi,Delhi,Clinic,2,4850,TRUE
+318,Dr. Chanchal Hinton,General Medicine,MCh,Care Hospital,Ahmedabad,Gujarat,Diagnostic Center,3,400,TRUE
+319,Dr. Joseph Narain,Dermatology,MCh,Sakra World Hospital,Chandigarh,Chandigarh,Hospital,3,3950,TRUE
+320,Dr. Robert Krishna,Orthopedics,MBBS,Cloudnine Hospital,Lucknow,Uttar Pradesh,Hospital,35,3950,TRUE
+321,Dr. Debra Brown,Neurology,MBBS,Narayana Health,Lucknow,Uttar Pradesh,Clinic,9,1450,TRUE
+322,Dr. Douglas Bora,Pulmonology,MBBS,Vikram Hospital,Ahmedabad,Gujarat,Clinic,8,1850,TRUE
+323,Dr. Dakshesh Smith,Gynecology,DM,Artemis Hospital,Indore,Madhya Pradesh,Clinic,16,500,TRUE
+324,Dr. Joseph Rodriguez,Gynecology,MCh,Sagar Hospital,Coimbatore,Tamil Nadu,Hospital,26,4600,FALSE
+325,Dr. Vihaan Nagarajan,Pediatrics,MCh,Rainbow Children Hospital,Chandigarh,Chandigarh,Diagnostic Center,12,3850,TRUE
+326,Dr. Gautam Bhandari,Cardiology,MS,Hinduja Hospital,Chandigarh,Chandigarh,Hospital,31,550,TRUE
+327,Dr. Arthur Ravel,Gynecology,MCh,Breach Candy Hospital,Chandigarh,Chandigarh,Clinic,6,3050,TRUE
+328,Dr. Saumya Walker,General Medicine,MCh,Columbia Asia,Delhi,Delhi,Hospital,18,4000,FALSE
+329,Dr. William Mohan,Neurology,MD,Narayana Health,Kolkata,West Bengal,Hospital,25,350,TRUE
+330,Dr. Christopher Kakar,Ophthalmology,MD,Sagar Hospital,Kolkata,West Bengal,Clinic,14,1850,TRUE
+331,Dr. Gagan Sha,Cardiology,MS,Max Super Speciality,Kochi,Kerala,Diagnostic Center,16,1300,TRUE
+332,Dr. Xavier Arnold,Pulmonology,MBBS,Global Hospital,Pune,Maharashtra,Clinic,29,4350,TRUE
+333,Dr. Balendra Newton,Neurology,DM,Care Hospital,Chennai,Tamil Nadu,Hospital,13,2750,TRUE
+334,Dr. Bruce Dube,Gynecology,MCh,Care Hospital,Hyderabad,Telangana,Clinic,13,4300,FALSE
+335,Dr. Tyler Smith,General Medicine,MD,Care Hospital,Mumbai,Maharashtra,Clinic,14,4750,TRUE
+336,Dr. Bryan Vig,General Medicine,DM,Breach Candy Hospital,Visakhapatnam,Andhra Pradesh,Clinic,27,3050,TRUE
+337,Dr. Aashi Chahal,Neurology,DM,Aster CMI,Visakhapatnam,Andhra Pradesh,Clinic,22,3800,FALSE
+338,Dr. Joshua Patel,Ophthalmology,MD,Vikram Hospital,Mumbai,Maharashtra,Hospital,6,250,TRUE
+339,Dr. Amrita Bumb,Dermatology,MD,Fortis Healthcare,Jaipur,Rajasthan,Diagnostic Center,6,2200,TRUE
+340,Dr. Vyanjana Mays,Psychiatry,MS,Hinduja Hospital,Coimbatore,Tamil Nadu,Hospital,31,2800,TRUE
+341,Dr. Akshay Bell,Pulmonology,MS,Sterling Hospital,Thiruvananthapuram,Kerala,Clinic,33,2100,TRUE
+342,Dr. Jeffrey Miranda,Gynecology,MBBS,Breach Candy Hospital,Bhopal,Madhya Pradesh,Hospital,12,1000,TRUE
+343,Dr. Hannah Booth,Gynecology,MS,BLK Super Speciality,Nagpur,Maharashtra,Hospital,30,3150,TRUE
+344,Dr. Tanveer Williams,Dermatology,MS,Manipal Hospital,Guwahati,Assam,Hospital,17,4250,TRUE
+345,Dr. Girindra Dave,Pulmonology,MCh,Zydus Hospital,Mumbai,Maharashtra,Hospital,21,500,TRUE
+346,Dr. Ayush Soto,Pediatrics,MCh,Medanta,Kochi,Kerala,Hospital,30,650,TRUE
+347,Dr. Onkar Murray,General Medicine,MBBS,Kokilaben Dhirubhai Ambani,Indore,Madhya Pradesh,Hospital,12,4150,TRUE
+348,Dr. Heather Dave,Dermatology,MCh,Manipal Hospital,Kochi,Kerala,Diagnostic Center,8,4450,TRUE
+349,Dr. Richard Mukherjee,Pediatrics,MBBS,Aster CMI,Indore,Madhya Pradesh,Clinic,16,1550,TRUE
+350,Dr. Christopher Cunningham,Orthopedics,MD,AIIMS,Nagpur,Maharashtra,Diagnostic Center,16,4950,TRUE
+351,Dr. Sarah Murty,Pulmonology,MCh,Lilavati Hospital,Chennai,Tamil Nadu,Clinic,13,2650,TRUE
+352,Dr. Madhav Smith,Orthopedics,MD,Rainbow Children Hospital,Hyderabad,Telangana,Hospital,32,3150,TRUE
+353,Dr. Ryan Kim,Dermatology,MD,Cloudnine Hospital,Chennai,Tamil Nadu,Clinic,27,3400,TRUE
+354,Dr. Indali Saha,Pediatrics,MS,Sakra World Hospital,Chandigarh,Chandigarh,Hospital,26,800,TRUE
+355,Dr. Gina Aguirre,Ophthalmology,MD,Zydus Hospital,Coimbatore,Tamil Nadu,Clinic,32,3750,TRUE
+356,Dr. Bryce Gopal,Orthopedics,MD,Zydus Hospital,Pune,Maharashtra,Clinic,26,4200,TRUE
+357,Dr. Tiffany Wise,Pulmonology,MS,Narayana Health,Chandigarh,Chandigarh,Hospital,25,400,TRUE
+358,Dr. Julia Chahal,Cardiology,MCh,AIIMS,Kochi,Kerala,Hospital,24,3150,TRUE
+359,Dr. Siya Kunda,ENT,MS,Columbia Asia,Kochi,Kerala,Hospital,20,200,TRUE
+360,Dr. Diya Sagar,Cardiology,MS,Kokilaben Dhirubhai Ambani,Bhopal,Madhya Pradesh,Hospital,35,3550,TRUE
+361,Dr. Karen Bal,Pulmonology,MD,Global Hospital,Coimbatore,Tamil Nadu,Hospital,5,2650,TRUE
+362,Dr. Wakeeta Cook,Neurology,DM,Fortis Healthcare,Guwahati,Assam,Hospital,1,1350,TRUE
+363,Dr. Miguel Contreras,Ophthalmology,MBBS,KIMS Hospital,Lucknow,Uttar Pradesh,Hospital,25,1250,TRUE
+364,Dr. Brianna Morales,Gynecology,MS,Sakra World Hospital,Indore,Madhya Pradesh,Hospital,33,4450,FALSE
+365,Dr. Harita Ghose,Pulmonology,MD,Continental Hospital,Jaipur,Rajasthan,Clinic,13,4350,TRUE
+366,Dr. Sneha Morales,ENT,MBBS,Hinduja Hospital,Patna,Bihar,Clinic,27,3800,FALSE
+367,Dr. Karen Sibal,Ophthalmology,MS,AIIMS,Chennai,Tamil Nadu,Clinic,17,3300,TRUE
+368,Dr. Darsh Ramirez,Dermatology,MD,Care Hospital,Bhopal,Madhya Pradesh,Diagnostic Center,3,4650,TRUE
+369,Dr. Jennifer Dugal,General Medicine,MCh,Wockhardt Hospital,Patna,Bihar,Hospital,8,1450,TRUE
+370,Dr. Randy Alvarado,General Medicine,DM,Continental Hospital,Bhopal,Madhya Pradesh,Hospital,35,4600,TRUE
+371,Dr. Nicholas Parsa,Oncology,MS,Rainbow Children Hospital,Bhopal,Madhya Pradesh,Hospital,3,2150,FALSE
+372,Dr. Ekapad Bryant,Dermatology,MCh,Sakra World Hospital,Nagpur,Maharashtra,Diagnostic Center,34,700,TRUE
+373,Dr. Donna Rush,ENT,DM,Continental Hospital,Visakhapatnam,Andhra Pradesh,Diagnostic Center,10,550,TRUE
+374,Dr. Linda Wilson,ENT,MD,Fortis Healthcare,Bangalore,Karnataka,Hospital,35,4600,TRUE
+375,Dr. Rachita Walker,Orthopedics,DM,Cloudnine Hospital,Guwahati,Assam,Diagnostic Center,1,1900,FALSE
+376,Dr. Hannah Aggarwal,ENT,MD,Hinduja Hospital,Hyderabad,Telangana,Clinic,26,1500,FALSE
+377,Dr. Pranit Sodhi,Ophthalmology,MBBS,Hinduja Hospital,Lucknow,Uttar Pradesh,Hospital,32,600,TRUE
+378,Dr. Thomas Johnson,General Medicine,MBBS,Cloudnine Hospital,Hyderabad,Telangana,Clinic,10,500,TRUE
+379,Dr. Sai Kaur,Oncology,MD,Columbia Asia,Delhi,Delhi,Clinic,21,3450,TRUE
+380,Dr. Justin Lynch,Neurology,DM,Kokilaben Dhirubhai Ambani,Guwahati,Assam,Clinic,31,1550,TRUE
+381,Dr. Yagnesh Scott,General Medicine,MCh,Manipal Hospital,Hyderabad,Telangana,Clinic,26,3550,TRUE
+382,Dr. Jessica Miller,Orthopedics,MD,Sterling Hospital,Kochi,Kerala,Hospital,29,3400,TRUE
+383,Dr. Richard Oommen,Pulmonology,MBBS,Medanta,Delhi,Delhi,Clinic,9,650,FALSE
+384,Dr. Carrie Rollins,Pediatrics,DM,Tata Memorial,Hyderabad,Telangana,Clinic,5,2700,TRUE
+385,Dr. Yatin Verma,Dermatology,MD,Yashoda Hospital,Hyderabad,Telangana,Hospital,15,400,TRUE
+386,Dr. Isaiah Roman,Gynecology,MS,Lilavati Hospital,Hyderabad,Telangana,Hospital,20,4050,TRUE
+387,Dr. Patrick Parsa,Gynecology,MBBS,Medanta,Ahmedabad,Gujarat,Clinic,18,1000,TRUE
+388,Dr. Tarak French,Neurology,MBBS,Global Hospital,Chennai,Tamil Nadu,Hospital,4,4700,TRUE
+389,Dr. Xavier Thaker,Dermatology,MS,Narayana Health,Thiruvananthapuram,Kerala,Clinic,33,4550,TRUE
+390,Dr. Debra Johnson,Dermatology,MS,Sagar Hospital,Chennai,Tamil Nadu,Clinic,23,4400,TRUE
+391,Dr. Carlos Schneider,Oncology,DM,Wockhardt Hospital,Bangalore,Karnataka,Hospital,20,300,TRUE
+392,Dr. Alexandria Palmer,Neurology,DM,Breach Candy Hospital,Coimbatore,Tamil Nadu,Hospital,22,4450,TRUE
+393,Dr. Mercedes Balasubramanian,Ophthalmology,MCh,Sagar Hospital,Nagpur,Maharashtra,Hospital,9,3950,TRUE
+394,Dr. Daniel Lad,Psychiatry,MCh,Continental Hospital,Thiruvananthapuram,Kerala,Clinic,27,1500,TRUE
+395,Dr. Omisha Powell,Ophthalmology,MBBS,Tata Memorial,Bhopal,Madhya Pradesh,Hospital,27,2350,FALSE
+396,Dr. Howard Ferrell,Oncology,MBBS,Kokilaben Dhirubhai Ambani,Chandigarh,Chandigarh,Clinic,15,3850,TRUE
+397,Dr. Vamakshi Mejia,Pediatrics,MCh,Rainbow Children Hospital,Visakhapatnam,Andhra Pradesh,Hospital,10,4200,FALSE
+398,Dr. Brijesh Mcmahon,Orthopedics,MD,Wockhardt Hospital,Chandigarh,Chandigarh,Hospital,8,4950,TRUE
+399,Dr. Charvi Sem,Pediatrics,MBBS,AIIMS,Pune,Maharashtra,Clinic,27,3350,TRUE
+400,Dr. Victor Pau,Pediatrics,DM,Cloudnine Hospital,Kochi,Kerala,Clinic,20,2450,TRUE
+401,Dr. Joshua Yang,Pediatrics,MS,Columbia Asia,Nagpur,Maharashtra,Diagnostic Center,18,1100,TRUE
+402,Dr. Fred Saraf,Neurology,MCh,AIIMS,Chennai,Tamil Nadu,Hospital,33,4400,TRUE
+403,Dr. Christopher Sharaf,Gynecology,MBBS,Narayana Health,Ahmedabad,Gujarat,Clinic,1,4850,TRUE
+404,Dr. Charles Smith,General Medicine,DM,Vikram Hospital,Bhopal,Madhya Pradesh,Diagnostic Center,27,4950,TRUE
+405,Dr. Sanaya May,Psychiatry,MD,Tata Memorial,Lucknow,Uttar Pradesh,Clinic,31,3350,FALSE
+406,Dr. Aachal Jones,Ophthalmology,MCh,Cloudnine Hospital,Chandigarh,Chandigarh,Clinic,28,3550,TRUE
+407,Dr. Sara Loke,Gynecology,MS,Care Hospital,Kochi,Kerala,Hospital,18,1450,TRUE
+408,Dr. Erin Kumer,Psychiatry,DM,Max Super Speciality,Pune,Maharashtra,Hospital,26,3650,TRUE
+409,Dr. Michael Hardin,Orthopedics,MCh,Vikram Hospital,Chennai,Tamil Nadu,Hospital,17,4550,TRUE
+410,Dr. Orinder Richard,Psychiatry,DM,HCG Oncology,Guwahati,Assam,Hospital,26,4100,TRUE
+411,Dr. Gavin Bawa,Gynecology,DM,Sagar Hospital,Ahmedabad,Gujarat,Clinic,14,3000,TRUE
+412,Dr. Yadavi Howard,Dermatology,DM,Sagar Hospital,Visakhapatnam,Andhra Pradesh,Hospital,33,600,TRUE
+413,Dr. Lisa Sharma,Pulmonology,DM,Fortis Healthcare,Jaipur,Rajasthan,Clinic,2,3650,TRUE
+414,Dr. Nidhi Hinton,Gynecology,MD,Lilavati Hospital,Visakhapatnam,Andhra Pradesh,Diagnostic Center,12,3950,TRUE
+415,Dr. Ekavir Jhaveri,Pediatrics,MBBS,Yashoda Hospital,Patna,Bihar,Hospital,18,650,TRUE
+416,Dr. Bradley Martin,Dermatology,MCh,Sagar Hospital,Indore,Madhya Pradesh,Hospital,31,950,TRUE
+417,Dr. Upasna Watson,Ophthalmology,DM,Vikram Hospital,Kochi,Kerala,Clinic,8,600,TRUE
+418,Dr. Linda Sachdeva,Orthopedics,MCh,Sakra World Hospital,Patna,Bihar,Clinic,20,850,TRUE
+419,Dr. Meghan Johnson,General Medicine,MS,Aster CMI,Hyderabad,Telangana,Clinic,27,250,TRUE
+420,Dr. Aryan Fuller,Pulmonology,MCh,Yashoda Hospital,Chandigarh,Chandigarh,Diagnostic Center,28,3500,TRUE
+421,Dr. Riya King,Ophthalmology,MCh,Continental Hospital,Pune,Maharashtra,Clinic,9,4900,TRUE
+422,Dr. Colin Wright,Pulmonology,MCh,Columbia Asia,Jaipur,Rajasthan,Hospital,5,1850,TRUE
+423,Dr. Robert Agate,Pediatrics,MS,Medanta,Kolkata,West Bengal,Hospital,31,700,TRUE
+424,Dr. Shannon Bahri,Dermatology,DM,Medanta,Coimbatore,Tamil Nadu,Diagnostic Center,19,2200,TRUE
+425,Dr. Dominic Jaggi,Gynecology,MD,Fortis Healthcare,Bangalore,Karnataka,Hospital,1,1900,TRUE
+426,Dr. Rayaan Rowe,Pediatrics,DM,KIMS Hospital,Hyderabad,Telangana,Diagnostic Center,26,2650,TRUE
+427,Dr. Pranav Castillo,Orthopedics,MBBS,Aster CMI,Hyderabad,Telangana,Clinic,3,800,TRUE
+428,Dr. Daniel Kakar,Dermatology,MCh,Sagar Hospital,Thiruvananthapuram,Kerala,Clinic,21,1700,TRUE
+429,Dr. Jatin Torres,Cardiology,MCh,Sterling Hospital,Indore,Madhya Pradesh,Hospital,17,550,TRUE
+430,Dr. Edhitha Jackson,Psychiatry,MCh,BLK Super Speciality,Lucknow,Uttar Pradesh,Hospital,7,4500,TRUE
+431,Dr. Brittany Suresh,Psychiatry,MS,Fortis Healthcare,Jaipur,Rajasthan,Clinic,16,4600,TRUE
+432,Dr. Jamie Compton,Dermatology,MS,Zydus Hospital,Nagpur,Maharashtra,Hospital,15,2800,TRUE
+433,Dr. Robert Loke,Pediatrics,MD,Narayana Health,Guwahati,Assam,Diagnostic Center,17,4950,TRUE
+434,Dr. Geetika Braun,Psychiatry,MCh,Columbia Asia,Bangalore,Karnataka,Clinic,18,1800,TRUE
+435,Dr. Jyoti Korpal,Pediatrics,DM,Care Hospital,Lucknow,Uttar Pradesh,Hospital,33,2000,TRUE
+436,Dr. Tyler Ray,Dermatology,MS,Columbia Asia,Jaipur,Rajasthan,Hospital,11,3450,TRUE
+437,Dr. Nakul Payne,ENT,MS,Kokilaben Dhirubhai Ambani,Patna,Bihar,Diagnostic Center,19,5000,TRUE
+438,Dr. Wazir Lad,Psychiatry,MBBS,Sterling Hospital,Chennai,Tamil Nadu,Diagnostic Center,12,2600,TRUE
+439,Dr. Zilmil Anderson,Oncology,MCh,Yashoda Hospital,Jaipur,Rajasthan,Clinic,28,1150,TRUE
+440,Dr. Robert Dani,Cardiology,MCh,Max Super Speciality,Delhi,Delhi,Hospital,6,2000,TRUE
+441,Dr. Austin Badami,Neurology,MBBS,Wockhardt Hospital,Chennai,Tamil Nadu,Diagnostic Center,20,2100,TRUE
+442,Dr. Diana Dalal,Ophthalmology,DM,Aster CMI,Thiruvananthapuram,Kerala,Clinic,24,4250,TRUE
+443,Dr. Lavanya Martin,Psychiatry,MBBS,Fortis Healthcare,Nagpur,Maharashtra,Hospital,23,1150,TRUE
+444,Dr. Tracy Patterson,General Medicine,MCh,Manipal Hospital,Delhi,Delhi,Hospital,8,2750,FALSE
+445,Dr. Jack Miranda,General Medicine,MCh,AIIMS,Patna,Bihar,Diagnostic Center,32,2400,TRUE
+446,Dr. Bimala Krishnan,Dermatology,DM,Aster CMI,Pune,Maharashtra,Hospital,33,4800,TRUE
+447,Dr. Bahadurjit Osborn,Pulmonology,MS,Cloudnine Hospital,Chandigarh,Chandigarh,Hospital,23,2000,FALSE
+448,Dr. Heidi Fuller,Pulmonology,MCh,Artemis Hospital,Hyderabad,Telangana,Clinic,12,1700,TRUE
+449,Dr. Sai Srinivas,Pediatrics,DM,Global Hospital,Ahmedabad,Gujarat,Hospital,24,2400,TRUE
+450,Dr. Christopher Lanka,Pediatrics,MBBS,Apollo Hospital,Kochi,Kerala,Clinic,16,3200,TRUE
+451,Dr. Jessica Mody,General Medicine,MS,AIIMS,Ahmedabad,Gujarat,Diagnostic Center,27,3250,TRUE
+452,Dr. Amber Lloyd,Pulmonology,MS,Sagar Hospital,Jaipur,Rajasthan,Hospital,10,3700,FALSE
+453,Dr. Joshua Phillips,Oncology,MBBS,Cloudnine Hospital,Delhi,Delhi,Hospital,14,1950,TRUE
+454,Dr. Pooja Galvan,Dermatology,MCh,Rainbow Children Hospital,Hyderabad,Telangana,Clinic,6,1100,TRUE
+455,Dr. Ijaya Borah,General Medicine,MS,Narayana Health,Pune,Maharashtra,Hospital,11,250,TRUE
+456,Dr. Christopher Mannan,Orthopedics,MBBS,Rainbow Children Hospital,Chennai,Tamil Nadu,Diagnostic Center,12,3900,TRUE
+457,Dr. Heather Cook,Ophthalmology,MS,Breach Candy Hospital,Delhi,Delhi,Clinic,31,3650,TRUE
+458,Dr. Aishani White,Pediatrics,MCh,Artemis Hospital,Chandigarh,Chandigarh,Clinic,2,1750,TRUE
+459,Dr. Jack Tailor,Dermatology,MCh,KIMS Hospital,Jaipur,Rajasthan,Clinic,2,4300,TRUE
+460,Dr. Rehaan Sibal,General Medicine,MS,Cloudnine Hospital,Bangalore,Karnataka,Diagnostic Center,21,4650,TRUE
+461,Dr. Ronald Sabharwal,Ophthalmology,MS,Wockhardt Hospital,Mumbai,Maharashtra,Hospital,22,2550,TRUE
+462,Dr. John Haney,ENT,MS,Narayana Health,Mumbai,Maharashtra,Hospital,3,2200,TRUE
+463,Dr. Jessica Williams,Pediatrics,MBBS,Tata Memorial,Chandigarh,Chandigarh,Hospital,1,1250,TRUE
+464,Dr. Jenna Henderson,Cardiology,MCh,Sakra World Hospital,Lucknow,Uttar Pradesh,Clinic,4,350,TRUE
+465,Dr. Lisa Hudson,Ophthalmology,DM,Care Hospital,Thiruvananthapuram,Kerala,Hospital,14,450,TRUE
+466,Dr. Anusha Ross,Orthopedics,DM,Sterling Hospital,Chandigarh,Chandigarh,Diagnostic Center,31,2350,FALSE
+467,Dr. Courtney Dass,Neurology,DM,BLK Super Speciality,Visakhapatnam,Andhra Pradesh,Diagnostic Center,19,4150,TRUE
+468,Dr. Charles Krish,General Medicine,MS,Fortis Healthcare,Patna,Bihar,Diagnostic Center,16,4800,TRUE
+469,Dr. Abha Sawyer,Oncology,DM,Yashoda Hospital,Chennai,Tamil Nadu,Diagnostic Center,10,450,TRUE
+470,Dr. Wridesh Martin,Cardiology,MBBS,Manipal Hospital,Chennai,Tamil Nadu,Clinic,5,2350,TRUE
+471,Dr. Alicia Sridhar,Oncology,MD,Care Hospital,Jaipur,Rajasthan,Clinic,6,1900,TRUE
+472,Dr. Neha Chander,Neurology,MBBS,Fortis Healthcare,Thiruvananthapuram,Kerala,Diagnostic Center,23,1000,TRUE
+473,Dr. Douglas Wagle,Orthopedics,MCh,Vikram Hospital,Chennai,Tamil Nadu,Diagnostic Center,8,3000,TRUE
+474,Dr. Charles Moore,Orthopedics,DM,Max Super Speciality,Lucknow,Uttar Pradesh,Clinic,30,1500,TRUE
+475,Dr. Chasmum Bera,Cardiology,MD,Columbia Asia,Lucknow,Uttar Pradesh,Diagnostic Center,23,350,TRUE
+476,Dr. Irya Lucas,Ophthalmology,MCh,Hinduja Hospital,Chennai,Tamil Nadu,Clinic,30,2550,TRUE
+477,Dr. Amrita Choudhury,General Medicine,MD,Cloudnine Hospital,Jaipur,Rajasthan,Hospital,10,1250,TRUE
+478,Dr. Ekani Arias,Psychiatry,DM,Yashoda Hospital,Indore,Madhya Pradesh,Hospital,20,2750,TRUE
+479,Dr. Amy Howard,Oncology,MS,HCG Oncology,Kolkata,West Bengal,Diagnostic Center,24,1350,TRUE
+480,Dr. Yauvani Jackson,ENT,DM,Max Super Speciality,Chennai,Tamil Nadu,Hospital,24,4850,FALSE
+481,Dr. Allen Vasa,Oncology,MBBS,Breach Candy Hospital,Chennai,Tamil Nadu,Hospital,28,4450,FALSE
+482,Dr. Lori Savant,Pediatrics,MD,Sterling Hospital,Guwahati,Assam,Clinic,14,1750,TRUE
+483,Dr. Derek Brown,Ophthalmology,MD,Hinduja Hospital,Indore,Madhya Pradesh,Clinic,4,1550,TRUE
+484,Dr. Kabir Shetty,Neurology,MD,Apollo Hospital,Guwahati,Assam,Hospital,2,4000,TRUE
+485,Dr. William Goodman,Gynecology,MD,Breach Candy Hospital,Coimbatore,Tamil Nadu,Clinic,32,4550,TRUE
+486,Dr. Ati Livingston,Pulmonology,MS,HCG Oncology,Delhi,Delhi,Hospital,18,550,TRUE
+487,Dr. Aarini Nagi,Neurology,MCh,Sakra World Hospital,Chandigarh,Chandigarh,Hospital,9,3500,TRUE
+488,Dr. Catherine Sule,Neurology,MD,Zydus Hospital,Nagpur,Maharashtra,Hospital,3,1250,TRUE
+489,Dr. Becky Muni,ENT,MBBS,Aster CMI,Lucknow,Uttar Pradesh,Hospital,20,1850,TRUE
+490,Dr. Megan Serrano,ENT,MS,Lilavati Hospital,Guwahati,Assam,Clinic,27,1500,TRUE
+491,Dr. Maanas Jones,Pulmonology,MCh,Hinduja Hospital,Patna,Bihar,Clinic,11,3450,TRUE
+492,Dr. Nicholas Ortiz,Neurology,MS,Kokilaben Dhirubhai Ambani,Guwahati,Assam,Hospital,1,4200,TRUE
+493,Dr. Karen Lutz,Oncology,DM,Tata Memorial,Coimbatore,Tamil Nadu,Hospital,23,1150,TRUE
+494,Dr. Andrea Price,Dermatology,MBBS,Narayana Health,Visakhapatnam,Andhra Pradesh,Clinic,28,1050,TRUE
+495,Dr. Julia Lata,Cardiology,MCh,HCG Oncology,Delhi,Delhi,Hospital,27,4550,TRUE
+496,Dr. Ira Banik,Ophthalmology,MCh,Artemis Hospital,Ahmedabad,Gujarat,Diagnostic Center,29,2550,FALSE
+497,Dr. Brandon Little,Pediatrics,MD,Max Super Speciality,Kolkata,West Bengal,Diagnostic Center,9,3500,TRUE
+498,Dr. Pratyush Shere,Orthopedics,DM,Columbia Asia,Hyderabad,Telangana,Hospital,24,3000,FALSE
+499,Dr. Jagvi Simpson,Cardiology,MS,Columbia Asia,Kolkata,West Bengal,Hospital,9,3700,TRUE
+500,Dr. Elizabeth Liu,General Medicine,MCh,Yashoda Hospital,Visakhapatnam,Andhra Pradesh,Clinic,17,1950,TRUE

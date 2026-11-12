@@ -246,7 +246,6 @@ Key activities:
 
 **Outcome:** Established a governed Snowflake environment with controlled data access, sensitive information protection, and region-based security enforcement.
 
-
 ### Phase 08 — Time Travel, Cloning & Data Recovery
 
 **Objective:** Implement data recovery and safe development practices using Snowflake Time Travel, Zero-Copy Cloning, and UNDROP.
@@ -269,7 +268,6 @@ Key activities:
 
 **Outcome:** Established data recovery and isolated testing capabilities, improving the reliability, resilience, and operational safety of the healthcare data platform.
 
-
 ### Phase 09 — Cost Management & Monitoring
 
 **Objective:** Monitor Snowflake resource consumption, control warehouse costs, and optimise query performance.
@@ -291,7 +289,6 @@ Key activities:
 - **Query Optimisation:** Query history and usage metrics help identify expensive queries and inefficient resource utilisation.
 
 **Outcome:** Established cost monitoring, budget controls, and usage analysis capabilities to support efficient Snowflake resource management.
-
 
 ### Phase 10 — Healthcare Analytics Queries & Validation
 

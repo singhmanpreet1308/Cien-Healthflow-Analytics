@@ -222,3 +222,18 @@ __marimo__/
 
 # Project environment
 .env
+
+# Added by Euron Code
+.euron/cache/
+.euron/knowledge/
+.euron/security/
+.euron/settings.local.json
+.env.*
+!.env.example
+
+
+Phase_11_CienMed_AI/.env
+Phase_11_CienMed_AI/users.yaml
+Phase_11_CienMed_AI/artifacts/
+Phase_11_CienMed_AI/.venv/
+__pycache__/

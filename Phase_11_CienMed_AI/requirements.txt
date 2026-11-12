@@ -1,0 +1,26 @@
+# CienMed AI (Phase 11) dependencies
+# Install: pip install -r requirements.txt
+
+# App / UI
+streamlit==1.67.0
+plotly==7.1.0
+
+# Data & warehouse
+duckdb==2.0.0
+pandas==2.3.3
+numpy==2.5.3
+
+# ML (pin scikit-learn + joblib so saved models in artifacts/ load correctly)
+scikit-learn==1.9.1
+joblib==1.6.0
+
+# LLM
+openai==3.49.0
+
+# Documents / RAG
+pdfplumber==0.11.10
+
+# Auth & config
+bcrypt==5.0.0
+PyYAML==6.0.3
+python-dotenv==1.2.4
