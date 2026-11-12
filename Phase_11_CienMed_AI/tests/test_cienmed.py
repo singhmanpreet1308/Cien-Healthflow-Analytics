@@ -322,8 +322,9 @@ def test_ui_request_form_submits(demo_users, github, monkeypatch):
     from streamlit.testing.v1 import AppTest
     monkeypatch.delenv("CIENMED_ACCESS_FORM_URL", raising=False)   # a local .env form URL hides the in-app form
     at = AppTest.from_file(APP, default_timeout=90)
-    at.query_params["role"] = "admin"
+    at.query_params["role"] = "clinician"
     at.run()
+    next(b for b in at.button if "guest" in b.label.lower()).click().run()   # form lives in the guest sidebar
     ti = {t.label: t for t in at.text_input}
     ti["Name"].input("Jo Smith"); ti["Work email"].input("jo@acme.com"); ti["Company / organisation"].input("Acme")
     next(b for b in at.button if b.label == "Send request").click().run()

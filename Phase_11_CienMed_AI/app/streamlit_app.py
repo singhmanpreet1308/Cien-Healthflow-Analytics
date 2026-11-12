@@ -125,7 +125,6 @@ def login_page() -> None:
                 st.session_state.user = guest
                 st.session_state.history = []
                 st.rerun()
-        request_access_form(wanted)
         if st.button("← Choose a different assistant", width="stretch"):
             del st.query_params["role"]
             st.rerun()
@@ -211,13 +210,9 @@ def sidebar(user: dict) -> None:
 
 # ------------------------------------------------------------------ chat
 def guest_banner(role: str) -> None:
-    """Shown to demo/guest accounts: what they can do, and how to get full access."""
-    url = access.form_url()
-    left, right = st.columns([3, 1], vertical_alignment="center")
-    left.info("**You're exploring the demo.** Click any example question below — answers are pre-generated. "
-              "Want to ask your own questions? Request a free trial account.", icon="👀")
-    if url:
-        right.link_button("🔑 Request full access", url, width="stretch", type="primary")
+    """Shown to demo/guest accounts: what they can do. The access request button lives in the sidebar."""
+    st.info("**You're exploring the demo.** Click any example question below — answers are pre-generated. "
+            "Want to ask your own questions? Use **🔑 Request full access** in the sidebar.", icon="👀")
 
 
 def chat(user: dict, patient_id: int | None = None) -> None:
