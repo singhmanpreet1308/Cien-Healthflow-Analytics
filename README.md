@@ -331,7 +331,6 @@ Key activities:
 
 **Outcome:** Validated the healthcare analytics layer through business-focused queries, supporting claims monitoring, provider evaluation, facility benchmarking, and revenue analysis.
 
-
 # Phase 11 — CienMed AI 🩺
 
 **A role-aware AI assistant for the Cien HealthFlow Analytics Platform.**
@@ -361,7 +360,6 @@ Clinicians ask about patients; admins and business analysts ask about claims, fa
 
 ---
 
-
 ## Architecture
 
 ```
@@ -382,10 +380,10 @@ Power BI ──► Streamlit (login · roles · guest mode)
 
 ## In action
 
-| Clinician                                         | Admin                                            |
-| ------------------------------------------------- | ------------------------------------------------ |
-| ![1794499677909](image/README/1794499677909.png)  | ![1794499808482](image/README/1794499808482.png) |
-| ![1794500031807](image/README/1794500031807.png)  | ![1794499925207](image/README/1794499925207.png) |
+| Clinician                                        | Admin                                            |
+| ------------------------------------------------ | ------------------------------------------------ |
+| ![1794499677909](image/README/1794499677909.png) | ![1794499808482](image/README/1794499808482.png) |
+| ![1794500031807](image/README/1794500031807.png) | ![1794499925207](image/README/1794499925207.png) |
 
 ---
 
