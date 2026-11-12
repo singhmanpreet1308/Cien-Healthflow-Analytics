@@ -126,8 +126,9 @@ def login_page() -> None:
         if st.button("← Choose a different assistant", width="stretch"):
             del st.query_params["role"]
             st.rerun()
-        if not governance.load_users():
-            st.info("No accounts yet. Run `python manage_users.py demo` to create demo users.")
+        problem = governance.users_status()
+        if problem:
+            st.warning(problem, icon="🔑")
 
 
 def guest_account(role: str) -> dict | None:

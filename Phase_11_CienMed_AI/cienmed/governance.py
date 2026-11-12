@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from datetime import datetime, timezone
 
@@ -18,10 +19,47 @@ PHONE_RE = re.compile(r"\b\d{10}\b")
 
 
 # ---------------- Authentication ----------------
+def _users_yaml_text() -> tuple[str, str]:
+    """Return (yaml_text, source). Order: users.yaml file -> env var -> Streamlit secrets."""
+    if config.USERS_FILE.exists():
+        return config.USERS_FILE.read_text(encoding="utf-8"), "users.yaml"
+    text = os.getenv("CIENMED_USERS_YAML", "")
+    if text.strip():
+        return text, "environment"
+    try:  # Streamlit Cloud: read the secret directly as well
+        import streamlit as st
+        text = st.secrets.get("CIENMED_USERS_YAML", "")
+        if text.strip():
+            return text, "streamlit secrets"
+    except Exception:
+        pass
+    return "", "none"
+
+
 def load_users() -> dict:
-    if not config.USERS_FILE.exists():
+    """Accounts come from users.yaml locally, or from the CIENMED_USERS_YAML secret when deployed
+    (users.yaml is never committed). Passwords are bcrypt hashes in both cases."""
+    text, _ = _users_yaml_text()
+    if not text.strip():
         return {}
-    return yaml.safe_load(config.USERS_FILE.read_text()).get("users", {})
+    try:
+        return (yaml.safe_load(text) or {}).get("users", {}) or {}
+    except yaml.YAMLError:
+        return {}
+
+
+def users_status() -> str:
+    """Human-readable reason when no accounts load (shown on the login page, no secrets revealed)."""
+    text, source = _users_yaml_text()
+    if source == "none":
+        return "No accounts found: add the CIENMED_USERS_YAML secret (python manage_users.py secrets), or run python manage_users.py demo locally."
+    try:
+        data = yaml.safe_load(text) or {}
+    except yaml.YAMLError as e:
+        return f"CIENMED_USERS_YAML from {source} is not valid YAML (check indentation): {str(e).splitlines()[0]}"
+    if not (data.get("users") or {}):
+        return f"CIENMED_USERS_YAML from {source} has no users under 'users:'."
+    return ""
 
 
 def authenticate(username: str, password: str) -> dict | None:
@@ -41,8 +79,7 @@ def hash_password(pw: str) -> str:
 
 # ---------------- PHI masking ----------------
 def _pseudo(value) -> str:
-    """Salted hash: stable inside this system, not reversible without the secret salt."""
-    return "PT-" + hashlib.sha256(f"{config.PHI_SALT}|{value}".encode()).hexdigest()[:8]
+    return "PT-" + hashlib.sha256(str(value).encode()).hexdigest()[:8]
 
 
 def mask_df(df: pd.DataFrame, role: str) -> pd.DataFrame:
