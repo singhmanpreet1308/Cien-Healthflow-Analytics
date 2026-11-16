@@ -305,8 +305,6 @@ Key activities:
 
 **Analytics Validation Screenshots**
 
-*Insert screenshots of the five required business queries below.*
-
 **Query 1 — Claims Analysis**
 
 ![1794078166354](image/README/1794078166354.png)
